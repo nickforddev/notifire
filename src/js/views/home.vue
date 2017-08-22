@@ -1,9 +1,17 @@
 <template>
   <div class="hello">
-    <div class="editor">
-      <editor v-model="html" @input="debounceInput"></editor>
-      <div class="actions">
-        <button @click="render">Render</button>
+    <div class="editors">
+      <div class="editor template">
+        <editor v-model="html" @input="debounceInput" mode="handlebars"></editor>
+        <div class="actions">
+          <button @click="render">Render</button>
+        </div>
+      </div>
+      <div class="editor styles">
+        <editor v-model="css" @input="debounceInput" mode="ruby"></editor>
+        <div class="actions">
+          <button @click="render">Render</button>
+        </div>
       </div>
     </div>
     <div class="content" v-html="content"></div>
@@ -20,53 +28,45 @@ export default {
   name: 'hello',
   data () {
     return {
-      html: `
-<style>
-  h1.header {
-    color: blue
-  }
-  .test h1.header {
-    color: red;
-  }
-</style>
-<h1 class="header">{{header}}</h1>
-
-<div class="test">
-  <h1 class="header">{{header}}</h1>
-</div>
-
-{{#bug}}
-{{/bug}}
-
-{{#items}}
-  {{#first}}
-    <li><strong>{{name}}</strong></li>
-  {{/first}}
-  {{#link}}
-    <li><a href="{{url}}">{{name}}</a></li>
-  {{/link}}
-{{/items}}
-
-{{#empty}}
-  <p>The list is empty.</p>
-{{/empty}}
-`,
+      css: '',
+      html: '',
       content: ''
     }
   },
-  created() {
-    this.render()
+  async created() {
+    await this.fetch()
+    // await this.render()
   },
   components: {
     editor
   },
   methods: {
+    fetch() {
+      const template_xhr = axios.get('http://localhost:3636/templates/example/body.html')
+      template_xhr.then(response => {
+        this.html = response.data
+      })
+      const styles_xhr = axios.get('http://localhost:3636/templates/example/body.scss')
+      styles_xhr.then(response => {
+        this.css = response.data
+      })
+      const promises = [
+        template_xhr,
+        styles_xhr
+      ]
+      return Promise.all(promises)
+    },
     render() {
-      axios.post('http://localhost:3636', {
-        template: this.html
+      return axios.post('http://localhost:3636', {
+        template: this.html,
+        css: this.css
       })
       .then(response => {
         this.content = response.data
+      })
+      .catch(error => {
+        const message = _.get(error, 'response.data')
+        console.log(message)
       })
     },
     debounceInput: _.debounce(function() {
@@ -77,11 +77,15 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-  .editor {
+<style scoped lang="scss">
+  .editors {
     position: relative;
     width: 50%;
     float: left;
+
+    .editor {
+      height: 50vh;
+    }
   }
   .content {
     position: relative;
