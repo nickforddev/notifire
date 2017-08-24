@@ -14,7 +14,8 @@
 import axios from 'axios'
 import ace from 'brace'
 // import 'brace/ext/emmet'
-const theme = 'twilight'
+
+const theme = 'monokai'
 
 export default {
   props: {
@@ -32,8 +33,9 @@ export default {
   },
   async mounted() {
     this.initEditor()
-    console.log(this.remote)
-    if (this.remote) await this.fetch()
+    if (this.remote) {
+      await this.fetch()
+    }
   },
   // watch: {
   //   value(value) {
@@ -85,15 +87,12 @@ export default {
       this.editor.clearSelection()
     },
     fetch() {
-      console.log('fetch')
       return axios.get(this.remote)
         .then(response => {
           this.setValue(response.data)
         })
     },
     save() {
-      // this.$emit('save', this)
-      console.log(this.remote)
       return axios.put(this.remote, {
         content: this.content
       }).then(() => {
@@ -113,7 +112,7 @@ $header-background: #3d3d3d;
   height: 100%;
 
   .editor {
-    height: calc(100% - $header-height);
+    height: calc(100% - #{$header-height});
   }
 
   .header {

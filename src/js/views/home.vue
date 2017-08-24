@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <div class="editors">
-      <div class="editor template">
+      <div class="editor-panel template">
         <editor
           v-model="html"
           title="template"
@@ -13,7 +13,8 @@
           <button @click="render">Render</button>
         </div> -->
       </div>
-      <div class="editor styles">
+      <div class="divider" @mousedown.prevent="dragStart" @mouseup="dragEnd"></div>
+      <div class="editor-panel styles">
         <editor
           v-model="css"
           title="styles"
@@ -27,7 +28,9 @@
       </div>
     </div>
     <div class="content">
-      <iframe v-html="content" />
+      <iframe
+        ref="iframe"
+        frameborder="0" />
     </div>
     <div class="clear"></div>
   </div>
@@ -44,32 +47,24 @@ export default {
     return {
       css: '',
       html: '',
-      content: ''
+      content: '',
+      loaded: false
     }
-  },
-  async created() {
-    // await this.fetch()
-    // await this.render()
   },
   components: {
     editor
   },
+  mounted() {
+    console.log(this.$el.querySelectorAll('.editor').length)
+  },
+  watch: {
+    content(value) {
+      const iframe = this.$refs.iframe
+      const doc = iframe.contentDocument || iframe.contentWindow.document
+      doc.body.innerHTML = value
+    }
+  },
   methods: {
-    // fetch() {
-      // const template_xhr = axios.get('http://localhost:3636/templates/example/body.html')
-      // template_xhr.then(response => {
-      //   this.html = response.data
-      // })
-      // const styles_xhr = axios.get('http://localhost:3636/templates/example/body.scss')
-      // styles_xhr.then(response => {
-      //   this.css = response.data
-      // })
-      // const promises = [
-      //   template_xhr,
-      //   styles_xhr
-      // ]
-      // return Promise.all(promises)
-    // },
     render() {
       return axios.post('http://localhost:3636', {
         template: this.html,
@@ -79,40 +74,63 @@ export default {
         this.content = response.data
       })
       .catch(error => {
-        const message = _.get(error, 'response.data')
-        console.log(message)
+        const message = _.get(error, 'response.data') || 'Could not connect with the server'
+        this.content = message
       })
     },
     debounceInput: _.debounce(function() {
       this.render()
-    }, 900)
+    }, 900),
+    dragStart() {
+      console.log('dragstart')
+    },
+    dragEnd() {
+      console.log('dragend')
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  .editors {
-    position: relative;
-    width: 50%;
-    float: left;
+$divider-height: 20px;
+$divider-background: #333;
 
-    .editor {
-      height: 50vh;
-    }
+.editors {
+  position: relative;
+  width: 50%;
+  float: left;
+
+  .editor-panel {
+    height: 50vh;
   }
-  .content {
-    position: relative;
-    width: 50%;
-    float: left;
+}
+.divider {
+  height: $divider-height;
+  background: $divider-background;
+
+  &:hover {
+    cursor: row-resize;
   }
-  .actions {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 9;
+}
+.content {
+  position: relative;
+  width: 50%;
+  height: 100vh;
+  float: left;
+
+  iframe {
+    width: 100%;
+    height: 100%;
   }
-  .clear {
-    clear: both;
-  }
+}
+.actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 9;
+}
+.clear {
+  clear: both;
+}
 </style>
