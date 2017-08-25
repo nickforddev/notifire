@@ -5,9 +5,6 @@
 </template>
 
 <script>
-// import _ from 'lodash'
-// import axios from 'axios'
-
 export default {
   name: 'tree-view',
   props: {

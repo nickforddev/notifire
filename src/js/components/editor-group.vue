@@ -17,7 +17,6 @@
 import _ from 'lodash'
 import editor from '@/components/editor'
 import { sleep } from '@/utils'
-// import axios from 'axios'
 
 export default {
   name: 'hello',
@@ -33,11 +32,6 @@ export default {
     this.setHeights()
   },
   watch: {
-    content(value) {
-      const iframe = this.$refs.iframe
-      const doc = iframe.contentDocument || iframe.contentWindow.document
-      doc.body.innerHTML = value
-    },
     editors() {
       this.setHeights()
     }
@@ -45,25 +39,8 @@ export default {
   methods: {
     debounceInput: _.debounce(function() {
       this.$emit('input', this.data)
-      // this.$emit('change')
-      // this.render()
     }, 900),
-    // render() {
-    //   this.getFiles()
-    //   return axios.post('http://localhost:3636', {
-    //     template: this.html,
-    //     css: this.css
-    //   })
-    //   .then(response => {
-    //     this.content = response.data
-    //   })
-    //   .catch(error => {
-    //     const message = _.get(error, 'response.data') || 'Could not connect with the server'
-    //     this.content = message
-    //   })
-    // },
     async setHeights() {
-      console.log('setHieghts')
       await sleep(10)
 
       const editor_count = this.$el.querySelectorAll('.editor').length
@@ -73,25 +50,6 @@ export default {
         $editor.style.height = `${height}vh`
       })
     }
-    // debounceInput: _.debounce(function() {
-    //   this.render()
-    // }, 900),
-    // dragStart() {
-    //   console.log('dragstart')
-    // },
-    // dragEnd() {
-    //   console.log('dragend')
-    // },
-    // getFiles() {
-    //   console.log('getFiles')
-    //   return axios.get('http://localhost:3636')
-    //     .then(response => {
-    //       this.tree = response.data
-    //     })
-    //     .catch(err => {
-    //       console.warn(err)
-    //     })
-    // }
   },
   components: {
     editor
@@ -99,7 +57,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 $divider-height: 20px;
 $divider-background: #333;

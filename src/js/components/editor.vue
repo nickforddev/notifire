@@ -3,7 +3,7 @@
     <div class="header">
       <div class="title">{{ this.title }}</div>
       <div class="actions">
-        <button @click="save" v-shortkey="['ctrl', 's']" @shortkey="save()">Save</button>
+        <button @click="save" v-shortkey="['ctrl', 's']" @shortkey="save">Save</button>
       </div>
     </div>
     <div class="editor"></div>
@@ -13,7 +13,6 @@
 <script>
 import axios from 'axios'
 import ace from 'brace'
-// import 'brace/ext/emmet'
 
 const theme = 'monokai'
 
@@ -48,7 +47,6 @@ export default {
           mode: `ace/mode/${this.mode}`,
           tabSize: 2,
           useSoftTabs: true
-          // enableEmmet: true
         })
       }
       this.editor.setOption('fontSize', '13px')
@@ -72,7 +70,6 @@ export default {
       })
     },
     setValue(value) {
-      console.log(value)
       if (typeof value === 'object') value = JSON.stringify(value, null, '\t')
       this.content = value
       this.editor.setValue(this.content)
@@ -85,7 +82,6 @@ export default {
         })
     },
     save() {
-      console.log('save')
       return axios.put(this.remote, {
         content: this.content
       }).then(() => {
