@@ -1,27 +1,16 @@
 <template>
   <main>
-    <tree-view :data="tree" />
-    <editor-group>
-      <editor
-        v-model="html"
-        title="template"
-        mode="handlebars"
-        remote="http://localhost:3636/templates/example/body.html"
-        @input="debounceInput"
-      />
-      <editor
-        v-model="css"
-        title="styles"
-        mode="scss"
-        remote="http://localhost:3636/templates/example/body.scss"
-        @input="debounceInput"
-      />
-    </editor-group>
+    <tree-view :data="tree.data" @loadFile="loadFile" />
+    
+    <div class="editor-content-container">
+      <editor-group :editors="editors" @input="render" v-model="data" />
 
-    <div class="content">
-      <iframe
-        ref="iframe"
-        frameborder="0" />
+      <div class="content">
+        <iframe
+          ref="iframe"
+          frameborder="0" />
+      </div>
+      <div class="clear"></div>
     </div>
     <div class="clear"></div>
   </main>
@@ -31,18 +20,29 @@
 import _ from 'lodash'
 import axios from 'axios'
 import treeView from '@/components/tree-view'
-import editor from '@/components/editor'
 import editorGroup from '@/components/editor-group'
 
 export default {
   name: 'hello',
   data () {
     return {
-      css: '',
-      html: '',
+      data: {},
+      tree: {},
       content: '',
-      loaded: false,
-      tree: {}
+      editors: [
+        {
+          model: 'html',
+          title: 'template',
+          mode: 'handlebars',
+          remote: 'http://localhost:3636/templates/example/body.html'
+        },
+        {
+          model: 'css',
+          title: 'styles',
+          mode: 'scss',
+          remote: 'http://localhost:3636/templates/example/body.scss'
+        }
+      ]
     }
   },
   watch: {
@@ -50,14 +50,21 @@ export default {
       const iframe = this.$refs.iframe
       const doc = iframe.contentDocument || iframe.contentWindow.document
       doc.body.innerHTML = value
+    },
+    data(value) {
+      console.log({value})
     }
   },
   methods: {
     render() {
       this.getFiles()
+      // console.log({
+      //   html: this.data.html,
+      //   css: this.data.css
+      // })
       return axios.post('http://localhost:3636', {
-        template: this.html,
-        css: this.css
+        template: this.data.html,
+        css: this.data.css
       })
       .then(response => {
         this.content = response.data
@@ -67,11 +74,7 @@ export default {
         this.content = message
       })
     },
-    debounceInput: _.debounce(function() {
-      this.render()
-    }, 900),
     getFiles() {
-      console.log('getFiles')
       return axios.get('http://localhost:3636')
         .then(response => {
           this.tree = response.data
@@ -79,37 +82,32 @@ export default {
         .catch(err => {
           console.warn(err)
         })
+    },
+    loadFile(file_path) {
+      const path_split = file_path.split('/')
+      const path = path_split.slice(1).join('/')
+      const file_name = path_split[path_split.length - 1]
+      const file_name_split = file_name.split('.')
+      const file_type = file_name_split[file_name_split.length - 1]
+      this.editors.push({
+        title: file_name,
+        mode: file_type,
+        model: file_type,
+        remote: `http://localhost:3636/${path}`
+      })
     }
   },
   components: {
     treeView,
-    editor,
     editorGroup
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-$divider-height: 20px;
-$divider-background: #333;
-
-.editors {
-  position: relative;
-  width: 50%;
+.editor-content-container {
+  width: calc(100% - 300px);
   float: left;
-
-  .editor-panel {
-    height: 50vh;
-  }
-}
-.divider {
-  height: $divider-height;
-  background: $divider-background;
-
-  &:hover {
-    cursor: row-resize;
-  }
 }
 .content {
   position: relative;

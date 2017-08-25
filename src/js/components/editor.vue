@@ -72,6 +72,8 @@ export default {
       })
     },
     setValue(value) {
+      console.log(value)
+      if (typeof value === 'object') value = JSON.stringify(value, null, '\t')
       this.content = value
       this.editor.setValue(this.content)
       this.editor.clearSelection()

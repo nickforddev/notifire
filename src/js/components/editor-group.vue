@@ -1,25 +1,32 @@
 <template>
   <div class="editor-group">
-    <slot>
-      No editors in slot
-    </slot>
+    <editor
+      v-for="editor in editors"
+      :key="editor.title"
+      v-model="data[editor.model]"
+      :title="editor.title"
+      :mode="editor.mode"
+      :remote="editor.remote"
+      @input="debounceInput"
+    />
     <div class="clear"></div>
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
+import editor from '@/components/editor'
+import { sleep } from '@/utils'
 // import axios from 'axios'
 
 export default {
   name: 'hello',
+  props: {
+    editors: Array
+  },
   data () {
     return {
-      css: '',
-      html: '',
-      content: '',
-      loaded: false,
-      tree: {}
+      data: {}
     }
   },
   mounted() {
@@ -30,9 +37,17 @@ export default {
       const iframe = this.$refs.iframe
       const doc = iframe.contentDocument || iframe.contentWindow.document
       doc.body.innerHTML = value
+    },
+    editors() {
+      this.setHeights()
     }
   },
   methods: {
+    debounceInput: _.debounce(function() {
+      this.$emit('input', this.data)
+      // this.$emit('change')
+      // this.render()
+    }, 900),
     // render() {
     //   this.getFiles()
     //   return axios.post('http://localhost:3636', {
@@ -47,7 +62,10 @@ export default {
     //     this.content = message
     //   })
     // },
-    setHeights() {
+    async setHeights() {
+      console.log('setHieghts')
+      await sleep(10)
+
       const editor_count = this.$el.querySelectorAll('.editor').length
       const height = 100 / editor_count
       const $editors = this.$el.querySelectorAll('.editor-container')
@@ -74,6 +92,9 @@ export default {
     //       console.warn(err)
     //     })
     // }
+  },
+  components: {
+    editor
   }
 }
 </script>

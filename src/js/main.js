@@ -4,10 +4,24 @@ import Vue from 'vue'
 import App from './app'
 import router from './router'
 import VueShortkey from 'vue-shortkey'
+import TreeItem from '@/components/tree-item'
 
-Vue.use(VueShortkey)
+const components = [
+  TreeItem
+]
 
-Vue.config.productionTip = false
+const install = (Vue) => {
+  // inject components
+  components.map(component => {
+    Vue.component(component.name, component)
+  })
+
+  Vue.use(VueShortkey)
+}
+
+install(Vue)
+
+// Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
