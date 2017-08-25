@@ -1,45 +1,38 @@
 <template>
-  <div class="hello">
-    <div class="editors">
-      <div class="editor-panel template">
-        <editor
-          v-model="html"
-          title="template"
-          mode="handlebars"
-          remote="http://localhost:3636/templates/example/body.html"
-          @input="debounceInput"
-        />
-        <!-- <div class="actions">
-          <button @click="render">Render</button>
-        </div> -->
-      </div>
-      <div class="divider" @mousedown.prevent="dragStart" @mouseup="dragEnd"></div>
-      <div class="editor-panel styles">
-        <editor
-          v-model="css"
-          title="styles"
-          mode="ruby"
-          remote="http://localhost:3636/templates/example/body.scss"
-          @input="debounceInput"
-        />
-        <!-- <div class="actions">
-          <button @click="render">Render</button>
-        </div> -->
-      </div>
-    </div>
+  <main>
+    <tree-view :data="tree" />
+    <editor-group>
+      <editor
+        v-model="html"
+        title="template"
+        mode="handlebars"
+        remote="http://localhost:3636/templates/example/body.html"
+        @input="debounceInput"
+      />
+      <editor
+        v-model="css"
+        title="styles"
+        mode="scss"
+        remote="http://localhost:3636/templates/example/body.scss"
+        @input="debounceInput"
+      />
+    </editor-group>
+
     <div class="content">
       <iframe
         ref="iframe"
         frameborder="0" />
     </div>
     <div class="clear"></div>
-  </div>
+  </main>
 </template>
 
 <script>
 import _ from 'lodash'
 import axios from 'axios'
+import treeView from '@/components/tree-view'
 import editor from '@/components/editor'
+import editorGroup from '@/components/editor-group'
 
 export default {
   name: 'hello',
@@ -48,14 +41,9 @@ export default {
       css: '',
       html: '',
       content: '',
-      loaded: false
+      loaded: false,
+      tree: {}
     }
-  },
-  components: {
-    editor
-  },
-  mounted() {
-    console.log(this.$el.querySelectorAll('.editor').length)
   },
   watch: {
     content(value) {
@@ -66,6 +54,7 @@ export default {
   },
   methods: {
     render() {
+      this.getFiles()
       return axios.post('http://localhost:3636', {
         template: this.html,
         css: this.css
@@ -81,12 +70,21 @@ export default {
     debounceInput: _.debounce(function() {
       this.render()
     }, 900),
-    dragStart() {
-      console.log('dragstart')
-    },
-    dragEnd() {
-      console.log('dragend')
+    getFiles() {
+      console.log('getFiles')
+      return axios.get('http://localhost:3636')
+        .then(response => {
+          this.tree = response.data
+        })
+        .catch(err => {
+          console.warn(err)
+        })
     }
+  },
+  components: {
+    treeView,
+    editor,
+    editorGroup
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <div class="header">
       <div class="title">{{ this.title }}</div>
       <div class="actions">
-        <button @click="save">Save</button>
+        <button @click="save" v-shortkey="['ctrl', 's']" @shortkey="save()">Save</button>
       </div>
     </div>
     <div class="editor"></div>
@@ -37,15 +37,6 @@ export default {
       await this.fetch()
     }
   },
-  // watch: {
-  //   value(value) {
-  //     if (!this.content) {
-  //       this.content = value
-  //       this.editor.setValue(this.content)
-  //       this.editor.clearSelection()
-  //     }
-  //   }
-  // },
   methods: {
     initEditor() {
       require(`brace/mode/${this.mode}`)
@@ -58,7 +49,6 @@ export default {
           tabSize: 2,
           useSoftTabs: true
           // enableEmmet: true
-          // fontSize: '22px'
         })
       }
       this.editor.setOption('fontSize', '13px')
@@ -93,6 +83,7 @@ export default {
         })
     },
     save() {
+      console.log('save')
       return axios.put(this.remote, {
         content: this.content
       }).then(() => {

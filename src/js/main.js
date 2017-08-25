@@ -3,6 +3,9 @@
 import Vue from 'vue'
 import App from './app'
 import router from './router'
+import VueShortkey from 'vue-shortkey'
+
+Vue.use(VueShortkey)
 
 Vue.config.productionTip = false
 
