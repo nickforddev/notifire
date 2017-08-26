@@ -5,17 +5,34 @@
 </template>
 
 <script>
+import axios from 'axios'
+import config from '@/config'
+
 export default {
   name: 'tree-view',
-  props: {
-    data: Object
-  },
   computed: {
     files() {
       return this.processFolder(this.data)
     }
   },
+  data() {
+    return {
+      data: {}
+    }
+  },
+  mounted() {
+    this.getFiles()
+  },
   methods: {
+    getFiles() {
+      return axios.get(config.api)
+        .then(response => {
+          this.data = response.data.data
+        })
+        .catch(err => {
+          console.warn(err)
+        })
+    },
     processFolder(object) {
       let output = []
       for (let key in object) {

@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import config from '@/config'
 import axios from 'axios'
 import ace from 'brace'
 
@@ -28,6 +29,11 @@ export default {
       content: this.value || '',
       interval: null,
       editor: null
+    }
+  },
+  computed: {
+    url() {
+      return `${config.api}/${this.remote}`
     }
   },
   async mounted() {
@@ -76,13 +82,13 @@ export default {
       this.editor.clearSelection()
     },
     fetch() {
-      return axios.get(this.remote)
+      return axios.get(this.url)
         .then(response => {
           this.setValue(response.data)
         })
     },
     save() {
-      return axios.put(this.remote, {
+      return axios.put(this.url, {
         content: this.content
       }).then(() => {
         alert(`${this.title} saved successfully`)
@@ -102,6 +108,8 @@ $header-background: #3d3d3d;
 
   .editor {
     height: calc(100% - #{$header-height});
+    overflow: hidden;
+    // overflow: scroll;
   }
 
   .header {

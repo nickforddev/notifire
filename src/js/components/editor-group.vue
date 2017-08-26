@@ -47,8 +47,9 @@ export default {
       const height = 100 / editor_count
       const $editors = this.$el.querySelectorAll('.editor-container')
       _.each($editors, ($editor) => {
-        $editor.style.height = `${height}vh`
+        $editor.style.height = `${height}%`
       })
+      window.dispatchEvent(new Event('resize'))
     }
   },
   components: {
@@ -64,6 +65,7 @@ $divider-background: #333;
 .editor-group {
   position: relative;
   width: 50%;
+  height: 100vh;
   float: left;
 
   .editor-panel {

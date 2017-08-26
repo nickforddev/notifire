@@ -1,6 +1,6 @@
 <template>
   <main>
-    <tree-view :data="tree.data" @loadFile="loadFile" />
+    <tree-view @loadFile="loadFile" />
     
     <div class="editor-content-container">
       <editor-group :editors="editors" @input="render" v-model="data" />
@@ -23,7 +23,7 @@ import treeView from '@/components/tree-view'
 import editorGroup from '@/components/editor-group'
 
 export default {
-  name: 'hello',
+  name: 'home',
   data () {
     return {
       data: {},
@@ -34,13 +34,13 @@ export default {
           model: 'html',
           title: 'template',
           mode: 'handlebars',
-          remote: 'http://localhost:3636/templates/example/body.html'
+          remote: '/templates/example/body.html'
         },
         {
           model: 'css',
           title: 'styles',
           mode: 'scss',
-          remote: 'http://localhost:3636/templates/example/body.scss'
+          remote: '/templates/example/body.scss'
         }
       ]
     }
@@ -57,11 +57,6 @@ export default {
   },
   methods: {
     render() {
-      this.getFiles()
-      // console.log({
-      //   html: this.data.html,
-      //   css: this.data.css
-      // })
       return axios.post('http://localhost:3636', {
         template: this.data.html,
         css: this.data.css
@@ -74,15 +69,6 @@ export default {
         this.content = message
       })
     },
-    getFiles() {
-      return axios.get('http://localhost:3636')
-        .then(response => {
-          this.tree = response.data
-        })
-        .catch(err => {
-          console.warn(err)
-        })
-    },
     loadFile(file_path) {
       const path_split = file_path.split('/')
       const path = path_split.slice(1).join('/')
@@ -93,7 +79,7 @@ export default {
         title: file_name,
         mode: file_type,
         model: file_type,
-        remote: `http://localhost:3636/${path}`
+        remote: `/${path}`
       })
     }
   },
