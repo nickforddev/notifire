@@ -2,7 +2,7 @@
   <main>
     <tree-view @loadFile="loadFile" />
     
-    <div class="editor-content-container">
+    <div class="editor-content-container" :style="[editor_content_styles]">
       <editor-group :editors="editors" @input="render" v-model="data" />
 
       <div class="content">
@@ -17,6 +17,7 @@
 <script>
 import _ from 'lodash'
 import axios from 'axios'
+import { mapGetters } from 'vuex'
 import config from '@/config'
 import treeView from '@/components/tree-view'
 import editorGroup from '@/components/editor-group'
@@ -27,7 +28,6 @@ export default {
     return {
       data: {},
       tree: {},
-      tree_width: 300,
       content: '',
       editors: [
         {
@@ -45,14 +45,21 @@ export default {
       ]
     }
   },
+  computed: {
+    editor_content_styles() {
+      return {
+        width: `calc(100% - ${this.sidebar_width}px)`
+      }
+    },
+    ...mapGetters([
+      'sidebar_width'
+    ])
+  },
   watch: {
     content(value) {
       const iframe = this.$refs.iframe
       const doc = iframe.contentDocument || iframe.contentWindow.document
       doc.body.innerHTML = value
-    },
-    data(value) {
-      console.log({value})
     }
   },
   methods: {
@@ -80,8 +87,7 @@ export default {
         return editor.remote === `/${path}`
       })
 
-      console.log(match)
-
+      // console.log(match)
       if (match) return
 
       this.editors.push({
@@ -101,7 +107,7 @@ export default {
 
 <style scoped lang="scss">
 .editor-content-container {
-  width: calc(100% - 300px);
+  // width: calc(100% - 300px);
   float: left;
 }
 .content {

@@ -18,12 +18,16 @@
 <script>
 import axios from 'axios'
 import config from '@/config'
+import app from '@/main'
+import { mapGetters } from 'vuex'
+
+console.log(app)
 
 export default {
   name: 'tree-view',
   data() {
     return {
-      width: 300,
+      // width: 300,
       mousedown: false,
       data: {}
     }
@@ -37,9 +41,12 @@ export default {
     },
     tree_styles() {
       return {
-        width: this.width + 'px'
+        width: this.sidebar_width + 'px'
       }
-    }
+    },
+    ...mapGetters([
+      'sidebar_width'
+    ])
   },
   methods: {
     getFiles() {
@@ -71,7 +78,7 @@ export default {
       this.$emit('loadFile', file_path)
     },
     dragging(e) {
-      this.width = e.clientX + 5
+      app.$store.dispatch('set_sidebar_width', e.clientX + 5)
     },
     dragStart(e) {
       document.body.addEventListener('mousemove', this.dragging)
