@@ -34,13 +34,13 @@ export default {
           model: 'html',
           title: 'template',
           mode: 'handlebars',
-          remote: '/templates/example/body.html'
+          remote: '/templates/example/email/index.html'
         },
         {
           model: 'css',
           title: 'styles',
           mode: 'scss',
-          remote: '/templates/example/body.scss'
+          remote: '/templates/example/email/style.scss'
         }
       ]
     }
