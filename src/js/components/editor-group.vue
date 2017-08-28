@@ -2,12 +2,13 @@
   <div class="editor-group">
     <editor
       v-for="editor in editors"
-      :key="editor.title"
       v-model="data[editor.model]"
+      :key="editor.title"
       :title="editor.title"
       :mode="editor.mode"
       :remote="editor.remote"
       @input="debounceInput"
+      @close="closeEditor"
     />
     <div class="clear"></div>
   </div>
@@ -28,7 +29,7 @@ export default {
       data: {}
     }
   },
-  mounted() {
+  async mounted() {
     this.setHeights()
   },
   watch: {
@@ -50,6 +51,16 @@ export default {
         $editor.style.height = `${height}%`
       })
       window.dispatchEvent(new Event('resize'))
+    },
+    closeEditor(_editor) {
+      this.editors.map((editor, index) => {
+        if (editor.remote === _editor.remote) {
+          this.editors.splice(index, 1)
+        }
+      })
+    },
+    removeAllEditors() {
+      this.editors = []
     }
   },
   components: {
@@ -59,6 +70,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '~%/modules/colors';
+
 $divider-height: 20px;
 $divider-background: #333;
 
@@ -66,6 +79,7 @@ $divider-background: #333;
   position: relative;
   width: 50%;
   height: 100vh;
+  background-color: $color-page-background;
   float: left;
 
   .editor-panel {

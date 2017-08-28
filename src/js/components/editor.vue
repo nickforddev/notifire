@@ -1,8 +1,10 @@
 <template>
   <div class="editor-container">
+    <loading v-if="loading" />
     <div class="header">
       <div class="title">{{ this.title }}</div>
       <div class="actions">
+        <button @click="close">Close</button>
         <button @click="save" v-shortkey="['ctrl', 's']" @shortkey="save">Save</button>
       </div>
     </div>
@@ -26,8 +28,8 @@ export default {
   },
   data() {
     return {
+      loading: true,
       content: this.value || '',
-      interval: null,
       editor: null
     }
   },
@@ -37,6 +39,7 @@ export default {
     }
   },
   async mounted() {
+    console.log(this.content)
     this.initEditor()
     if (this.remote) {
       await this.fetch()
@@ -81,11 +84,10 @@ export default {
       this.editor.setValue(this.content)
       this.editor.clearSelection()
     },
-    fetch() {
-      return axios.get(this.url)
-        .then(response => {
-          this.setValue(response.data)
-        })
+    async fetch() {
+      const { data } = await axios.get(this.url)
+      this.setValue(data)
+      this.loading = false
     },
     save() {
       return axios.put(this.url, {
@@ -93,6 +95,11 @@ export default {
       }).then(() => {
         alert(`${this.title} saved successfully`)
       })
+    },
+    close() {
+      // console.log('close', this)
+      this.$emit('close', this)
+      this.$destroy()
     }
   }
 }
@@ -104,6 +111,7 @@ $header-color: white;
 $header-background: #3d3d3d;
 
 .editor-container {
+  position: relative;
   height: 100%;
 
   .editor {

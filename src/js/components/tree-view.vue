@@ -1,6 +1,17 @@
 <template>
-  <div class="tree-view">
-    <tree-item v-for="file in files" :key="file.name" :data="file" @loadFile="emitLoad" />
+  <div class="tree-view" :style="[tree_styles]">
+    <h3>Files</h3>
+    <tree-item
+      v-for="file in files"
+      :key="file.name"
+      :data="file"
+      :level="0"
+      @loadFile="emitLoad"
+    />
+    <div
+      class="divider vertical"
+      @mousedown.prevent="dragStart"
+    />
   </div>
 </template>
 
@@ -10,18 +21,25 @@ import config from '@/config'
 
 export default {
   name: 'tree-view',
-  computed: {
-    files() {
-      return this.processFolder(this.data)
-    }
-  },
   data() {
     return {
+      width: 300,
+      mousedown: false,
       data: {}
     }
   },
   mounted() {
     this.getFiles()
+  },
+  computed: {
+    files() {
+      return this.processFolder(this.data)
+    },
+    tree_styles() {
+      return {
+        width: this.width + 'px'
+      }
+    }
   },
   methods: {
     getFiles() {
@@ -51,16 +69,50 @@ export default {
     },
     emitLoad(file_path) {
       this.$emit('loadFile', file_path)
+    },
+    dragging(e) {
+      this.width = e.clientX + 5
+    },
+    dragStart(e) {
+      document.body.addEventListener('mousemove', this.dragging)
+      document.body.addEventListener('mouseup', this.dragStop)
+    },
+    dragStop() {
+      document.body.removeEventListener('mousemove', this.dragging)
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-  .tree-view {
-    text-align: left;
-    height: 100vh;
-    width: 300px;
-    float: left;
+@import '~%/modules/colors';
+
+.tree-view {
+  position: relative;
+  text-align: left;
+  height: 100vh;
+  width: 300px;
+  float: left;
+  background: $color-sidebar-background;
+  color: $color-sidebar-color;
+  overflow: scroll;
+
+  h3 {
+    padding-left: 15px;
   }
+}
+
+.divider {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 10px;
+  background: $color-divider-background;
+  z-index: 9;
+
+  &:hover {
+    cursor: col-resize;
+  }
+}
 </style>

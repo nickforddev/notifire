@@ -4,9 +4,13 @@ import Vue from 'vue'
 import App from './app'
 import router from './router'
 import VueShortkey from 'vue-shortkey'
+import Loading from '@/components/loading'
 import TreeItem from '@/components/tree-item'
 
+import '../scss/styles.scss'
+
 const components = [
+  Loading,
   TreeItem
 ]
 

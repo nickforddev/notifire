@@ -6,9 +6,7 @@
       <editor-group :editors="editors" @input="render" v-model="data" />
 
       <div class="content">
-        <iframe
-          ref="iframe"
-          frameborder="0" />
+        <iframe ref="iframe" />
       </div>
       <div class="clear"></div>
     </div>
@@ -19,6 +17,7 @@
 <script>
 import _ from 'lodash'
 import axios from 'axios'
+import config from '@/config'
 import treeView from '@/components/tree-view'
 import editorGroup from '@/components/editor-group'
 
@@ -28,6 +27,7 @@ export default {
     return {
       data: {},
       tree: {},
+      tree_width: 300,
       content: '',
       editors: [
         {
@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     render() {
-      return axios.post('http://localhost:3636', {
+      return axios.post(config.api, {
         template: this.data.html,
         css: this.data.css
       })
@@ -75,6 +75,15 @@ export default {
       const file_name = path_split[path_split.length - 1]
       const file_name_split = file_name.split('.')
       const file_type = file_name_split[file_name_split.length - 1]
+
+      const match = this.editors.find(editor => {
+        return editor.remote === `/${path}`
+      })
+
+      console.log(match)
+
+      if (match) return
+
       this.editors.push({
         title: file_name,
         mode: file_type,
@@ -104,6 +113,7 @@ export default {
   iframe {
     width: 100%;
     height: 100%;
+    border-width: 0;
   }
 }
 .actions {
