@@ -118,6 +118,8 @@ export default {
   padding: 6px;
   margin: 0;
   font-size: 12px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   &:hover {
     background: $color-sidebar-hover;

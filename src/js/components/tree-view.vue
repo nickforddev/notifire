@@ -27,7 +27,6 @@ export default {
   name: 'tree-view',
   data() {
     return {
-      // width: 300,
       mousedown: false,
       data: {}
     }
@@ -102,7 +101,9 @@ export default {
   float: left;
   background: $color-sidebar-background;
   color: $color-sidebar-color;
-  overflow: scroll;
+  white-space: nowrap;
+  overflow-y: scroll;
+  overflow-x: hidden;
 
   h3 {
     padding-left: 15px;
@@ -115,7 +116,7 @@ export default {
   right: 0;
   bottom: 0;
   width: 10px;
-  background: $color-divider-background;
+  // background: $color-divider-background;
   z-index: 9;
 
   &:hover {
