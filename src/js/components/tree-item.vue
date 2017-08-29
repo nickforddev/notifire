@@ -30,7 +30,7 @@
         v-for="(model, index) in files"
         :key="index" :data="model"
         :level="next_level"
-        @loadFile="emitLoad"
+        @event="event"
       />
     </div>
     <div v-else-if="isTemplatesFolder(file) && open">
@@ -38,7 +38,6 @@
         v-for="(model, index) in files"
         :key="index" :data="model"
         :level="next_level"
-        @loadFile="emitLoad"
         @event="event"
       />
     </div>
@@ -117,19 +116,42 @@ export default {
     },
     loadFile() {
       const file_path = this.file.data
-      this.$emit('loadFile', file_path)
-    },
-    emitLoad(file_path) {
-      this.$emit('loadFile', file_path)
+      this.$emit('event', 'loadFile', file_path)
     },
     event(event, ...args) {
       this.$emit('event', event, ...args)
     },
     create(type) {
-      const name = prompt(`Please enter a name for your new ${type}.`)
+      this[`create_${type}`]()
+    },
+    create_templates() {
+      const name = prompt(`Please enter a name for your new template.`)
+      if (!name) return
       axios.post(`${config.api}/templates`, { name })
         .then(() => {
-          this.$emit('refresh')
+          this.$emit('event', 'refresh')
+        })
+        .catch(error => {
+          alert(error)
+        })
+    },
+    create_partials() {
+      const name = prompt(`Please enter a name for your new partial.`)
+      if (!name) return
+      axios.post(`${config.api}/partials`, { name })
+        .then(() => {
+          this.$emit('event', 'refresh')
+        })
+        .catch(error => {
+          alert(error)
+        })
+    },
+    create_scss() {
+      const name = prompt(`Please enter a name for your new scss module.`)
+      if (!name) return
+      axios.post(`${config.api}/scss`, { name })
+        .then(() => {
+          this.$emit('event', 'refresh')
         })
         .catch(error => {
           alert(error)

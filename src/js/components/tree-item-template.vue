@@ -18,7 +18,6 @@
         v-for="(model, index) in files"
         :key="index" :data="model"
         :level="next_level"
-        @loadFile="emitLoad"
         @event="event"
       />
     </div>
@@ -94,21 +93,17 @@ export default {
     },
     loadFile() {
       const file_path = this.file.data
-      this.$emit('loadFile', file_path)
-    },
-    emitLoad(file_path) {
-      this.$emit('loadFile', file_path)
+      this.$emit('event', 'loadFile', file_path)
     },
     event(event, ...args) {
       this.$emit('event', event, ...args)
     },
     edit() {
-      console.log('edit')
       this.open = true
     },
     remove() {
-      console.log(this.file.name)
-      this.$emit('event', 'remove', this.file.name)
+      const path = `${this.$parent.file.name}/${this.file.name}`
+      this.$emit('event', 'remove', path)
     }
   }
 }

@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     render() {
-      return axios.post(config.api, {
+      return axios.post(`${config.api}/render/template`, {
         template: this.data.html,
         css: this.data.css
       })

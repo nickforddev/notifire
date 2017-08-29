@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import config from '@/config'
 import axios from 'axios'
 import ace from 'brace'
@@ -73,11 +74,15 @@ export default {
     initEventListeners(editor) {
       this.editor.on('change', () => {
         const content = this.editor.getValue()
-        this.$emit('input', content)
         this.content = content
+        this.emitChange()
         // this.contentBackup = content
       })
     },
+    emitChange: _.debounce(function() {
+      this.$emit('input', this.content)
+      this.save()
+    }, 900),
     setValue(value) {
       if (typeof value === 'object') value = JSON.stringify(value, null, '\t')
       this.content = value
@@ -93,7 +98,8 @@ export default {
       return axios.put(this.url, {
         content: this.content
       }).then(() => {
-        alert(`${this.title} saved successfully`)
+        console.log(`${this.title} saved successfully`)
+        // alert(`${this.title} saved successfully`)
       })
     },
     close() {

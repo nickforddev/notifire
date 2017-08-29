@@ -4,6 +4,7 @@
   "description": "A Vue.js project",
   "author": "Nick Ford <nickforddesign@gmail.com>",
   "private": true,
+  "repository": "https://github.com/nickforddesign/notification_designer_frontend",
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",

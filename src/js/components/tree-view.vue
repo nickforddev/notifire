@@ -6,7 +6,6 @@
       :key="file.name"
       :data="file"
       :level="0"
-      @loadFile="emitLoad"
       @event="handleEvent"
     />
     <div
@@ -74,7 +73,7 @@ export default {
       }
       return output
     },
-    emitLoad(file_path) {
+    loadFile(file_path) {
       this.$emit('loadFile', file_path)
     },
     handleEvent(event, ...args) {
@@ -83,10 +82,10 @@ export default {
     refresh() {
       this.getFiles()
     },
-    remove(template_name) {
-      const accepted = confirm(`Are you sure you want to delete "${template_name}"?`)
+    remove(path) {
+      const accepted = confirm(`Are you sure you want to delete "${path}"?`)
       if (accepted) {
-        axios.delete(`${config.api}/templates/${template_name}`)
+        axios.delete(`${config.api}/${path}`)
           .then(() => {
             this.getFiles()
           })
