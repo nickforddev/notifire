@@ -1,22 +1,6 @@
 <template>
   <div :class="['tree-item-container', class_name]">
-    <div 
-      v-if="isTemplatesFolder(file)"
-      :class="['tree-item', 'templates-folder', file_class_name]"
-      :style="[styles]"
-      @click.self="clickAction">
-        <div class="leader">
-          <div v-if="file.type === 'folder'" class="caret"></div>
-        </div>
-        <div class="leader icon">
-          <img :src="icon_src" alt="css">
-        </div>
-        {{ file.name }}
-        <div class="actions">
-          <button @click="create(file.name)">+</button>
-        </div>
-    </div>
-    <div v-else :class="['tree-item', file_class_name]" :style="[styles]" @click="clickAction">
+    <div :class="['tree-item', file_class_name]" :style="[styles]" @click.self="clickAction">
       <div class="leader">
         <div v-if="file.type === 'folder'" class="caret"></div>
       </div>
@@ -24,17 +8,12 @@
         <img :src="icon_src" alt="css">
       </div>
       {{ file.name }}
+      <div class="actions">
+        <button @click="edit">Edit</button>
+      </div>
     </div>
-    <div v-if="!isTemplatesFolder(file) && open">
+    <div v-if="open">
       <tree-item
-        v-for="(model, index) in files"
-        :key="index" :data="model"
-        :level="next_level"
-        @loadFile="emitLoad"
-      />
-    </div>
-    <div v-else-if="isTemplatesFolder(file) && open">
-      <tree-item-template
         v-for="(model, index) in files"
         :key="index" :data="model"
         :level="next_level"
@@ -46,14 +25,14 @@
 
 <script>
 export default {
-  name: 'tree-item',
+  name: 'tree-item-template',
   props: {
     data: Object,
     level: Number
   },
   data() {
     return {
-      open: true
+      open: false
     }
   },
   computed: {
@@ -101,7 +80,7 @@ export default {
   },
   methods: {
     isTemplatesFolder(file) {
-      return file.type === 'folder' && ['templates', 'partials', 'scss'].includes(file.name)
+      return file.type === 'folder' && file.name === 'templates'
     },
     toggle() {
       this.open = !this.open
@@ -118,8 +97,9 @@ export default {
     emitLoad(file_path) {
       this.$emit('loadFile', file_path)
     },
-    create(type) {
-      prompt(`Please enter a name for your new ${type}.`)
+    edit() {
+      console.log('edit')
+      this.open = true
     }
   }
 }

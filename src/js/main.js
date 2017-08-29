@@ -5,12 +5,14 @@ import store from '@/store'
 import VueShortkey from 'vue-shortkey'
 import Loading from '@/components/loading'
 import TreeItem from '@/components/tree-item'
+import TreeItemTemplate from '@/components/tree-item-template'
 
 import '../scss/styles.scss'
 
 const components = [
   Loading,
-  TreeItem
+  TreeItem,
+  TreeItemTemplate
 ]
 
 const install = (Vue) => {
