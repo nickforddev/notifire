@@ -39,12 +39,16 @@
         :key="index" :data="model"
         :level="next_level"
         @loadFile="emitLoad"
+        @event="event"
       />
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import config from '@/config'
+
 export default {
   name: 'tree-item',
   props: {
@@ -118,8 +122,18 @@ export default {
     emitLoad(file_path) {
       this.$emit('loadFile', file_path)
     },
+    event(event, ...args) {
+      this.$emit('event', event, ...args)
+    },
     create(type) {
-      prompt(`Please enter a name for your new ${type}.`)
+      const name = prompt(`Please enter a name for your new ${type}.`)
+      axios.post(`${config.api}/templates`, { name })
+        .then(() => {
+          this.$emit('refresh')
+        })
+        .catch(error => {
+          alert(error)
+        })
     }
   }
 }

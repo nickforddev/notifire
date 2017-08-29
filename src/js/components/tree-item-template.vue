@@ -9,6 +9,7 @@
       </div>
       {{ file.name }}
       <div class="actions">
+        <button @click="remove">Delete</button>
         <button @click="edit">Edit</button>
       </div>
     </div>
@@ -18,6 +19,7 @@
         :key="index" :data="model"
         :level="next_level"
         @loadFile="emitLoad"
+        @event="event"
       />
     </div>
   </div>
@@ -97,9 +99,16 @@ export default {
     emitLoad(file_path) {
       this.$emit('loadFile', file_path)
     },
+    event(event, ...args) {
+      this.$emit('event', event, ...args)
+    },
     edit() {
       console.log('edit')
       this.open = true
+    },
+    remove() {
+      console.log(this.file.name)
+      this.$emit('event', 'remove', this.file.name)
     }
   }
 }

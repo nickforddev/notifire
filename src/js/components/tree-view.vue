@@ -7,6 +7,7 @@
       :data="file"
       :level="0"
       @loadFile="emitLoad"
+      @event="handleEvent"
     />
     <div
       class="divider vertical"
@@ -75,6 +76,21 @@ export default {
     },
     emitLoad(file_path) {
       this.$emit('loadFile', file_path)
+    },
+    handleEvent(event, ...args) {
+      this[event](...args)
+    },
+    refresh() {
+      this.getFiles()
+    },
+    remove(template_name) {
+      const accepted = confirm(`Are you sure you want to delete "${template_name}"?`)
+      if (accepted) {
+        axios.delete(`${config.api}/templates/${template_name}`)
+          .then(() => {
+            this.getFiles()
+          })
+      }
     },
     dragging(e) {
       app.$store.dispatch('set_sidebar_width', e.clientX + 5)
