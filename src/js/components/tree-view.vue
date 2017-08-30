@@ -21,8 +21,6 @@ import config from '@/config'
 import app from '@/main'
 import { mapGetters } from 'vuex'
 
-console.log(app)
-
 export default {
   name: 'tree-view',
   data() {
@@ -35,43 +33,19 @@ export default {
     this.getFiles()
   },
   computed: {
-    files() {
-      return this.processFolder(this.data)
-    },
     tree_styles() {
       return {
         width: this.sidebar_width + 'px'
       }
     },
     ...mapGetters([
+      'files',
       'sidebar_width'
     ])
   },
   methods: {
     getFiles() {
-      return axios.get(config.api)
-        .then(response => {
-          this.data = response.data.data
-        })
-        .catch(err => {
-          console.warn(err)
-        })
-    },
-    processFolder(object) {
-      let output = []
-      for (let key in object) {
-        let file = {}
-        file.name = key
-        if (typeof object[key] === 'string') {
-          file.type = 'file'
-          file.data = object[key]
-        } else {
-          file.type = 'folder'
-          file.data = this.processFolder(object[key])
-        }
-        output.push(file)
-      }
-      return output
+      this.$store.dispatch('get_files')
     },
     loadFile(file_path) {
       this.$emit('loadFile', file_path)

@@ -29,6 +29,10 @@ export default {
       data: {},
       tree: {},
       content: '',
+      editor_group: {
+        type: 'templates',
+        path: 'templates/example'
+      },
       editors: [
         {
           model: 'html',

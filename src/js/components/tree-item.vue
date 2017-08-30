@@ -28,7 +28,8 @@
     <div v-if="!isTemplatesFolder(file) && open">
       <tree-item
         v-for="(model, index) in files"
-        :key="index" :data="model"
+        :key="index"
+        :data="model"
         :level="next_level"
         @event="event"
       />
@@ -36,7 +37,8 @@
     <div v-else-if="isTemplatesFolder(file) && open">
       <tree-item-template
         v-for="(model, index) in files"
-        :key="index" :data="model"
+        :key="index"
+        :data="model"
         :level="next_level"
         @event="event"
       />
@@ -51,7 +53,7 @@ import config from '@/config'
 export default {
   name: 'tree-item',
   props: {
-    data: Object,
+    data: [Object, Array],
     level: Number
   },
   data() {

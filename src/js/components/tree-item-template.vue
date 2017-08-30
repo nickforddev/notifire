@@ -16,7 +16,8 @@
     <div v-if="open">
       <tree-item
         v-for="(model, index) in files"
-        :key="index" :data="model"
+        :key="index"
+        :data="model"
         :level="next_level"
         @event="event"
       />
