@@ -1,5 +1,5 @@
 <template>
-  <div :class="['tree-item-container', class_name]">
+  <div :class="['tree-item-container', class_name, is_active]">
     <div 
       v-if="isTemplatesFolder(file)"
       :class="['tree-item', 'templates-folder', file_class_name]"
@@ -24,6 +24,9 @@
         <img :src="icon_src" alt="css">
       </div>
       {{ file.name }}
+      <div v-if="template" class="actions">
+        <button @click="selectGroup">Select</button>
+      </div>
     </div>
     <div v-if="!isTemplatesFolder(file) && open">
       <tree-item
@@ -49,12 +52,14 @@
 <script>
 import axios from 'axios'
 import config from '@/config'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'tree-item',
   props: {
     data: [Object, Array],
-    level: Number
+    level: Number,
+    template: String
   },
   data() {
     return {
@@ -85,6 +90,11 @@ export default {
           : 'folder closed'
         : 'file'
     },
+    is_active() {
+      if (this.active_files.includes(this.file.path) || this.active_editor_group === this.file.path) {
+        return 'active'
+      }
+    },
     file_class_name() {
       return this.file.type
     },
@@ -102,7 +112,11 @@ export default {
         type = 'folder'
       }
       return `/static/svg/${type}.svg`
-    }
+    },
+    ...mapGetters([
+      'active_editor_group',
+      'active_files'
+    ])
   },
   methods: {
     isTemplatesFolder(file) {
@@ -117,14 +131,26 @@ export default {
         : this.loadFile()
     },
     loadFile() {
-      const file_path = this.file.data
-      this.$emit('event', 'loadFile', file_path)
+      this.$emit('event', 'loadFile', this.file.path)
     },
     event(event, ...args) {
       this.$emit('event', event, ...args)
     },
     create(type) {
       this[`create_${type}`]()
+    },
+    selectGroup() {
+      if (this.active_editor_group !== this.file.path) {
+        const accept = this.active_editor_group !== false
+          ? confirm('Opening a new template will cause the current one to close, do you want to continue?')
+          : true
+        if (accept) {
+          this.$store.dispatch('set_editor_group', {
+            type: 'email',
+            path: this.file.path
+          })
+        }
+      }
     },
     create_templates() {
       const name = prompt(`Please enter a name for your new template.`)
@@ -180,6 +206,10 @@ $font-size: 10px;
   &:hover {
     background: $color-sidebar-hover;
     cursor: pointer;
+  }
+
+  .active & {
+    background: $color-sidebar-selected;
   }
 }
 .caret {

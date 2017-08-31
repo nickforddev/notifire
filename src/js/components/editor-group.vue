@@ -6,7 +6,7 @@
       :key="editor.title"
       :title="editor.title"
       :mode="editor.mode"
-      :remote="editor.remote"
+      :path="editor.path"
       @input="debounceInput"
       @close="closeEditor"
     />
@@ -17,23 +17,32 @@
 <script>
 import _ from 'lodash'
 import editor from '@/components/editor'
-import { sleep } from '@/utils'
+import { sleep, pathToData } from '@/utils'
+import { mapGetters } from 'vuex'
 
 export default {
-  name: 'hello',
-  props: {
-    editors: Array
-  },
+  name: 'editor-group',
   data () {
     return {
       data: {}
     }
   },
+  computed: {
+    editors() {
+      return this.active_files.map(path => {
+        return this.getDefaults(path)
+      })
+    },
+    ...mapGetters([
+      'files',
+      'active_files'
+    ])
+  },
   async mounted() {
     this.setHeights()
   },
   watch: {
-    editors() {
+    editors(val) {
       this.setHeights()
     }
   },
@@ -41,9 +50,20 @@ export default {
     debounceInput: _.debounce(function() {
       this.$emit('input', this.data)
     }, 900),
+    getDefaults(path) {
+      const data = pathToData(path, this.files)
+      const mode = data.ext === 'html'
+        ? 'handlebars'
+        : data.ext
+      return {
+        title: data.name,
+        model: data.ext,
+        mode,
+        path
+      }
+    },
     async setHeights() {
       await sleep(10)
-
       const editor_count = this.$el.querySelectorAll('.editor').length
       const height = 100 / editor_count
       const $editors = this.$el.querySelectorAll('.editor-container')
@@ -52,12 +72,8 @@ export default {
       })
       window.dispatchEvent(new Event('resize'))
     },
-    closeEditor(_editor) {
-      this.editors.map((editor, index) => {
-        if (editor.remote === _editor.remote) {
-          this.editors.splice(index, 1)
-        }
-      })
+    closeEditor(editor) {
+      this.$store.dispatch('close_editor', editor)
     },
     removeAllEditors() {
       this.editors = []

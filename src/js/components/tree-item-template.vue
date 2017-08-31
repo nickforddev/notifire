@@ -19,6 +19,7 @@
         :key="index"
         :data="model"
         :level="next_level"
+        :template="file.name"
         @event="event"
       />
     </div>

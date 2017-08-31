@@ -25,7 +25,7 @@ export default {
     value: String,
     mode: String,
     title: String,
-    remote: String
+    path: String
   },
   data() {
     return {
@@ -36,15 +36,18 @@ export default {
   },
   computed: {
     url() {
-      return `${config.api}/${this.remote}`
+      return `${config.api}/${this.path}`
     }
   },
   async mounted() {
-    console.log(this.content)
+    // console.log(this.content)
     this.initEditor()
-    if (this.remote) {
+    if (this.path) {
       await this.fetch()
     }
+  },
+  beforeDestroy() {
+    this.editor.destroy()
   },
   methods: {
     initEditor() {
@@ -103,8 +106,7 @@ export default {
       })
     },
     close() {
-      // console.log('close', this)
-      this.$emit('close', this)
+      this.$emit('close', this.remote)
       this.$destroy()
     }
   }

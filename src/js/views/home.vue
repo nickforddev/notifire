@@ -1,9 +1,9 @@
 <template>
   <main>
-    <tree-view @loadFile="loadFile" />
+    <tree-view />
     
     <div class="editor-content-container" :style="[editor_content_styles]">
-      <editor-group :editors="editors" @input="render" v-model="data" />
+      <editor-group @input="render" v-model="data" />
 
       <div class="content">
         <iframe ref="iframe" />
@@ -27,26 +27,7 @@ export default {
   data () {
     return {
       data: {},
-      tree: {},
-      content: '',
-      editor_group: {
-        type: 'templates',
-        path: 'templates/example'
-      },
-      editors: [
-        {
-          model: 'html',
-          title: 'template',
-          mode: 'handlebars',
-          remote: '/templates/example/email/index.html'
-        },
-        {
-          model: 'css',
-          title: 'styles',
-          mode: 'scss',
-          remote: '/templates/example/email/style.scss'
-        }
-      ]
+      content: ''
     }
   },
   computed: {
@@ -56,11 +37,12 @@ export default {
       }
     },
     ...mapGetters([
+      'renderer_html',
       'sidebar_width'
     ])
   },
   watch: {
-    content(value) {
+    renderer_html(value) {
       const iframe = this.$refs.iframe
       const doc = iframe.contentDocument || iframe.contentWindow.document
       doc.body.innerHTML = value
@@ -73,32 +55,11 @@ export default {
         css: this.data.css
       })
       .then(response => {
-        this.content = response.data
+        this.$store.dispatch('set_renderer_html', response.data)
       })
       .catch(error => {
         const message = _.get(error, 'response.data') || 'Could not connect with the server'
         this.content = message
-      })
-    },
-    loadFile(file_path) {
-      const path_split = file_path.split('/')
-      const path = path_split.slice(1).join('/')
-      const file_name = path_split[path_split.length - 1]
-      const file_name_split = file_name.split('.')
-      const file_type = file_name_split[file_name_split.length - 1]
-
-      const match = this.editors.find(editor => {
-        return editor.remote === `/${path}`
-      })
-
-      // console.log(match)
-      if (match) return
-
-      this.editors.push({
-        title: file_name,
-        mode: file_type,
-        model: file_type,
-        remote: `/${path}`
       })
     }
   },

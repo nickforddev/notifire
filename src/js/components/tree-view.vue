@@ -18,7 +18,7 @@
 <script>
 import axios from 'axios'
 import config from '@/config'
-import app from '@/main'
+// import app from '@/main'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -48,7 +48,9 @@ export default {
       this.$store.dispatch('get_files')
     },
     loadFile(file_path) {
-      this.$emit('loadFile', file_path)
+      // console.log({file_path})
+      this.$store.dispatch('add_editor', file_path)
+      // this.$emit('loadFile', file_path)
     },
     handleEvent(event, ...args) {
       this[event](...args)
@@ -66,7 +68,7 @@ export default {
       }
     },
     dragging(e) {
-      app.$store.dispatch('set_sidebar_width', e.clientX + 5)
+      this.$store.dispatch('set_sidebar_width', e.clientX + 5)
     },
     dragStart(e) {
       document.body.addEventListener('mousemove', this.dragging)
