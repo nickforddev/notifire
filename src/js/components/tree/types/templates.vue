@@ -5,7 +5,7 @@
       :key="file.name"
       :data="file"
       :level="0"
-      @event="handleEvent"
+      :open="isOpen(file.name)"
     />
   </div>
 </template>
@@ -17,15 +17,27 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'globals',
+  data() {
+    return {
+      open_folder: ''
+    }
+  },
   computed: {
     ...mapGetters([
       'files'
     ])
   },
   methods: {
-    handleEvent() {
-
+    isOpen(name) {
+      return name === this.open_folder
+    },
+    setOpenFolder(name) {
+      console.log('temapltes', name)
+      this.open_folder = name
     }
+    // handleEvent() {
+
+    // }
   }
 }
 </script>

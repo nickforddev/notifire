@@ -1,6 +1,6 @@
 <template>
   <div :class="['tree-item-container', class_name]">
-    <div :class="['tree-item', file_class_name]" :style="[styles]" @click.self="clickAction">
+    <div :class="['tree-item', file_class_name]" @click.self="clickAction">
       <div class="leader">
         <div v-if="file.type === 'folder'" class="caret"></div>
       </div>
@@ -13,6 +13,7 @@
         <button @click="edit">Edit</button>
       </div>
     </div>
+
     <div v-if="open">
       <tree-item
         v-for="(model, index) in files"
@@ -31,12 +32,8 @@ export default {
   name: 'tree-item-template',
   props: {
     data: Object,
-    level: Number
-  },
-  data() {
-    return {
-      open: false
-    }
+    level: Number,
+    open: Boolean
   },
   computed: {
     next_level() {
@@ -65,11 +62,6 @@ export default {
     file_class_name() {
       return this.file.type
     },
-    styles() {
-      return {
-        'paddingLeft': this.next_level * 10 + 'px'
-      }
-    },
     icon_src() {
       let type
       if (this.file.type === 'file') {
@@ -82,11 +74,10 @@ export default {
     }
   },
   methods: {
-    isTemplatesFolder(file) {
-      return file.type === 'folder' && file.name === 'templates'
-    },
     toggle() {
-      this.open = !this.open
+      // console.log(this.file.name)
+      this.$parent.setOpenFolder(this.file.name)
+      // this.open = !this.open
     },
     clickAction() {
       this.file.type === 'folder'
@@ -117,7 +108,7 @@ $color-sidebar-templates-folder: #424952;
 $font-size: 10px;
 
 .tree-item {
-  padding: 4px;
+  padding: 4px 4px 4px 10px;
   margin: 0;
   font-size: $font-size;
   text-overflow: ellipsis;
