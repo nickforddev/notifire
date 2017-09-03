@@ -94,8 +94,7 @@ export default {
         : this.loadFile()
     },
     loadFile() {
-      const file_path = this.file.data
-      this.$emit('event', 'loadFile', file_path)
+      this.$emit('event', 'loadFile', this.file.path)
     },
     event(event, ...args) {
       this.$emit('event', event, ...args)

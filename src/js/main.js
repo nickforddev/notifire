@@ -3,16 +3,31 @@ import App from './app'
 import router from './router'
 import store from '@/store'
 import VueShortkey from 'vue-shortkey'
+
 import Loading from '@/components/loading'
-import TreeItem from '@/components/tree-item'
-import TreeItemTemplate from '@/components/tree-item-template'
+
+import TreeView from '@/components/tree/tree-view'
+import TreeGroup from '@/components/tree/tree-group'
+import TreeItem from '@/components/tree/tree-item'
+import TreeItemFile from '@/components/tree/tree-item-file'
+import TreeItemFolder from '@/components/tree/tree-item-folder'
+import TreeItemTemplate from '@/components/tree/tree-item-template'
+
+import ContentView from '@/components/content-view'
+import Renderer from '@/components/renderer'
 
 import '../scss/styles.scss'
 
 const components = [
   Loading,
+  TreeView,
+  TreeGroup,
   TreeItem,
-  TreeItemTemplate
+  TreeItemFile,
+  TreeItemFolder,
+  TreeItemTemplate,
+  ContentView,
+  Renderer
 ]
 
 const install = (Vue) => {

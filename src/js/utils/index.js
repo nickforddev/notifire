@@ -1,6 +1,9 @@
+import axios from 'axios'
+import config from '@/config'
+// axios.defaults.baseURL = config.api
 
 /**
- * Async timeout
+ * async timeout
  *
  * @async
  * @param {Number} ms    how long to sleep
@@ -11,6 +14,25 @@ export const sleep = (ms = 0) => {
 }
 
 /**
+ * xhr request
+ *
+ * @async
+ * @param {String} path    path for request
+ * @param {Object} config  axios config object
+ * @returns {Promise}
+ */
+export function Request (path = '', {
+  method = 'get',
+  data
+} = {}) {
+  return axios({
+    url: `${config.api}/${path}`,
+    method,
+    data
+  })
+}
+
+/**
  * get file metadata by path
  *
  * @param {String} path   path string
@@ -18,7 +40,9 @@ export const sleep = (ms = 0) => {
  * @returns {Object}      file metadata
  */
 export const pathToData = (path = '', files = []) => {
-  const data = recursiveArrayFind(path.split('/').slice(1), files)
+  const path_array = path.split('/')
+  const type = path_array.shift()
+  const data = recursiveArrayFind(path_array, files[type])
   return data
 }
 
@@ -34,7 +58,7 @@ function recursiveArrayFind (path_array = [], files = []) {
     const match = files.find(file => {
       return path_array[0] === file.name
     })
-    path_array = path_array.slice(1)
+    path_array.splice(0, 1)
     if (path_array.length && match) {
       return recursiveArrayFind(path_array, match.data)
     } else {

@@ -5,12 +5,14 @@
       <div class="title">{{ this.title }}</div>
       <div class="actions">
         <button @click="close">Close</button>
-        <button @click="save" v-shortkey="['ctrl', 's']" @shortkey="save">Save</button>
+        <button @click="save">Save</button>
       </div>
     </div>
     <div class="editor"></div>
   </div>
 </template>
+
+<!-- /////////////////////////////////////////////////////////////////////// -->
 
 <script>
 import _ from 'lodash'
@@ -40,7 +42,6 @@ export default {
     }
   },
   async mounted() {
-    // console.log(this.content)
     this.initEditor()
     if (this.path) {
       await this.fetch()
@@ -63,7 +64,6 @@ export default {
         })
       }
       this.editor.setOption('fontSize', '13px')
-      // this.editor.setOption('enableEmmet', true)
       this.editor.setTheme(`ace/theme/${theme}`)
       this.editor.$blockScrolling = Infinity
       this.editor.setValue(this.content)
@@ -79,7 +79,6 @@ export default {
         const content = this.editor.getValue()
         this.content = content
         this.emitChange()
-        // this.contentBackup = content
       })
     },
     emitChange: _.debounce(function() {
@@ -102,16 +101,18 @@ export default {
         content: this.content
       }).then(() => {
         console.log(`${this.title} saved successfully`)
-        // alert(`${this.title} saved successfully`)
       })
     },
     close() {
-      this.$emit('close', this.remote)
+      console.log('close')
+      this.$emit('close', this.path)
       this.$destroy()
     }
   }
 }
 </script>
+
+<!-- /////////////////////////////////////////////////////////////////////// -->
 
 <style scoped lang="scss">
 $header-height: 30px;
@@ -125,7 +126,6 @@ $header-background: #3d3d3d;
   .editor {
     height: calc(100% - #{$header-height});
     overflow: hidden;
-    // overflow: scroll;
   }
 
   .header {

@@ -14,10 +14,12 @@
   </div>
 </template>
 
+<!-- /////////////////////////////////////////////////////////////////////// -->
+
 <script>
 import _ from 'lodash'
 import editor from '@/components/editor'
-import { sleep, pathToData } from '@/utils'
+import { sleep, pathToData, Request } from '@/utils'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -35,7 +37,9 @@ export default {
     },
     ...mapGetters([
       'files',
-      'active_files'
+      'active_files',
+      'active_editor_group',
+      'active_editor_group_type'
     ])
   },
   async mounted() {
@@ -48,7 +52,7 @@ export default {
   },
   methods: {
     debounceInput: _.debounce(function() {
-      this.$emit('input', this.data)
+      this.render()
     }, 900),
     getDefaults(path) {
       const data = pathToData(path, this.files)
@@ -73,10 +77,29 @@ export default {
       window.dispatchEvent(new Event('resize'))
     },
     closeEditor(editor) {
+      console.log('close editor', editor)
       this.$store.dispatch('close_editor', editor)
     },
     removeAllEditors() {
       this.editors = []
+    },
+    render() {
+      const type = this.active_editor_group_type
+      return new Request(`render/${type}`, {
+        method: 'post',
+        data: {
+          path: this.active_editor_group
+        }
+      })
+      .then(response => {
+        this.$store.dispatch('set_renderer_type', type)
+        this.$store.dispatch('set_renderer_html', response.data)
+      })
+      .catch(error => {
+        const message = _.get(error, 'response.data') || 'Could not connect with the server'
+        this.$store.dispatch('set_renderer_html', message)
+        console.warn(message)
+      })
     }
   },
   components: {
@@ -84,6 +107,8 @@ export default {
   }
 }
 </script>
+
+<!-- /////////////////////////////////////////////////////////////////////// -->
 
 <style scoped lang="scss">
 @import '~%/modules/colors';

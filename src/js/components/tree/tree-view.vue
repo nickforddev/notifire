@@ -1,13 +1,30 @@
 <template>
   <div class="tree-view" :style="[tree_styles]">
     <h3>Files</h3>
-    <tree-item
-      v-for="file in files"
-      :key="file.name"
-      :data="file"
-      :level="0"
-      @event="handleEvent"
+
+    <tree-group
+      type="globals"
+      :add="false"
     />
+
+    <tree-group
+      type="styles"
+      :add="true"
+      :data="files.styles"
+    />
+
+    <tree-group
+      type="templates"
+      :add="true"
+      :data="files.templates"
+    />
+
+    <tree-group
+      type="partials"
+      :add="true"
+      :data="files.partials"
+    />
+
     <div
       class="divider vertical"
       @mousedown.prevent="dragStart"
@@ -15,18 +32,16 @@
   </div>
 </template>
 
+<!-- /////////////////////////////////////////////////////////////////////// -->
+
 <script>
-import axios from 'axios'
-import config from '@/config'
-// import app from '@/main'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'tree-view',
   data() {
     return {
-      mousedown: false,
-      data: {}
+      mousedown: false
     }
   },
   mounted() {
@@ -47,26 +62,6 @@ export default {
     getFiles() {
       this.$store.dispatch('get_files')
     },
-    loadFile(file_path) {
-      // console.log({file_path})
-      this.$store.dispatch('add_editor', file_path)
-      // this.$emit('loadFile', file_path)
-    },
-    handleEvent(event, ...args) {
-      this[event](...args)
-    },
-    refresh() {
-      this.getFiles()
-    },
-    remove(path) {
-      const accepted = confirm(`Are you sure you want to delete "${path}"?`)
-      if (accepted) {
-        axios.delete(`${config.api}/${path}`)
-          .then(() => {
-            this.getFiles()
-          })
-      }
-    },
     dragging(e) {
       this.$store.dispatch('set_sidebar_width', e.clientX + 5)
     },
@@ -80,6 +75,8 @@ export default {
   }
 }
 </script>
+
+<!-- /////////////////////////////////////////////////////////////////////// -->
 
 <style scoped lang="scss">
 @import '~%/modules/colors';
@@ -107,7 +104,6 @@ export default {
   right: 0;
   bottom: 0;
   width: 10px;
-  // background: $color-divider-background;
   z-index: 9;
 
   &:hover {
