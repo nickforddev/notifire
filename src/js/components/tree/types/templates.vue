@@ -6,6 +6,7 @@
       :data="file"
       :level="0"
       :open="isOpen(file.name)"
+      @event="handleEvent"
     />
   </div>
 </template>
@@ -32,12 +33,11 @@ export default {
       return name === this.open_folder
     },
     setOpenFolder(name) {
-      console.log('temapltes', name)
       this.open_folder = name
+    },
+    handleEvent(event, ...args) {
+      this.$emit('event', event, ...args)
     }
-    // handleEvent() {
-
-    // }
   }
 }
 </script>

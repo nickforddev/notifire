@@ -1,7 +1,7 @@
 <template>
   <div class="tree-group">
     <h3>{{ type }}
-      <button v-if="add" @click="addFile">+</button>
+      <button v-if="add" @click="addItem">+</button>
     </h3>
 
     <component :is="type" />
@@ -24,10 +24,11 @@ import Partials from './types/partials'
 import Globals from './types/globals'
 import Styles from './types/styles'
 
+import { Request } from '@/utils'
+
 export default {
   name: 'tree-group',
   props: {
-    // data: Array,
     type: String,
     add: Boolean
   },
@@ -37,25 +38,19 @@ export default {
     }
   },
   methods: {
-    // refresh() {
-    //   this.$store.dispatch('get_files')
-    // },
-    handleEvent(event, ...args) {
-      this[event](...args)
+    addItem() {
+      this[`add_${this.type}`]()
     },
-    addFile() {
-      console.log(this.type)
-    },
-    loadFile(type, file_path) {
-      this.$store.dispatch('add_editor', type, file_path)
-    },
-    async removeFile(path) {
-      const accepted = confirm(`Are you sure you want to delete "${path}"?`)
-      if (accepted) {
-        await new Request(path, {
-          method: 'delete'
+    async add_templates() {
+      const name = prompt('Please enter a name for your new template')
+      if (name) {
+        await new Request('templates', {
+          method: 'post',
+          data: {
+            name
+          }
         })
-        this.getFiles()
+        this.$store.dispatch('get_files')
       }
     }
   },

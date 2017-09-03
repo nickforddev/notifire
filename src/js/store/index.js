@@ -90,6 +90,11 @@ export default new Vuex.Store({
     close_editor({ commit }, file) {
       commit('CLOSE_EDITOR', file)
     },
+    remove_file({ commit }, path) {
+      return new Request(path, {
+        method: 'delete'
+      })
+    },
     async get_files({ commit }) {
       try {
         const response = await new Request('data')

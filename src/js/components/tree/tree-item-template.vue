@@ -1,8 +1,8 @@
 <template>
   <div :class="['tree-item-container', class_name]">
-    <div :class="['tree-item', file_class_name]" @click.self="clickAction">
+    <div :class="['tree-item', file_class_name]" @click.self="toggle">
       <div class="leader">
-        <div v-if="file.type === 'folder'" class="caret"></div>
+        <!-- <div v-if="file.type === 'folder'" class="caret"></div> -->
       </div>
       <div class="leader icon">
         <img :src="icon_src" alt="css">
@@ -10,7 +10,6 @@
       {{ file.name }}
       <div class="actions">
         <button @click="remove">Delete</button>
-        <button @click="edit">Edit</button>
       </div>
     </div>
 
@@ -21,7 +20,6 @@
         :data="model"
         :level="next_level"
         :template="file.name"
-        @event="event"
       />
     </div>
   </div>
@@ -35,6 +33,11 @@ export default {
     level: Number,
     open: Boolean
   },
+  data() {
+    return {
+      icon_src: '/static/svg/folder.svg'
+    }
+  },
   computed: {
     next_level() {
       return this.level + 1
@@ -43,59 +46,28 @@ export default {
       return this.data
     },
     files() {
-      return this.file.type === 'folder'
-        ? this.file.data
-        : []
-    },
-    button_label() {
-      return this.open
-        ? '-'
-        : '+'
+      return this.file.data
     },
     class_name() {
-      return this.file.type === 'folder'
-        ? this.open
-          ? 'folder open'
-          : 'folder closed'
-        : 'file'
+      return this.open
+        ? 'folder open'
+        : 'folder closed'
     },
     file_class_name() {
       return this.file.type
-    },
-    icon_src() {
-      let type
-      if (this.file.type === 'file') {
-        const filename_split = this.file.name.split('.')
-        type = filename_split[filename_split.length - 1]
-      } else {
-        type = 'folder'
-      }
-      return `/static/svg/${type}.svg`
     }
   },
   methods: {
     toggle() {
-      // console.log(this.file.name)
       this.$parent.setOpenFolder(this.file.name)
-      // this.open = !this.open
     },
-    clickAction() {
-      this.file.type === 'folder'
-        ? this.toggle()
-        : this.loadFile()
-    },
-    loadFile() {
-      this.$emit('event', 'loadFile', this.file.path)
-    },
-    event(event, ...args) {
-      this.$emit('event', event, ...args)
-    },
-    edit() {
-      this.open = true
-    },
-    remove() {
-      const path = `${this.$parent.file.name}/${this.file.name}`
-      this.$emit('event', 'remove', path)
+    async remove() {
+      const path = this.file.path
+      const accepted = confirm(`Are you sure you want to delete "${path}"?`)
+      if (accepted) {
+        await this.$store.dispatch('remove_file', path)
+        this.$store.dispatch('get_files')
+      }
     }
   }
 }
@@ -149,15 +121,15 @@ $font-size: 10px;
   position: absolute;
   right: 5px;
 }
-.templates-folder {
-  padding: 6px 6px 10px;
-  background: $color-sidebar-templates-folder;
-  margin-top: 6px;
-  border-top: 1px solid lighten($color-sidebar-templates-folder, 10%);
-  border-bottom: 1px solid darken($color-sidebar-templates-folder, 10%);
+// .templates-folder {
+//   padding: 6px 6px 10px;
+//   background: $color-sidebar-templates-folder;
+//   margin-top: 6px;
+//   border-top: 1px solid lighten($color-sidebar-templates-folder, 10%);
+//   border-bottom: 1px solid darken($color-sidebar-templates-folder, 10%);
 
-  &:hover {
-    background: lighten($color-sidebar-templates-folder, 10%);
-  }
-}
+//   &:hover {
+//     background: lighten($color-sidebar-templates-folder, 10%);
+//   }
+// }
 </style>

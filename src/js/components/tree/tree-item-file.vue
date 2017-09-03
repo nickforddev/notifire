@@ -3,7 +3,7 @@
     <div
       class="tree-item"
       :style="[styles]"
-      @click="loadFile">
+      @click="load">
 
       <div class="leader icon">
         <img :src="icon_src" :alt="file.type" />
@@ -50,7 +50,7 @@ export default {
     ])
   },
   methods: {
-    loadFile() {
+    load() {
       if (!this.active_files.includes(this.file.path)) {
         this.$store.dispatch('add_editor', this.file.path)
       } else {
