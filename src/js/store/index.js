@@ -51,6 +51,7 @@ export default new Vuex.Store({
       state.renderer_type = type
     },
     SET_EDITOR_GROUP(state, options) {
+      console.log({options})
       state.active_editor_group = options.path
       state.active_editor_group_type = options.type
     },

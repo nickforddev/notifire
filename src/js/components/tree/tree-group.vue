@@ -6,13 +6,6 @@
 
     <component :is="type" />
 
-    <!-- <tree-item
-      v-for="file in files"
-      :key="file.name"
-      :data="file"
-      :level="0"
-      @event="handleEvent"
-    /> -->
   </div>
 </template>
 
@@ -42,9 +35,18 @@ export default {
       this[`add_${this.type}`]()
     },
     async add_templates() {
-      const name = prompt('Please enter a name for your new template')
+      this.create_item('template')
+    },
+    async add_partials() {
+      this.create_item('partial')
+    },
+    async add_styles() {
+      this.create_item('stylesheet', 'scss')
+    },
+    async create_item(type = '', path = `${type}s`) {
+      const name = prompt(`Please enter a name for your new ${type}`)
       if (name) {
-        await new Request('templates', {
+        await new Request(path, {
           method: 'post',
           data: {
             name

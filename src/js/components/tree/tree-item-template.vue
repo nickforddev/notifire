@@ -14,18 +14,22 @@
     </div>
 
     <div v-if="open">
-      <tree-item
-        v-for="(model, index) in files"
-        :key="index"
-        :data="model"
-        :level="next_level"
-        :template="file.name"
-      />
+      <div v-for="(child, index) in children" :key="index" class="tree-item-children">
+        <tree-item
+          :data="child"
+          :level="next_level"
+          :template="file.name" />
+        <div class="actions">
+          <button @click="edit(child)">Edit</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'tree-item-template',
   props: {
@@ -45,7 +49,7 @@ export default {
     file() {
       return this.data
     },
-    files() {
+    children() {
       return this.file.data
     },
     class_name() {
@@ -55,7 +59,10 @@ export default {
     },
     file_class_name() {
       return this.file.type
-    }
+    },
+    ...mapGetters([
+      'active_editor_group'
+    ])
   },
   methods: {
     toggle() {
@@ -67,6 +74,22 @@ export default {
       if (accepted) {
         await this.$store.dispatch('remove_file', path)
         this.$store.dispatch('get_files')
+      }
+    },
+    edit(file) {
+      console.log(file.name)
+
+      console.log(file.path)
+
+      let conf = true
+      if (this.active_editor_group) {
+        conf = confirm('This will close the current group. Are you sure?')
+      }
+      if (conf) {
+        this.$store.dispatch('set_editor_group', {
+          type: file.name,
+          path: file.path
+        })
       }
     }
   }
@@ -80,6 +103,7 @@ $color-sidebar-templates-folder: #424952;
 $font-size: 10px;
 
 .tree-item {
+  position: relative;
   padding: 4px 4px 4px 10px;
   margin: 0;
   font-size: $font-size;
@@ -120,6 +144,10 @@ $font-size: 10px;
   display: inline-block;
   position: absolute;
   right: 5px;
+  top: 2px;
+}
+.tree-item-children {
+  position: relative;
 }
 // .templates-folder {
 //   padding: 6px 6px 10px;
