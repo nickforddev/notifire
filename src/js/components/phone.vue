@@ -78,9 +78,11 @@ $phone-height: 824px;
   background: $color-phone-edge-background;
   border-radius: $phone-border-radius + 6px;
   box-shadow: inset 0 0 3px 0 rgba(0,0,0,0.7);
+  z-index: 0;
 
   .strips {
     @include absolute_fill;
+    z-index: 1;
 
     &:before {
       @include block_psuedo;
@@ -103,6 +105,7 @@ $phone-height: 824px;
 
   .buttons {
     @include absolute_fill;
+    z-index: 2;
 
     div {
       position: absolute;
@@ -162,6 +165,7 @@ $phone-height: 824px;
   height: $phone-height - 14px;
   background: $color-phone-background;
   border-radius: $phone-border-radius;
+  z-index: 3;
 
   &:after {
     @include absolute_center;
@@ -174,8 +178,14 @@ $phone-height: 824px;
 }
 
 .content {
+  position: relative;
   height: 575px;
-  padding: 10px;
+  margin: 10px;
+  background-image: url('/static/lockscreen1.jpg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  font-family: 'San Francisco';
+  z-index: 4;
 }
 
 .top {
@@ -238,5 +248,11 @@ $phone-height: 824px;
       left: 4px;
     }
   }
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border-width: 0;
 }
 </style>

@@ -2,7 +2,8 @@ import Vue from 'vue'
 import App from './app'
 import router from './router'
 import store from '@/store'
-import VueShortkey from 'vue-shortkey'
+import { filters } from '@/modules/filters'
+// import VueShortkey from 'vue-shortkey'
 
 import Loading from '@/components/loading'
 
@@ -11,12 +12,14 @@ import TreeGroup from '@/components/tree/tree-group'
 import TreeItem from '@/components/tree/tree-item'
 import TreeItemFile from '@/components/tree/tree-item-file'
 import TreeItemFolder from '@/components/tree/tree-item-folder'
+import TreeItemPartial from '@/components/tree/tree-item-partial'
 import TreeItemTemplate from '@/components/tree/tree-item-template'
 
 import ContentView from '@/components/content-view'
 import Renderer from '@/components/renderer'
 
 import Phone from '@/components/phone'
+import LockScreen from '@/components/lock-screen'
 
 import '../scss/styles.scss'
 
@@ -27,19 +30,23 @@ const components = [
   TreeItem,
   TreeItemFile,
   TreeItemFolder,
+  TreeItemPartial,
   TreeItemTemplate,
   ContentView,
   Renderer,
-  Phone
+  Phone,
+  LockScreen
 ]
 
 const install = (Vue) => {
+  // inject filters
+  for (let key in filters) {
+    Vue.filter(key, filters[key])
+  }
   // inject components
   components.map(component => {
     Vue.component(component.name, component)
   })
-
-  Vue.use(VueShortkey)
 }
 
 install(Vue)

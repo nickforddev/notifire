@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <phone>
-      <iframe ref="iframe" />
+      <lock-screen :data="push_data" />>
     </phone>
   </div>
 </template>
@@ -14,31 +14,21 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'push',
   computed: {
+    push_data() {
+      return {
+        app: 'Rafi Payment',
+        message: this.renderer_html.html
+      }
+    },
     ...mapGetters([
       'renderer_html'
     ])
-  },
-  watch: {
-    renderer_html(value) {
-      const iframe = this.$refs.iframe
-      const doc = iframe.contentDocument || iframe.contentWindow.document
-      doc.body.innerHTML = value.html
-    }
   }
 }
 </script>
 
 <!--/////////////////////////////////////////////////////////////////////////-->
 
-<style scoped lang="scss">
-.container {
-  height: 100%;
-  background: #1e1e1e;
-}
-iframe {
-  width: 100%;
-  height: 100%;
-  border-width: 0;
-  background: yellow;
-}
+<style>
+
 </style>

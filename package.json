@@ -16,6 +16,7 @@
     "axios": "^0.16.2",
     "brace": "^0.10.0",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "pretty-file-icons": "^2.1.2",
     "socket.io": "^2.0.3",
     "vue": "^2.3.3",

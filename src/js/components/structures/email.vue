@@ -33,6 +33,11 @@ export default {
 .container {
   height: 100%;
 }
+.subject {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid grey;
+}
 iframe {
   width: 100%;
   height: 100%;
