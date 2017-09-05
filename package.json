@@ -12,6 +12,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "anchorme": "^1.1.2",
     "axios": "^0.16.2",
     "brace": "^0.10.0",
     "lodash": "^4.17.4",

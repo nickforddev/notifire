@@ -15,9 +15,6 @@ export default {
     type: String
   },
   computed: {
-    // handleEvent(event, ...args) {
-    //   this.$emit('event', event, ...args)
-    // },
     vc_name() {
       return this.data.type === 'file'
         ? 'tree-item-file'

@@ -16,6 +16,8 @@ import TreeItemTemplate from '@/components/tree/tree-item-template'
 import ContentView from '@/components/content-view'
 import Renderer from '@/components/renderer'
 
+import Phone from '@/components/phone'
+
 import '../scss/styles.scss'
 
 const components = [
@@ -27,7 +29,8 @@ const components = [
   TreeItemFolder,
   TreeItemTemplate,
   ContentView,
-  Renderer
+  Renderer,
+  Phone
 ]
 
 const install = (Vue) => {

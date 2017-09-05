@@ -10,9 +10,9 @@ export default new Vuex.Store({
     files: {},
     active_files: [],
     active_editor_group: false,
-    active_group_type: '',
-    renderer_html: '',
-    renderer_type: 'email'
+    active_editor_group_type: 'email',
+    renderer_html: ''
+    // renderer_type: 'email'
   },
   getters: {
     sidebar_width: state => {
@@ -32,10 +32,10 @@ export default new Vuex.Store({
     },
     renderer_html: state => {
       return state.renderer_html
-    },
-    renderer_type: state => {
-      return state.renderer_type
     }
+    // renderer_type: state => {
+    //   return state.renderer_type
+    // }
   },
   mutations: {
     SET_SIDEBAR_WIDTH(state, value) {
@@ -45,13 +45,13 @@ export default new Vuex.Store({
       state.files = files
     },
     SET_RENDERER_HTML(state, html) {
+      console.log({html})
       state.renderer_html = html
     },
-    SET_RENDERER_TYPE(state, type) {
-      state.renderer_type = type
-    },
+    // SET_RENDERER_TYPE(state, type) {
+    //   state.renderer_type = type
+    // },
     SET_EDITOR_GROUP(state, options) {
-      console.log({options})
       state.active_editor_group = options.path
       state.active_editor_group_type = options.type
     },
@@ -65,10 +65,8 @@ export default new Vuex.Store({
       }
     },
     CLOSE_EDITOR(state, path) {
-      state.active_files.map((file, index) => {
-        if (file === path) {
-          state.active_files = state.active_files.splice(index, 1)
-        }
+      state.active_files = state.active_files.filter((file, index) => {
+        return file !== path
       })
     }
   },
@@ -79,9 +77,9 @@ export default new Vuex.Store({
     set_renderer_html({ commit }, html) {
       commit('SET_RENDERER_HTML', html)
     },
-    set_renderer_type({ commit }, type) {
-      commit('SET_RENDERER_TYPE', type)
-    },
+    // set_renderer_type({ commit }, type) {
+    //   commit('SET_RENDERER_TYPE', type)
+    // },
     clear_editor_group({ commit }) {
       commit('CLEAR_EDITOR_GROUP')
     },
@@ -108,16 +106,28 @@ export default new Vuex.Store({
     async set_editor_group({ commit, dispatch }, options) {
       dispatch('clear_editor_group')
       commit('SET_EDITOR_GROUP', options)
+      let files
       if (options.type === 'email') {
         await sleep(1)
-        const files = [
+        files = [
           `${options.path}/index.html`,
           `${options.path}/style.scss`,
           `${options.path}/subject.html`
         ]
-        for (let file of files) {
-          dispatch('add_editor', file)
-        }
+      } else if (options.type === 'push') {
+        await sleep(1)
+        files = [
+          `${options.path}/index.html`
+        ]
+      } else if (options.type === 'text') {
+        await sleep(1)
+        files = [
+          `${options.path}/index.html`
+        ]
+      }
+
+      for (let file of files) {
+        dispatch('add_editor', file)
       }
     }
   }

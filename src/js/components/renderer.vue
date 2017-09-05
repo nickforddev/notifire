@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <component :is="renderer_type" />
+    <component :is="`${active_editor_group_type}_view`" />
   </div>
 </template>
 
@@ -8,17 +8,21 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import email from '@/components/structures/email'
+import email_view from '@/components/structures/email'
+import push_view from '@/components/structures/push'
+import text_view from '@/components/structures/text'
 
 export default {
   name: 'renderer',
   computed: {
     ...mapGetters([
-      'renderer_type'
+      'active_editor_group_type'
     ])
   },
   components: {
-    email
+    email_view,
+    push_view,
+    text_view
   }
 }
 </script>

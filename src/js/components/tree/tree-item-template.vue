@@ -19,7 +19,7 @@
           :data="child"
           :level="next_level"
           :template="file.name" />
-        <div class="actions">
+        <div v-if="child.type === 'folder'" class="actions">
           <button @click="edit(child)">Edit</button>
         </div>
       </div>

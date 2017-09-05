@@ -85,6 +85,7 @@ export default {
     },
     render() {
       const type = this.active_editor_group_type
+      console.log({type})
       return new Request(`render/${type}`, {
         method: 'post',
         data: {
@@ -92,7 +93,7 @@ export default {
         }
       })
       .then(response => {
-        this.$store.dispatch('set_renderer_type', type)
+        // this.$store.dispatch('set_renderer_type', type)
         this.$store.dispatch('set_renderer_html', response.data)
       })
       .catch(error => {
