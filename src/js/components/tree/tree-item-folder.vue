@@ -1,5 +1,5 @@
 <template>
-  <div class="tree-item-container folder">
+  <div :class="['tree-item-container folder', is_active]">
     <div
       :class="['tree-item', class_name]"
       @click="toggle"
@@ -71,7 +71,8 @@ export default {
       }
     },
     ...mapGetters([
-      'active_editor_group'
+      'active_editor_group',
+      'active_editor_group_type'
     ])
   },
   methods: {
@@ -159,9 +160,12 @@ $font-size: 10px;
     cursor: pointer;
   }
 
-  .active & {
-    background: $color-sidebar-selected;
-  }
+  // .active & {
+  //   background: $color-sidebar-selected;
+  // }
+}
+.active > .tree-item {
+  background: $color-sidebar-selected;
 }
 .caret {
   display: inline-block;

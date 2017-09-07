@@ -7,7 +7,7 @@
       :title="editor.title"
       :mode="editor.mode"
       :path="editor.path"
-      :ref=""
+      :ref="editor.path"
       @input="debounceInput"
       @close="closeEditor"
     />
@@ -45,6 +45,7 @@ export default {
   },
   async mounted() {
     this.setHeights()
+    window.addEventListener('focus-editor', this.editorFocus)
   },
   watch: {
     editors(val) {
@@ -98,6 +99,10 @@ export default {
         const message = _.get(error, 'response.data') || 'Could not connect with the server'
         this.$store.dispatch('set_renderer_error', message)
       })
+    },
+    editorFocus(e) {
+      const $editor = this.$refs[e.detail]
+      $editor[0].editor.focus()
     }
   },
   components: {

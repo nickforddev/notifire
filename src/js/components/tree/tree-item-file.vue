@@ -54,7 +54,9 @@ export default {
       if (!this.active_files.includes(this.file.path)) {
         this.$store.dispatch('add_editor', this.file.path)
       } else {
-        console.log('file already open, focus on it here')
+        window.dispatchEvent(new CustomEvent('focus-editor', {
+          detail: this.file.path
+        }))
       }
     }
   }
@@ -79,10 +81,10 @@ $font-size: 10px;
     background: $color-sidebar-hover;
     cursor: pointer;
   }
+}
 
-  .active & {
-    background: $color-sidebar-selected;
-  }
+.active > .tree-item {
+  background: $color-sidebar-selected;
 }
 .leader {
   display: inline-block;

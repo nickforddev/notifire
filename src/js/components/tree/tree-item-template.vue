@@ -1,5 +1,5 @@
 <template>
-  <div :class="['tree-item-container', class_name]">
+  <div :class="['tree-item-container', class_name, is_active]">
     <div :class="['tree-item', file_class_name]" @click.self="toggle">
       <div class="leader">
         <div v-if="file.type === 'folder'" class="caret"></div>
@@ -56,6 +56,11 @@ export default {
       return this.open
         ? 'folder open'
         : 'folder closed'
+    },
+    is_active() {
+      if ((this.active_editor_group || '').includes(this.file.path)) {
+        return 'active'
+      }
     },
     file_class_name() {
       return this.file.type
@@ -115,6 +120,9 @@ $font-size: 10px;
     background: $color-sidebar-hover;
     cursor: pointer;
   }
+}
+.active > .tree-item {
+  background: $color-sidebar-selected;
 }
 .caret {
   display: inline-block;
