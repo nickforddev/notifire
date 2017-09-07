@@ -2,7 +2,7 @@
   <div :class="['tree-item-container', class_name]">
     <div :class="['tree-item', file_class_name]" @click.self="toggle">
       <div class="leader">
-        <!-- <div v-if="file.type === 'folder'" class="caret"></div> -->
+        <div v-if="file.type === 'folder'" class="caret"></div>
       </div>
       <div class="leader icon">
         <img :src="icon_src" alt="css">

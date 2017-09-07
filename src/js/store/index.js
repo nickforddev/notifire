@@ -11,8 +11,9 @@ export default new Vuex.Store({
     active_files: [],
     active_editor_group: false,
     active_editor_group_type: 'email',
-    renderer_html: ''
-    // renderer_type: 'email'
+    editor_width: '50%',
+    renderer_html: '',
+    renderer_error: ''
   },
   getters: {
     sidebar_width: state => {
@@ -32,10 +33,13 @@ export default new Vuex.Store({
     },
     renderer_html: state => {
       return state.renderer_html
+    },
+    renderer_error: state => {
+      return state.renderer_error
+    },
+    editor_width: state => {
+      return state.editor_width
     }
-    // renderer_type: state => {
-    //   return state.renderer_type
-    // }
   },
   mutations: {
     SET_SIDEBAR_WIDTH(state, value) {
@@ -45,12 +49,15 @@ export default new Vuex.Store({
       state.files = files
     },
     SET_RENDERER_HTML(state, html) {
-      console.log({html})
+      state.renderer_error = ''
       state.renderer_html = html
     },
-    // SET_RENDERER_TYPE(state, type) {
-    //   state.renderer_type = type
-    // },
+    SET_RENDERER_ERROR(state, error) {
+      state.renderer_error = error
+    },
+    SET_EDITOR_WIDTH(state, width) {
+      state.editor_width = width
+    },
     SET_EDITOR_GROUP(state, options) {
       state.active_editor_group = options.path
       state.active_editor_group_type = options.type
@@ -58,6 +65,7 @@ export default new Vuex.Store({
     CLEAR_EDITOR_GROUP(state, options) {
       state.active_editor_group = false
       state.active_files = []
+      state.renderer_html = ''
     },
     ADD_EDITOR(state, path) {
       if (!(path in state.active_files)) {
@@ -74,12 +82,15 @@ export default new Vuex.Store({
     set_sidebar_width({ commit }, value) {
       commit('SET_SIDEBAR_WIDTH', value)
     },
+    set_editor_width({ commit }, value) {
+      commit('SET_EDITOR_WIDTH', value)
+    },
     set_renderer_html({ commit }, html) {
       commit('SET_RENDERER_HTML', html)
     },
-    // set_renderer_type({ commit }, type) {
-    //   commit('SET_RENDERER_TYPE', type)
-    // },
+    set_renderer_error({ commit }, error) {
+      commit('SET_RENDERER_ERROR', error)
+    },
     clear_editor_group({ commit }) {
       commit('CLEAR_EDITOR_GROUP')
     },

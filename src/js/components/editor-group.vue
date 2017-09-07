@@ -7,6 +7,7 @@
       :title="editor.title"
       :mode="editor.mode"
       :path="editor.path"
+      :ref=""
       @input="debounceInput"
       @close="closeEditor"
     />
@@ -74,10 +75,9 @@ export default {
       _.each($editors, ($editor) => {
         $editor.style.height = `${height}%`
       })
-      window.dispatchEvent(new Event('resize'))
+      window.dispatchEvent(new Event('resize-editors'))
     },
     closeEditor(editor) {
-      console.log('close editor', editor)
       this.$store.dispatch('close_editor', editor)
     },
     removeAllEditors() {
@@ -85,7 +85,6 @@ export default {
     },
     render() {
       const type = this.active_editor_group_type
-      console.log({type})
       return new Request(`render/${type}`, {
         method: 'post',
         data: {
@@ -93,13 +92,11 @@ export default {
         }
       })
       .then(response => {
-        // this.$store.dispatch('set_renderer_type', type)
         this.$store.dispatch('set_renderer_html', response.data)
       })
       .catch(error => {
         const message = _.get(error, 'response.data') || 'Could not connect with the server'
-        this.$store.dispatch('set_renderer_html', message)
-        console.warn(message)
+        this.$store.dispatch('set_renderer_error', message)
       })
     }
   },

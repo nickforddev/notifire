@@ -1,7 +1,7 @@
 <template>
   <div class="tree-item-container folder">
     <div
-      class="tree-item"
+      :class="['tree-item', class_name]"
       @click="toggle"
       :style="styles">
       <div class="leader">
@@ -171,7 +171,7 @@ $font-size: 10px;
   border-width: 0 0 5px 5px;
   border-color: transparent transparent $color-sidebar-caret transparent;
 
-  .folder.closed & {
+  .closed & {
     border-width: 3.5px 0 3.5px 4px;
     border-color: transparent transparent transparent $color-sidebar-caret;
   }

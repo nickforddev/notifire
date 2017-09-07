@@ -5,3 +5,23 @@
     clear: both;
   }
 }
+
+@mixin absolute_fill {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+@mixin absolute_center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+@mixin block_psuedo {
+  content: '';
+  display: block;
+}

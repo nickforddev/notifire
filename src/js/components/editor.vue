@@ -48,6 +48,7 @@ export default {
     }
   },
   beforeDestroy() {
+    window.removeEventListener('resize-editors', this.resize)
     this.editor.destroy()
   },
   methods: {
@@ -80,6 +81,7 @@ export default {
         this.content = content
         this.emitChange()
       })
+      window.addEventListener('resize-editors', this.resize)
     },
     emitChange: _.debounce(function() {
       this.$emit('input', this.content)
@@ -96,6 +98,9 @@ export default {
       this.setValue(data)
       this.loading = false
     },
+    resize() {
+      this.editor.resize()
+    },
     save() {
       return axios.put(this.url, {
         content: this.content
@@ -104,7 +109,6 @@ export default {
       })
     },
     close() {
-      console.log('close')
       this.$emit('close', this.path)
       this.$destroy()
     }

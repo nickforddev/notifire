@@ -34,6 +34,7 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
+@import '~%/modules/mixins';
 $color-phone-background: #080808;
 $color-phone-edge-background: #464646;
 $color-phone-camera-background: #292728;
@@ -45,25 +46,13 @@ $phone-button-diameter: 60px;
 $phone-width: 382px;
 $phone-height: 824px;
 
-@mixin absolute_center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-}
-
-@mixin absolute_fill {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-@mixin block_psuedo {
-  content: '';
-  display: block;
-}
+// @mixin absolute_fill {
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   bottom: 0;
+//   left: 0;
+// }
 
 .phone {
   position: relative;

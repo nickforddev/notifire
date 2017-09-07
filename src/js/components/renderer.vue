@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <div class="error-message" v-if="renderer_error">{{ renderer_error }}</div>
     <component :is="`${active_editor_group_type}_view`" />
   </div>
 </template>
@@ -16,6 +17,7 @@ export default {
   name: 'renderer',
   computed: {
     ...mapGetters([
+      'renderer_error',
       'active_editor_group_type'
     ])
   },
@@ -30,10 +32,18 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
+@import '~%/modules/mixins';
+
 .content {
   position: relative;
   width: 50%;
   height: 100vh;
   float: left;
+}
+.error-message {
+  @include absolute_fill;
+  padding: 30px;
+  background: rgba(0,0,0, 0.75);
+  color: white;
 }
 </style>

@@ -70,6 +70,8 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
+@import '~%/modules/mixins';
+
 $color-push-meta: #3d7c8c;
 $push-border-radius: 10px;
 
@@ -123,25 +125,30 @@ $push-border-radius: 10px;
         margin: 10px;
       }
 
-      .title {
-        display: inline-block;
-        text-transform: uppercase;
+      .app-info {
+        @include clear;
+        vertical-align: middle;
       }
 
       .icon {
-        display: inline-block;
+        float: left;
         width: 18px;
         height: 18px;
-        margin-right: 6px;
+        margin-right: 8px;
 
         img {
           width: 100%;
         }
       }
+
+      .title {
+        float: left;
+        margin-top: 2px;
+        text-transform: uppercase;
+      }
       
       .status {
         display: inline-block;
-        align-self: flex-end;
       }
     }
     .main {
@@ -152,6 +159,7 @@ $push-border-radius: 10px;
       font-weight: bold;
     }
     .call-to-action {
+      margin-top: 2px;
       color: $color-push-meta;
       font-size: 0.8em;
       font-weight: 500;
