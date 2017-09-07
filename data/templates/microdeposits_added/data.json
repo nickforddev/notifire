@@ -1,0 +1,16 @@
+{
+	"account_name": "My Checking Account",
+	"date": "January 1, 2017",
+	"url": "http://payment.rafiproperties.com/help/#microdeposits",
+	"button_text": "More Info on Microdeposits",
+	"details": [
+		{
+			"key": "Lease",
+			"value": "533 Washington St, Unit 1"
+		},
+		{
+			"key": "End Date",
+			"value": "January 1, 2017"
+		}
+	]
+}

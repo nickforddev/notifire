@@ -1,0 +1,22 @@
+<h1>Transfer Failed</h1>
+
+<p>
+  A {{ amount }} transfer from your account has failed.
+</p>
+
+<img src="{{image_path}}/icons/status-failed.png" title="Transfer Cancelled" alt="Transfer Cancelled" class="icon" />
+
+<div class="divider"></div>
+
+<h2 class="text-left">Details</h2>
+
+<table class="summary_table" cellpadding="8" width="100%">
+
+{{# details }}
+    <tr>
+      <td class="summary_cell" align="left">{{ key }}</td>
+      <td class="summary_cell strong" align="left">{{ value }}</td>
+    </tr>
+{{/ details }}
+
+</table>

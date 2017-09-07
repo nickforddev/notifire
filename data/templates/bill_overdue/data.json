@@ -1,0 +1,58 @@
+{
+	"days": "5",
+	"display_due_date": "September 16th",
+	"button_text": "Make a Payment",
+	"balance": "$2400",
+	"split": "$1200",
+	"url": "http://payment.rafiproperties.com",
+	"details": [
+		{
+			"key": "Lease",
+			"value": "533 Washington St, Unit 1"
+		},
+		{
+			"key": "Bank Account",
+			"value": "My Bank Account"
+		},
+		{
+			"key": "Date",
+			"value": "January 1, 2017"
+		},
+		{
+			"key": "Bill ID",
+			"value": "RP404"
+		}
+	],
+	"transfers": [
+		{
+			"status": "error",
+			"name": "Joe Sixpack",
+			"amount": "$700",
+			"date": "1/2/17"
+		},
+		{
+			"status": "failed",
+			"name": "Joe Sixpack",
+			"amount": "$700",
+			"date": "1/2/17"
+		},
+		{
+			"status": "cancelled",
+			"name": "Joe Sixpack",
+			"amount": "$700",
+			"date": "1/2/17"
+		},
+		{
+			"status": "pending",
+			"name": "Joe Sixpack",
+			"amount": "$700",
+			"date": "1/2/17"
+		},
+		{
+			"status": "processed",
+			"name": "Joe Sixpack",
+			"amount": "$500",
+			"date": "1/1/17"
+		}
+	]
+}

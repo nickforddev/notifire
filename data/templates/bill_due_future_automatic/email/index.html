@@ -1,0 +1,23 @@
+<h1>
+  Auto Rent Payment in {{days}} Days
+</h1>
+
+<p>
+  An automatic payment for {{split}} will be made in {{days}} days.<br />
+  No further action is necessary. Thank you for using Rafi Payment!
+</p>
+
+<div class="divider"></div>
+
+<h2 class="text-left">Details</h2>
+
+<table class="summary_table" cellpadding="8" width="100%">
+
+{{# details }}
+    <tr>
+      <td class="summary_cell" align="left">{{ key }}</td>
+      <td class="summary_cell strong" align="left">{{ value }}</td>
+    </tr>
+{{/ details }}
+
+</table>

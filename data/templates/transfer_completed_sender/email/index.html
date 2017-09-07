@@ -1,0 +1,22 @@
+<h1>Transfer Completed</h1>
+
+<p>
+  {{ amount }} was successfully transferred to {{ destination }}.
+</p>
+
+<img src="{{image_path}}/icons/status-complete.png" title="Transfer Completed" alt="Transfer Completed" class="icon" />
+
+<div class="divider"></div>
+
+<h2 class="text-left">Details</h2>
+
+<table class="summary_table" cellpadding="8" width="100%">
+
+{{# details }}
+    <tr>
+      <td class="summary_cell" align="left">{{ key }}</td>
+      <td class="summary_cell strong" align="left">{{ value }}</td>
+    </tr>
+{{/ details }}
+
+</table>

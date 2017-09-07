@@ -1,0 +1,16 @@
+{
+	"account_name": "My Checking Account",
+	"date": "January 1, 2017",
+	"url": "https://plutus.dev/account/payment",
+	"button_text": "Payment Settings",
+	"details": [
+		{
+			"key": "Bank Account",
+			"value": "My Bank Account"
+		},
+		{
+			"key": "Date",
+			"value": "January 1, 2017"
+		}
+	]
+}

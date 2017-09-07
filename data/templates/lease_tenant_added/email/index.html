@@ -1,0 +1,22 @@
+<h1>You've Been Added to a Lease</h1>
+
+<p>
+  Please log in to set your rent split and autopayment settings
+</p>
+
+{{> button }}
+
+<div class="divider"></div>
+
+<h2 class="text-left">Details</h2>
+
+<table class="summary_table" cellpadding="8" width="100%">
+
+{{# details }}
+    <tr>
+      <td class="summary_cell" align="left">{{ key }}</td>
+      <td class="summary_cell strong" align="left">{{ value }}</td>
+    </tr>
+{{/ details }}
+
+</table>

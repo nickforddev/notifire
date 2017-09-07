@@ -1,0 +1,55 @@
+<h1>
+  <span class="negative">Your Bill is {{ days }} Days Overdue</span>
+</h1>
+
+<p>Your rent bill is past due! Please make sure your bill is paid in full. <br />Thank you for using Rafi Payment!</p>
+
+{{> button }}
+
+{{# transfers.length }}
+
+<div class="divider"></div>
+
+<h2 class="text-left">Transfers</h2>
+
+<table class="summary_table" cellpadding="8" width="100%">
+
+  <tr>
+    <td class="summary_cell" align="left">Name</td>
+    <td class="summary_cell" align="left">Date</td>
+    <td class="summary_cell" align="left">Status</td>
+    <td class="summary_cell" align="left">Amount</td>
+  </tr>
+
+{{# transfers }}
+  
+  <tr>
+    <td class="summary_cell strong" align="left">{{ name }}</td>
+    <td class="summary_cell strong" align="left">{{ date }}</td>
+    <td class="summary_cell strong" align="left">
+      <span class="status {{ status }}">{{ status }}</span>
+    </td>
+    <td class="summary_cell strong" align="left">{{ amount }}</td>
+
+  </tr>
+
+{{/ transfers }}
+
+</table>
+
+{{/ transfers.length }}
+
+<div class="divider"></div>
+
+<h2 class="text-left">Details</h2>
+
+<table class="summary_table" cellpadding="8" width="100%">
+
+{{# details }}
+    <tr>
+      <td class="summary_cell" align="left">{{ key }}</td>
+      <td class="summary_cell strong" align="left">{{ value }}</td>
+    </tr>
+{{/ details }}
+
+</table>

@@ -1,0 +1,29 @@
+<h1>Microdeposits Failed</h1>
+
+<p>
+  We are unable to verify your bank account, because our microdeposits were rejected by your bank.
+</p>
+
+<p>
+  To try again, go to your <a href="{{ host_name }}/account/payment">account payment settings</a> and click retry on the affected bank account. 
+  Or, contact customer support.
+</p>
+
+<p><a href="http://payment.rafiproperties.com/help/#microdeposits">More info on microdeposits</a></p>
+
+{{> button }}
+
+<div class="divider"></div>
+
+<h2 class="text-left">Details</h2>
+
+<table class="summary_table" cellpadding="8" width="100%">
+
+{{# details }}
+    <tr>
+      <td class="summary_cell" align="left">{{ key }}</td>
+      <td class="summary_cell strong" align="left">{{ value }}</td>
+    </tr>
+{{/ details }}
+
+</table>

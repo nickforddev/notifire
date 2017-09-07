@@ -1,0 +1,14 @@
+{
+  "url": "http://payment.rafiproperties.com",
+  "button_text": "Log In",
+  "details": [
+    {
+      "key": "Lease",
+      "value": "533 Washington St, Unit 1"
+    },
+    {
+      "key": "End Date",
+      "value": "January 1, 2017"
+    }
+  ]
+}

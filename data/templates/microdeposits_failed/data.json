@@ -1,0 +1,15 @@
+{
+  "account_name": "My Checking Account",
+  "date": "January 1, 2017",
+  "button_text": "Payment Settings",
+  "details": [
+		{
+			"key": "Bank Account",
+			"value": "My Bank Account"
+		},
+		{
+			"key": "Date",
+			"value": "January 1, 2017"
+		}
+	]
+}

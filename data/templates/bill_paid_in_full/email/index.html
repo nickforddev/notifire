@@ -1,0 +1,38 @@
+<h1><span class="positive">Your Bill is Paid in Full</span></h1>
+
+<p>Thank you for using Rafi Payment!</p>
+
+<img src="{{image_path}}/icons/status-complete.png" title="Transfer Completed" alt="Transfer Completed" class="icon" />
+
+{{# transfers.length }}
+
+<div class="divider"></div>
+
+<h2 class="text-left">Transfers</h2>
+
+<table class="summary_table" cellpadding="8" width="100%">
+
+  <tr>
+    <td class="summary_cell" align="left">Name</td>
+    <td class="summary_cell" align="left">Date</td>
+    <td class="summary_cell" align="left">Status</td>
+    <td class="summary_cell" align="left">Amount</td>
+  </tr>
+
+{{# transfers }}
+  
+  <tr>
+    <td class="summary_cell strong" align="left">{{ name }}</td>
+    <td class="summary_cell strong" align="left">{{ date }}</td>
+    <td class="summary_cell strong" align="left">
+      <span class="status {{ status }}">{{ status }}</span>
+    </td>
+    <td class="summary_cell strong" align="left">{{ amount }}</td>
+
+  </tr>
+
+{{/ transfers }}
+
+</table>
+
+{{/ transfers.length }}
