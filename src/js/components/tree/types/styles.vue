@@ -5,7 +5,6 @@
       :key="file.name"
       :data="file"
       :level="0"
-      @event="handleEvent"
     />
   </div>
 </template>
@@ -21,11 +20,6 @@ export default {
     ...mapGetters([
       'files'
     ])
-  },
-  methods: {
-    handleEvent() {
-
-    }
   }
 }
 </script>

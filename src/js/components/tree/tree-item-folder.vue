@@ -84,59 +84,6 @@ export default {
         ? this.toggle()
         : this.loadFile()
     }
-    // event(event, ...args) {
-    //   this.$emit('event', event, ...args)
-    // },
-    // create(type) {
-    //   this[`create_${type}`]()
-    // },
-
-    // selectGroup() {
-    //   if (this.active_editor_group !== this.file.path) {
-    //     const accept = this.active_editor_group !== false
-    //       ? confirm('Opening a new template will cause the current one to close, do you want to continue?')
-    //       : true
-    //     if (accept) {
-    //       this.$store.dispatch('set_editor_group', {
-    //         type: 'email',
-    //         path: this.file.path
-    //       })
-    //     }
-    //   }
-    // },
-    // create_templates() {
-    //   const name = prompt(`Please enter a name for your new template.`)
-    //   if (!name) return
-    //   axios.post(`${config.api}/templates`, { name })
-    //     .then(() => {
-    //       this.$emit('event', 'refresh')
-    //     })
-    //     .catch(error => {
-    //       alert(error)
-    //     })
-    // },
-    // create_partials() {
-    //   const name = prompt(`Please enter a name for your new partial.`)
-    //   if (!name) return
-    //   axios.post(`${config.api}/partials`, { name })
-    //     .then(() => {
-    //       this.$emit('event', 'refresh')
-    //     })
-    //     .catch(error => {
-    //       alert(error)
-    //     })
-    // },
-    // create_scss() {
-    //   const name = prompt(`Please enter a name for your new scss module.`)
-    //   if (!name) return
-    //   axios.post(`${config.api}/scss`, { name })
-    //     .then(() => {
-    //       this.$emit('event', 'refresh')
-    //     })
-    //     .catch(error => {
-    //       alert(error)
-    //     })
-    // }
   }
 }
 </script>
@@ -160,12 +107,9 @@ $font-size: 10px;
     cursor: pointer;
   }
 
-  // .active & {
-  //   background: $color-sidebar-selected;
-  // }
-}
-.active > .tree-item {
-  background: $color-sidebar-selected;
+  .active > & {
+    background: $color-sidebar-selected;
+  }
 }
 .caret {
   display: inline-block;

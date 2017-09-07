@@ -25,10 +25,6 @@
       :data="files.partials"
     />
 
-    <div
-      class="divider vertical"
-      @mousedown.prevent="dragStart"
-    />
   </div>
 </template>
 
@@ -39,11 +35,6 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'tree-view',
-  data() {
-    return {
-      mousedown: false
-    }
-  },
   mounted() {
     this.getFiles()
   },
@@ -61,16 +52,6 @@ export default {
   methods: {
     getFiles() {
       this.$store.dispatch('get_files')
-    },
-    dragging(e) {
-      this.$store.dispatch('set_sidebar_width', e.clientX + 5)
-    },
-    dragStart(e) {
-      document.body.addEventListener('mousemove', this.dragging)
-      document.body.addEventListener('mouseup', this.dragStop)
-    },
-    dragStop() {
-      document.body.removeEventListener('mousemove', this.dragging)
     }
   }
 }
@@ -95,19 +76,6 @@ export default {
 
   h3 {
     padding-left: 15px;
-  }
-}
-
-.divider {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 10px;
-  z-index: 9;
-
-  &:hover {
-    cursor: col-resize;
   }
 }
 </style>

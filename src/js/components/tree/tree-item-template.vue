@@ -71,7 +71,11 @@ export default {
   },
   methods: {
     toggle() {
-      this.$parent.setOpenFolder(this.file.name)
+      if (!this.open) {
+        this.$parent.setOpenFolder(this.file.name)
+      } else {
+        this.$parent.clearOpenFolder()
+      }
     },
     async remove() {
       const path = this.file.path
@@ -82,10 +86,6 @@ export default {
       }
     },
     edit(file) {
-      console.log(file.name)
-
-      console.log(file.path)
-
       let conf = true
       if (this.active_editor_group) {
         conf = confirm('This will close the current group. Are you sure?')
@@ -120,9 +120,10 @@ $font-size: 10px;
     background: $color-sidebar-hover;
     cursor: pointer;
   }
-}
-.active > .tree-item {
-  background: $color-sidebar-selected;
+
+  .active > & {
+    background: $color-sidebar-selected;
+  }
 }
 .caret {
   display: inline-block;

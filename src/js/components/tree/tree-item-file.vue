@@ -81,10 +81,10 @@ $font-size: 10px;
     background: $color-sidebar-hover;
     cursor: pointer;
   }
-}
 
-.active > .tree-item {
-  background: $color-sidebar-selected;
+  .active > & {
+    background: $color-sidebar-selected;
+  }
 }
 .leader {
   display: inline-block;

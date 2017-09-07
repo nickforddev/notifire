@@ -2,7 +2,7 @@
   <div :class="['tree-item-container', class_name]">
     <div :class="['tree-item', file_class_name]" @click.self="toggle">
       <div class="leader">
-        <!-- <div v-if="file.type === 'folder'" class="caret"></div> -->
+        <div v-if="file.type === 'folder'" class="caret"></div>
       </div>
       <div class="leader icon">
         <img :src="icon_src" alt="css">
@@ -66,7 +66,11 @@ export default {
   },
   methods: {
     toggle() {
-      this.$parent.setOpenFolder(this.file.name)
+      if (!this.open) {
+        this.$parent.setOpenFolder(this.file.name)
+      } else {
+        this.$parent.clearOpenFolder()
+      }
     },
     async remove() {
       const path = this.file.path
@@ -77,10 +81,6 @@ export default {
       }
     },
     edit(file) {
-      console.log(file.name)
-
-      console.log(file.path)
-
       let conf = true
       if (this.active_editor_group) {
         conf = confirm('This will close the current group. Are you sure?')
@@ -124,7 +124,7 @@ $font-size: 10px;
   border-width: 0 0 5px 5px;
   border-color: transparent transparent $color-sidebar-caret transparent;
 
-  .folder.closed & {
+  .closed > & {
     border-width: 3.5px 0 3.5px 4px;
     border-color: transparent transparent transparent $color-sidebar-caret;
   }
