@@ -37,11 +37,6 @@ export default {
     level: Number,
     open: Boolean
   },
-  // data() {
-  //   return {
-  //     icon_src: '/static/svg/folder.svg'
-  //   }
-  // },
   computed: {
     next_level() {
       return this.level + 1
