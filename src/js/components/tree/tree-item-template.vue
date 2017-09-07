@@ -37,11 +37,11 @@ export default {
     level: Number,
     open: Boolean
   },
-  data() {
-    return {
-      icon_src: '/static/svg/folder.svg'
-    }
-  },
+  // data() {
+  //   return {
+  //     icon_src: '/static/svg/folder.svg'
+  //   }
+  // },
   computed: {
     next_level() {
       return this.level + 1
@@ -56,6 +56,11 @@ export default {
       return this.open
         ? 'folder open'
         : 'folder closed'
+    },
+    icon_src() {
+      return this.open
+        ? '/static/svg/folder-open.svg'
+        : '/static/svg/folder.svg'
     },
     is_active() {
       if ((this.active_editor_group || '').includes(this.file.path)) {

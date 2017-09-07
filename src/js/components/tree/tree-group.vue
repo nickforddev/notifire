@@ -41,7 +41,7 @@ export default {
       this.create_item('partial')
     },
     async add_styles() {
-      this.create_item('stylesheet', 'scss')
+      this.create_item('stylesheet', 'styles')
     },
     async create_item(type = '', path = `${type}s`) {
       const name = prompt(`Please enter a name for your new ${type}`)

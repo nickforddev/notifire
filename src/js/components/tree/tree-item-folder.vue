@@ -41,8 +41,7 @@ export default {
   },
   data() {
     return {
-      open: false,
-      icon_src: '/static/svg/folder.svg'
+      open: false
     }
   },
   computed: {
@@ -59,6 +58,11 @@ export default {
       return this.open
           ? 'open'
           : 'closed'
+    },
+    icon_src() {
+      return this.open
+        ? '/static/svg/folder-open.svg'
+        : '/static/svg/folder.svg'
     },
     is_active() {
       if (this.active_editor_group === this.file.path) {
