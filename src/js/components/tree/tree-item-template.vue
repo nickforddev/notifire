@@ -9,7 +9,7 @@
       </div>
       {{ file.name }}
       <div class="actions">
-        <button @click="remove">Delete</button>
+        <button @click="remove">-</button>
       </div>
     </div>
 

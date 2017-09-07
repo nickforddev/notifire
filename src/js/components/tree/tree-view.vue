@@ -1,6 +1,6 @@
 <template>
   <div class="tree-view" :style="[tree_styles]">
-    <h3>Files</h3>
+    <h3>Files <button @click="build">Build</button></h3>
 
     <tree-group
       type="globals"
@@ -32,6 +32,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { Request } from '@/utils'
 
 export default {
   name: 'tree-view',
@@ -52,6 +53,12 @@ export default {
   methods: {
     getFiles() {
       this.$store.dispatch('get_files')
+    },
+    async build() {
+      const { data } = await Request('build', {
+        method: 'post'
+      })
+      alert(data)
     }
   }
 }

@@ -7,7 +7,7 @@
         :level="0"
       />
       <div class="actions">
-        <button @click="remove(file)">Delete</button>
+        <button @click="remove(file)">-</button>
       </div>
     </div>
   </div>
