@@ -117,6 +117,10 @@ export default new Vuex.Store({
     async set_editor_group({ commit, dispatch }, options) {
       dispatch('clear_editor_group')
       commit('SET_EDITOR_GROUP', options)
+      let parent_path = options.path.split('/')
+      parent_path.splice(-1)
+      parent_path = parent_path.join('/')
+      console.log({parent_path})
       let files
       if (options.type === 'email') {
         await sleep(1)
@@ -128,12 +132,14 @@ export default new Vuex.Store({
       } else if (options.type === 'push') {
         await sleep(1)
         files = [
-          `${options.path}/index.html`
+          `${options.path}/index.html`,
+          `${parent_path}/data.json`
         ]
       } else if (options.type === 'text') {
         await sleep(1)
         files = [
-          `${options.path}/index.html`
+          `${options.path}/index.html`,
+          `${parent_path}/data.json`
         ]
       }
 

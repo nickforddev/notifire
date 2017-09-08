@@ -1,15 +1,15 @@
 {
-  "ordinal": "1st",
-  "amount": "$100.00",
-  "destination": "Rafi Properties",
-  "details": [
-    {
-      "key": "Lease",
-      "value": "533 Washington St, Unit 1"
-    },
-    {
-      "key": "Company",
-      "value": "Rafi Properties"
-    }
-  ]
+	"ordinal": "1st",
+	"amount": "$100.00",
+	"destination": "Rafi Properties",
+	"details": [
+		{
+			"key": "Lease",
+			"value": "533 Washington St, Unit 1"
+		},
+		{
+			"key": "Company",
+			"value": "Rafi Properties"
+		}
+	]
 }

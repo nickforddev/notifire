@@ -1,6 +1,6 @@
 {
-  "pm_company_name": "ACME Real Estate",
-  "confirm_url": "http://yahoo.com",
-  "decline_url": "http://yahoo.com",
-  "button_text": "Activate Your Account"
+	"pm_company_name": "ACME Real Estate",
+	"confirm_url": "http://yahoo.com",
+	"decline_url": "http://yahoo.com",
+	"button_text": "Activate Your Account"
 }
