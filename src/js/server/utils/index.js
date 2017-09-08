@@ -17,7 +17,7 @@ exports.sleep = (ms) => {
 
 /**
  * Deferred promises
- * 
+ *
  * @async
  * @returns {Deferred}
  */
@@ -35,7 +35,7 @@ exports.Deferred = Deferred
 
 /**
  * Wrap a node function that uses a callback
- * 
+ *
  * @async
  * @param {Function} fn  the function to wrap
  * @param {any} args     any amount of args
@@ -63,12 +63,15 @@ async function transformAsync(promise, transform) {
   }
 }
 
+exports.transformAsync = transformAsync
+
 /**
  * Append to file and return promise
- * 
- * @param {string} [path=''] 
- * @param {string} [content=''] 
- * @returns 
+ *
+ * @async
+ * @param {string} [path='']
+ * @param {string} [content='']
+ * @returns {Promise}
  */
 function appendFile(path = '', content = '') {
   return asyncCallback(fs.appendFile, path, content)
@@ -84,10 +87,11 @@ exports.writeFile = writeFile
 
 /**
  * Make directory and return promise
- * 
- * @param {string} [path=''] 
- * @param {number} [mask=0o775] 
- * @returns 
+ *
+ * @async
+ * @param {string} [path='']
+ * @param {number} [mask=0o775]
+ * @returns {Promise}
  */
 function mkdir(path = '', mask = 0o775) {
   return asyncCallback(mkdirp, path, mask)
@@ -103,10 +107,10 @@ exports.rmrf = rmrf
 
 /**
  * Read a file and return contents asynchronously
- * 
+ *
  * @async
- * @param {string} [path=''] 
- * @param {string} [encoding='utf8'] 
+ * @param {string} [path='']
+ * @param {string} [encoding='utf8']
  * @returns {String}
  */
 const readFile = (path = '', encoding = 'utf8') => {
@@ -138,10 +142,10 @@ exports.readdirPaths = readdirPaths
 
 /**
  * Recursively read a directory asynchronously
- * 
+ *
  * @async
- * @param {string} [path=''] 
- * @returns {Array} 
+ * @param {string} [path='']
+ * @returns {Array}
  */
 const readdirRecursive = (path = '') => {
   return asyncCallback(glob, `${path}/**/*`)
@@ -155,12 +159,12 @@ function isFile (path) {
 
 /**
  * Convert array of file paths to an object
- * 
+ *
  * @param {Array} paths            array of paths
  * @param {String} relative_path   optional relative path to start
  * @returns {Object}               the file system as a tree
  */
-exports.pathsToTree = (paths = [], relative_path = '') => {
+const pathsToTree = (paths = [], relative_path = '') => {
   let output = {}
   let directories = []
   let files = []
@@ -191,6 +195,8 @@ exports.pathsToTree = (paths = [], relative_path = '') => {
   return output
 }
 
+exports.pathsToTree = pathsToTree
+
 const treeToArray = (object) => {
   let output = []
   for (let key in object) {
@@ -199,7 +205,7 @@ const treeToArray = (object) => {
     file.type = object[key].type
     file.path = object[key].path
     if (file.type === 'file') {
-      file.data = object[key].data
+      // file.data = object[key].data
       file.ext = file.name.split('.').slice(-1)[0]
     } else {
       file.data = treeToArray(object[key].data)
@@ -213,7 +219,7 @@ exports.treeToArray = treeToArray
 
 /**
  * shorten an array of paths
- * 
+ *
  * @param {String} path_to_remove   beginning of path to remove
  * @param {Array} paths_array      paths array to process
  * @returns {Array}
@@ -226,11 +232,20 @@ function shortenPaths(path_to_remove, paths_array) {
 
 exports.shortenPaths = shortenPaths
 
+exports.getFilesData = async (path) => {
+  const paths_array = await readdirRecursive(path)
+  const short_paths_array = await shortenPaths(path, paths_array)
+  const tree = await pathsToTree(short_paths_array, path)
+  const files = await treeToArray(tree)
+  // console.log({files})
+  return files
+}
+
 /**
  * Create new template
- * 
+ *
  * @async
- * @param {String} template_name 
+ * @param {String} template_name
  * @returns {Promise}
  */
 exports.createTemplate = async (template_name) => {
@@ -272,9 +287,9 @@ exports.createTemplate = async (template_name) => {
 
 /**
  * remove template
- * 
- * @param {String} template_name 
- * @returns 
+ *
+ * @param {String} template_name
+ * @returns {Promise}
  */
 exports.removeTemplate = async (template_name) => {
   return asyncCallback(rimraf, `data/templates/${template_name}`)
@@ -282,9 +297,9 @@ exports.removeTemplate = async (template_name) => {
 
 /**
 * Create new partial
-* 
+*
 * @async
-* @param {String} partial_name 
+* @param {String} partial_name
 * @returns {Promise}
 */
 exports.createPartial = async (partial_name) => {
@@ -318,9 +333,9 @@ exports.createPartial = async (partial_name) => {
 
 /**
  * remove a partial
- * 
+ *
  * @async
- * @param {String} partial_name 
+ * @param {String} partial_name
  * @returns {Promise}
  */
 exports.removePartial = async (partial_name) => {
@@ -358,7 +373,7 @@ exports.removeStylesheet = async (stylesheet_name) => {
 
 /**
  * render an email template
- * 
+ *
  * @param {String} template_path   path of template to render
  * @returns {String}               rendered html
  */
@@ -414,7 +429,7 @@ exports.renderEmail = async (template_path) => {
 
 /**
  * render a text message
- * 
+ *
  * @param {String} template_path   path of template to render
  * @returns {String}               rendered html
  */
@@ -436,7 +451,7 @@ exports.renderText = async (template_path) => {
 
 /**
  * render push notification
- * 
+ *
  * @param {String} template_path   path of template to render
  * @returns {String}               rendered html
  */

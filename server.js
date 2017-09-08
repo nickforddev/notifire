@@ -24,12 +24,9 @@ app.get('/data', async (req, res) => {
   }
 
   for (let key in dirs) {
-    const paths_array = await utils.readdirRecursive(dirs[key])
-    const short_paths_array = utils.shortenPaths(dirs[key], paths_array)
-    const tree = utils.pathsToTree(short_paths_array, dirs[key])
-    const files = utils.treeToArray(tree)
-    output[key] = files
+    output[key] = await utils.getFilesData(dirs[key])
   }
+
   res.send(output)
 })
 
