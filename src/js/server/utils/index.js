@@ -296,7 +296,7 @@ exports.removeTemplate = async (template_name) => {
 }
 
 /**
-* Create new partial
+* create new partial
 *
 * @async
 * @param {String} partial_name

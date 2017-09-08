@@ -254,6 +254,49 @@ describe('utils.createTemplate', () => {
   })
 })
 
+describe('utils.renderEmail', () => {
+  it('should render email', async () => {
+    await utils.appendFile('data/templates/___test___/email/index.html', `
+      <div>{{ test }}</div>
+    `)
+    await utils.appendFile('data/templates/___test___/data.json', `
+    {
+      "test": "test123"
+    }
+    `)
+    const html = await utils.renderEmail('templates/___test___')
+    expect(html)
+      .toMatchSnapshot()
+  })
+})
+
+describe('utils.renderText', () => {
+  it('should render text', async () => {
+    await utils.appendFile('data/templates/___test___/text/index.html', `<div>{{ test }}</div>`)
+    const { html } = await utils.renderText('templates/___test___')
+    expect(html)
+      .toMatch('<div>test123</div>')
+  })
+})
+
+describe('utils.renderPush', () => {
+  it('should render push', async () => {
+    await utils.appendFile('data/templates/___test___/push/index.html', `<div>{{ test }}</div>`)
+    const { html } = await utils.renderPush('templates/___test___')
+    expect(html)
+      .toMatch('<div>test123</div>')
+  })
+})
+
+describe('utils.trimTemplate', () => {
+  it('should trim a template with comments in it', async () => {
+    const template = `<!-- this is an html comment -->     {{! this is a mustache comment }}`
+    const html = await utils.trimTemplate(template)
+    expect(!!html)
+      .toBe(false)
+  })
+})
+
 describe('utils.removeTemplate', () => {
   it('should remove a template', async () => {
     await utils.removeTemplate('___test___')
