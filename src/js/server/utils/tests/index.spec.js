@@ -1,6 +1,7 @@
 import utils from '../index'
 import glob from 'glob'
 
+// utils
 describe('utils.sleep', () => {
   it('should work with then', done => {
     utils.sleep(5)
@@ -90,6 +91,7 @@ describe('utils.transformAsync', () => {
   })
 })
 
+// fs
 describe('utils.mkdir', () => {
   it('should make a new directory asynchronously', async () => {
     expect.assertions(1)
@@ -228,5 +230,94 @@ describe('utils.rmrf', () => {
     const files = await utils.asyncCallback(glob, './___testing___/*')
     expect(files)
       .toEqual([])
+  })
+})
+
+// templates
+describe('utils.createTemplate', () => {
+  it('should create a new template', async () => {
+    await utils.removeTemplate('___test___') // just in case :)
+    await utils.createTemplate('___test___')
+    const files = await utils.readdir('data/templates/___test___')
+    expect(files)
+      .toEqual([
+        'data.json',
+        'email',
+        'push',
+        'text'
+      ])
+  })
+
+  it('should throw when template already exists', async () => {
+    await expect(utils.createTemplate('___test___'))
+      .rejects.toEqual(new Error('A template with that name already exists'))
+  })
+})
+
+describe('utils.removeTemplate', () => {
+  it('should remove a template', async () => {
+    await utils.removeTemplate('___test___')
+    const files = await utils.readdir('data/templates/')
+    expect(!files.includes('___test___'))
+      .toBe(true)
+  })
+})
+
+// stylesheets
+describe('utils.createStylesheet', () => {
+  it('should create a new stylesheet with no extension', async () => {
+    await utils.removeStylesheet('___test___.scss') // just in case :)
+    await utils.createStylesheet('___test___')
+    const files = await utils.readdir('data/styles/')
+    expect(files.includes('___test___.scss'))
+      .toBe(true)
+  })
+
+  it('should create a new stylesheet with an extension', async () => {
+    await utils.removeStylesheet('___test___.css') // just in case :)
+    await utils.createStylesheet('___test___.css')
+    const files = await utils.readdir('data/styles/')
+    expect(files.includes('___test___.css'))
+      .toBe(true)
+  })
+
+  it('should throw when stylesheet already exists', async () => {
+    await expect(utils.createStylesheet('___test___'))
+      .rejects.toEqual(new Error('A stylesheet with that name already exists'))
+  })
+})
+
+describe('utils.removeStylesheet', () => {
+  it('should remove a stylesheet', async () => {
+    await utils.removeStylesheet('___test___.scss')
+    await utils.removeStylesheet('___test___.css')
+    const files = await utils.readdir('data/styles/')
+    expect(!files.includes('___test___.scss'))
+      .toBe(true)
+  })
+})
+
+// partials
+describe('utils.createPartial', () => {
+  it('should create a new template', async () => {
+    await utils.removePartial('___test___') // just in case :)
+    await utils.createPartial('___test___')
+    const files = await utils.readdir('data/partials/')
+    expect(files.includes('___test___'))
+      .toBe(true)
+  })
+
+  it('should throw when Partial already exists', async () => {
+    await expect(utils.createPartial('___test___'))
+      .rejects.toEqual(new Error('A partial with that name already exists'))
+  })
+})
+
+describe('utils.removePartial', () => {
+  it('should remove a Partial', async () => {
+    await utils.removePartial('___test___')
+    const files = await utils.readdir('data/partials/')
+    expect(!files.includes('___test___'))
+      .toBe(true)
   })
 })
