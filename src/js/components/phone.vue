@@ -46,14 +46,6 @@ $phone-button-diameter: 60px;
 $phone-width: 382px;
 $phone-height: 824px;
 
-// @mixin absolute_fill {
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-//   bottom: 0;
-//   left: 0;
-// }
-
 .phone {
   position: relative;
   top: 30px;
@@ -239,9 +231,4 @@ $phone-height: 824px;
   }
 }
 
-iframe {
-  width: 100%;
-  height: 100%;
-  border-width: 0;
-}
 </style>

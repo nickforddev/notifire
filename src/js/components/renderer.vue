@@ -25,6 +25,9 @@ export default {
     email_view,
     push_view,
     text_view
+  },
+  mounted() {
+    this.$store.dispatch('get_globals')
   }
 }
 </script>

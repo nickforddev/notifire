@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     sidebar_width: 300,
+    globals: {},
     files: {},
     active_files: [],
     active_editor_group: false,
@@ -18,6 +19,9 @@ export default new Vuex.Store({
   getters: {
     sidebar_width: state => {
       return state.sidebar_width
+    },
+    globals: state => {
+      return state.globals
     },
     files: state => {
       return state.files
@@ -44,6 +48,9 @@ export default new Vuex.Store({
   mutations: {
     SET_SIDEBAR_WIDTH(state, value) {
       state.sidebar_width = value
+    },
+    SET_GLOBALS(state, data) {
+      state.globals = data
     },
     SET_FILES(state, files) {
       state.files = files
@@ -105,6 +112,15 @@ export default new Vuex.Store({
         method: 'delete'
       })
     },
+    async get_globals({ commit }) {
+      try {
+        const response = await new Request('globals/globals.json')
+        const data = response.data
+        commit('SET_GLOBALS', data)
+      } catch (error) {
+        console.warn(error)
+      }
+    },
     async get_files({ commit }) {
       try {
         const response = await new Request('data')
@@ -120,7 +136,7 @@ export default new Vuex.Store({
       let parent_path = options.path.split('/')
       parent_path.splice(-1)
       parent_path = parent_path.join('/')
-      console.log({parent_path})
+      // console.log({parent_path})
       let files
       if (options.type === 'email') {
         await sleep(1)

@@ -84,6 +84,10 @@ $font-size: 10px;
 
   .active > & {
     background: $color-sidebar-selected;
+
+    &:hover {
+      background: $color-sidebar-hover;
+    }
   }
 }
 .leader {

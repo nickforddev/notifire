@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <phone>
-      <lock-screen :data="text_data" />>
+      <lock-screen :data="text_data" />
     </phone>
   </div>
 </template>

@@ -1,8 +1,14 @@
 <template>
   <div class="container">
-    <div class="subject" v-html="renderer_html.subject"></div>
-    <div class="mask"></div>
-    <iframe ref="iframe" />
+    <div class="mask" />
+    <component :is="type" :data="renderer_html"/>
+    <div class="menu">
+      <select v-model="type">
+        <option value="desktop">Desktop</option>
+        <option value="iphone">iPhone</option>
+        <option value="android">Android</option>
+      </select>
+    </div>
   </div>
 </template>
 
@@ -10,20 +16,30 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import desktop from './desktop'
+import iphone from './iphone'
 
 export default {
   name: 'email',
+  data() {
+    return {
+      type: 'desktop',
+      menu_visible: false
+    }
+  },
   computed: {
     ...mapGetters([
       'renderer_html'
     ])
   },
-  watch: {
-    renderer_html(value) {
-      const iframe = this.$refs.iframe
-      const doc = iframe.contentDocument || iframe.contentWindow.document
-      doc.body.innerHTML = value.html
+  methods: {
+    toggleMenu() {
+      this.menu_visible = !this.menu_visible
     }
+  },
+  components: {
+    desktop,
+    iphone
   }
 }
 </script>
@@ -35,19 +51,7 @@ export default {
 
 $subject-height: 32px;
 .container {
-  height: calc(100% - #{$subject-height});
-}
-.subject {
-  display: block;
-  height: $subject-height;
-  text-align: left;
-  padding: 10px;
-  border-bottom: 1px solid grey;
-}
-iframe {
-  width: 100%;
   height: 100%;
-  border-width: 0;
 }
 .mask {
   @include block_psuedo;
@@ -55,8 +59,12 @@ iframe {
   bottom: 0;
   width: 150px;
   position: absolute;
-  // background: blue;
   margin-left: 12px;
   opacity: 0;
+}
+.menu {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 </style>
