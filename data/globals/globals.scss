@@ -12,8 +12,7 @@ body {
   font-weight: 200;
   font-size: 16px;
   color: $color-text;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   max-width: 550px;
   margin: 0px auto;
 }
@@ -46,8 +45,7 @@ body {
 .email_body {
   padding: 20px 20px 10px 20px;
   background: #ffffff;
-  -webkit-border-radius: 4px;
-          border-radius: 4px;
+  border-radius: 4px;
   text-align: center;
 }
 
@@ -176,8 +174,7 @@ sup {
 .status {
   display: inline-block;
   padding: 4px 6px;
-  -webkit-border-radius: 3px;
-          border-radius: 3px;
+  border-radius: 3px;
   font-size: 12px;
   font-weight: 200;
   

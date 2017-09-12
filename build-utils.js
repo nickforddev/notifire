@@ -3,6 +3,7 @@ const chalk = require('chalk')
 const utils = require('./src/js/server/utils')
 const preprocess = require('./src/js/server/preprocess')
 const inline = require('./src/js/server/inline')
+const postcss = require('./src/js/server/postcss')
 
 async function buildTemplate(template_path, global_css, output_path) {
   const template_name = template_path.split('/').slice(-1)
@@ -22,11 +23,12 @@ async function buildEmail(template_path, global_css, output_path) {
     const subject = await utils.readFile(`${template_path}/email/subject.html`)
     const scss = await utils.readFile(`${template_path}/email/style.scss`) || '//'
     const css = await preprocess(scss)
+    const css_post = await postcss(css)
     let template_inlined = await inline(template, {
       extraCss: global_css
     })
     template_inlined = await inline(template_inlined, {
-      extraCss: css,
+      extraCss: css_post,
       removeHtmlSelectors: true
     })
     await utils.mkdir(`${output_path}/templates/${name}/email`)
@@ -79,10 +81,11 @@ async function build(path = '', output_path = './dist') {
     const global_template = await utils.readFile(`${path}/globals/index.html`)
     const global_scss = await utils.readFile(`${path}/globals/globals.scss`) || '//'
     const global_css = await preprocess(global_scss)
+    const global_css_post = await postcss(global_css)
     const global_json = await utils.readFile(`${path}/globals/globals.json`)
 
     const inlined_global_template = await inline(global_template, {
-      extraCss: global_css
+      extraCss: global_css_post
     })
 
     await utils.rmrf(output_path)
@@ -92,11 +95,11 @@ async function build(path = '', output_path = './dist') {
     await utils.writeFile(`${output_path}/globals/globals.json`, global_json)
 
     for (let partial_path of partial_paths) {
-      await buildPartial(partial_path, global_css, output_path)
+      await buildPartial(partial_path, global_css_post, output_path)
     }
 
     for (let template_path of template_paths) {
-      await buildTemplate(template_path, global_css, output_path)
+      await buildTemplate(template_path, global_css_post, output_path)
     }
     const message = `Built ${template_paths.length} templates, ${partial_paths.length} partials  successfully`
     console.log(chalk.green(message))

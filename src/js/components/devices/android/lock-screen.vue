@@ -1,7 +1,10 @@
 <template>
   <div class="lock-screen">
     <div class="info">
-      <div class="time">{{ time }}</div>
+      <div class="time">
+        <div class="hours">{{ time_hours }}</div>
+        <div class="minutes">{{ time_minutes }}</div>
+      </div>
       <div class="date">{{ date_string }}</div>
     </div>
     <div class="push-container">
@@ -12,13 +15,12 @@
               <img :src="app_icon_path" />
             </div>
             <div class="title">{{ data.app }}</div>
+            <div class="status">08:02</div>
           </div>
-          <div class="status">now</div>
         </div>
         <div class="main">
           <div class="sender" v-if="data.sender">{{ data.sender }}</div>
           <div class="message" v-html="data.message"></div>
-          <div class="call-to-action">Slide for more</div>
         </div>
       </div>
     </div>
@@ -54,11 +56,14 @@ export default {
       const path = filters.lowercase(this.data.app)
       return `/static/icons/app-${filters.replace(path, ' ', '-')}.png`
     },
-    time() {
-      return this.date.format('h:mm')
+    time_hours() {
+      return this.date.format('hh')
+    },
+    time_minutes() {
+      return this.date.format('mm')
     },
     date_string() {
-      return this.date.format('dddd, MMMM d')
+      return this.date.format('ddd d MMM, YYYY')
     },
     ...mapGetters([
       'renderer_html'
@@ -73,21 +78,23 @@ export default {
 @import '~%/modules/mixins';
 
 $color-push-meta: #3d7c8c;
-$push-border-radius: 10px;
+$push-border-radius: 2px;
 
-.container {
-  height: 100%;
-  background: #1e1e1e;
-}
+// .container {
+//   height: 100%;
+//   background: #1e1e1e;
+//   font-family: 's8clock';
+// }
 .lock-screen {
   color: white;
 }
 .info {
   position: absolute;
-  top: 70px;
+  top: 50px;
   width: 100%;
 
   .time {
+    font-family: 's8clock';
     font-size: 5em;
     font-weight: 100;
   }
@@ -98,12 +105,12 @@ $push-border-radius: 10px;
 }
 .push-container {
   position: absolute;
-  top: 220px;
+  top: 280px;
   width: 100%;
 
   .push {
     margin: 4px;
-    background: rgba(255,255,255, 0.7);
+    background: rgba(255,255,255, 1);
     color: #111;
     border-radius: $push-border-radius;
     text-align: left;
@@ -118,7 +125,7 @@ $push-border-radius: 10px;
       width: 100%;
       font-size: 0.8em;
       font-weight: 500;
-      background: rgba(255,255,255, 0.2);
+      // background: rgba(255,255,255, 0.2);
       color: $color-push-meta;
 
       > div {
@@ -144,10 +151,13 @@ $push-border-radius: 10px;
       .title {
         float: left;
         margin-top: 2px;
-        text-transform: uppercase;
+        margin-right: 8px;
+        color: #333;
+        // text-transform: uppercase;
       }
       
       .status {
+        margin-top: 2px;
         display: inline-block;
       }
     }
@@ -158,12 +168,12 @@ $push-border-radius: 10px;
     .sender {
       font-weight: bold;
     }
-    .call-to-action {
-      margin-top: 2px;
-      color: $color-push-meta;
-      font-size: 0.8em;
-      font-weight: 500;
-    }
+    // .call-to-action {
+    //   margin-top: 2px;
+    //   color: $color-push-meta;
+    //   font-size: 0.8em;
+    //   font-weight: 500;
+    // }
   }
 }
 </style>

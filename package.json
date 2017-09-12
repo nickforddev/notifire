@@ -30,6 +30,8 @@
     "mkdirp": "^0.5.1",
     "moment": "^2.18.1",
     "node-sass": "^4.5.3",
+    "postcss": "^6.0.11",
+    "postcss-js": "^1.0.0",
     "pretty-file-icons": "^2.1.2",
     "require-text": "0.0.1",
     "rimraf": "^2.6.1",
@@ -42,7 +44,7 @@
     "vuex": "^2.3.1"
   },
   "devDependencies": {
-    "autoprefixer": "^7.1.2",
+    "autoprefixer": "^7.1.4",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
     "babel-jest": "^21.0.2",

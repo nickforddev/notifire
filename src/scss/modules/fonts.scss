@@ -1,41 +1,50 @@
 /** Ultra Light */
 @font-face {
-  font-family: "San Francisco";
+  font-family: 'San Francisco';
   font-weight: 100;
-  src: url("/static/fonts/sanfranciscodisplay-ultralight-webfont.woff");
+  src: url('/static/fonts/sanfranciscodisplay-ultralight-webfont.woff');
 }
 
 /** Thin */
 @font-face {
-  font-family: "San Francisco";
+  font-family: 'San Francisco';
   font-weight: 200;
-  src: url("/static/fonts/sanfranciscodisplay-thin-webfont.woff");
+  src: url('/static/fonts/sanfranciscodisplay-thin-webfont.woff');
 }
 
 /** Regular */
 @font-face {
-  font-family: "San Francisco";
+  font-family: 'San Francisco';
   font-weight: 400;
-  src: url("/static/fonts/sanfranciscodisplay-regular-webfont.woff");
+  src: url('/static/fonts/sanfranciscodisplay-regular-webfont.woff');
 }
 
 /** Medium */
 @font-face {
-  font-family: "San Francisco";
+  font-family: 'San Francisco';
   font-weight: 500;
-  src: url("/static/fonts/sanfranciscodisplay-medium-webfont.woff");
+  src: url('/static/fonts/sanfranciscodisplay-medium-webfont.woff');
 }
 
 /** Semi Bold */
 @font-face {
-  font-family: "San Francisco";
+  font-family: 'San Francisco';
   font-weight: 600;
-  src: url("/static/fonts/sanfranciscodisplay-semibold-webfont.woff");
+  src: url('/static/fonts/sanfranciscodisplay-semibold-webfont.woff');
 }
 
 /** Bold */ 
 @font-face {
-  font-family: "San Francisco";
+  font-family: 'San Francisco';
   font-weight: 700;
-  src: url("/static/fonts/sanfranciscodisplay-bold-webfont.woff");
+  src: url('/static/fonts/sanfranciscodisplay-bold-webfont.woff');
+}
+
+@font-face {
+  font-family: 's8clock';
+  src: url('/static/fonts/clock2017l-webfont.woff2') format('woff2'),
+       url('/static/fonts/clock2017l-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
 }
