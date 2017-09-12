@@ -41,8 +41,9 @@ export default {
       }
     },
     icon_src() {
-      const filename_split = this.file.name.split('.')
-      const type = filename_split[filename_split.length - 1]
+      // const filename_split = this.file.name.split('.')
+      // const type = filename_split[filename_split.length - 1]
+      const type = this.file.ext
       return `/static/svg/${type}.svg`
     },
     ...mapGetters([

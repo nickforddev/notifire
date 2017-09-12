@@ -17,7 +17,7 @@
       <div class="container">
         <logo />
         <div class="tagline">
-          A new way of thinking about notifications
+          Lorem ipsum dolor sit amet
         </div>
       </div>
     </div>
@@ -128,9 +128,12 @@ export default {
 $divider-height: 20px;
 $divider-background: #333;
 
+.editor-group-container {
+  width: 50%;
+}
 .editor-group {
   position: relative;
-  width: 50%;
+  width: 100%;
   height: 100vh;
   background-color: $color-page-background;
   color: $color-text-light;

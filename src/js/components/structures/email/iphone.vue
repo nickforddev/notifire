@@ -46,11 +46,13 @@ export default {
 
 <style scoped lang="scss">
 @import '~%/modules/mixins';
+@import '~%/modules/colors';
 
 $header-height: 32px;
 .container {
   height: 100%;
-  height: calc(100% - #{$header-height});
+  // height: calc(100% - #{$header-height});
+  background: $color-renderer-background;
 }
 .header {
   display: block;

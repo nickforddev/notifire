@@ -19,6 +19,7 @@ html, body {
 
 #app {
   font-family: 'Source Code Pro', monospace;
+  // font-family: Menlo, Monaco, "Courier New", monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

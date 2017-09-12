@@ -38,8 +38,10 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
+@import '~%/modules/colors';
+
 .container {
   height: 100%;
-  background: #1e1e1e;
+  background: $color-renderer-background;
 }
 </style>

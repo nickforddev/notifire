@@ -10,6 +10,9 @@ $color-sidebar-caret: white;
 
 // editor
 
+// renderer
+$color-renderer-background: #1e1e1e;
+
 // dividers
 $color-divider-background: #323842;
 
@@ -23,15 +26,15 @@ $color-text-dark: #333;
 $color-text-default: $color-text-light;
 
 // // greys
-// $color-grey-10: #e6e7e8;
-// $color-grey-20: #d1d3d4;
-// $color-grey-30: #a9abae;
-// $color-grey-40: #a7a9ac;
-// $color-grey-50: #939598;
-// $color-grey-60: #808285;
-// $color-grey-70: #6d6e71;
-// $color-grey-80: #58595b;
-// $color-grey-90: #414042;
+$color-grey-10: #e6e7e8;
+$color-grey-20: #d1d3d4;
+$color-grey-30: #a9abae;
+$color-grey-40: #a7a9ac;
+$color-grey-50: #939598;
+$color-grey-60: #808285;
+$color-grey-70: #6d6e71;
+$color-grey-80: #58595b;
+$color-grey-90: #414042;
 
 // statuses
 // $color-status-neutral: #0071bc;
@@ -53,10 +56,10 @@ $color-status-danger: #da1752;
 // $color-forms-legend: #686871;
 
 // // buttons
-// $color-button-background: lighten($color-background-default, 20%);
-// $color-button-text: $color-text-light;
-// $color-button-disabled-background: $color-grey-20;
-// $color-button-primary-background: $color-highlight;
+$color-button-background: lighten($color-background-default, 20%);
+$color-button-text: $color-text-light;
+$color-button-disabled-background: $color-grey-20;
+$color-button-primary-background: $color-highlight;
 
 // // boxes
 // $color-box-background: $color-input-background;
