@@ -11,7 +11,7 @@ export default new Vuex.Store({
     files: {},
     active_files: [],
     active_editor_group: false,
-    active_editor_group_type: 'email',
+    active_editor_group_type: false,
     editor_width: '50%',
     renderer_html: '',
     renderer_error: ''

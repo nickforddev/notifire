@@ -121,7 +121,7 @@ export default {
 <style scoped lang="scss">
 $header-height: 30px;
 $header-color: white;
-$header-background: #3d3d3d;
+$header-background: #282c34;
 
 .editor-container {
   position: relative;

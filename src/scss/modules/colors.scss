@@ -2,7 +2,7 @@
 $color-page-background: #2d323b;
 
 // sidebar
-$color-sidebar-background: #252a30;
+$color-sidebar-background: #21252b;
 $color-sidebar-selected: #323842;
 $color-sidebar-hover: #2f333c;
 $color-sidebar-color: white;
@@ -12,3 +12,61 @@ $color-sidebar-caret: white;
 
 // dividers
 $color-divider-background: #323842;
+
+// base
+$color-highlight: #f68e1f;
+$color-background-dark: #202731;
+$color-background-light: #e1e9ec;
+$color-background-default: $color-background-dark;
+$color-text-light: #fff2dd;
+$color-text-dark: #333;
+$color-text-default: $color-text-light;
+
+// // greys
+// $color-grey-10: #e6e7e8;
+// $color-grey-20: #d1d3d4;
+// $color-grey-30: #a9abae;
+// $color-grey-40: #a7a9ac;
+// $color-grey-50: #939598;
+// $color-grey-60: #808285;
+// $color-grey-70: #6d6e71;
+// $color-grey-80: #58595b;
+// $color-grey-90: #414042;
+
+// statuses
+// $color-status-neutral: #0071bc;
+$color-status-neutral: #1ce9f7;
+$color-status-success: #0ca449;
+$color-status-warning: #f7d114;
+$color-status-danger: #da1752;
+// $color-status-danger: #da1d17;
+
+// // inputs
+// $color-input-background: lighten($color-background-default, 5%);
+// $color-input-background-hover: lighten($color-background-default, 7%);
+// $color-input-text: #dfdfdf;
+// $color-input-border: $color-input-background;
+// $color-input-border-hover: $color-highlight;
+// $color-input-border-focus: $color-highlight;
+
+// // forms
+// $color-forms-legend: #686871;
+
+// // buttons
+// $color-button-background: lighten($color-background-default, 20%);
+// $color-button-text: $color-text-light;
+// $color-button-disabled-background: $color-grey-20;
+// $color-button-primary-background: $color-highlight;
+
+// // boxes
+// $color-box-background: $color-input-background;
+// $color-box-light-background: #e1e9ec;
+// $color-box-text: $color-text-light;
+
+// // alerts
+// $color-alert-background: $color-box-background;
+
+// // modals
+// // $color-modal-background: #424758;
+// // $color-modal-background: $color-box-background;
+// $color-modal-background: $color-background-default;

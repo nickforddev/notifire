@@ -1,4 +1,6 @@
 import Vue from 'vue'
+import VeeValidate from 'vee-validate'
+
 import App from './app'
 import router from './router'
 import store from '@/store'
@@ -6,6 +8,9 @@ import { filters } from '@/modules/filters'
 // import VueShortkey from 'vue-shortkey'
 
 import Loading from '@/components/loading'
+import Logo from '@/components/logo'
+import Modal from '@/components/modal'
+import Validation from '@/components/validation'
 
 import TreeView from '@/components/tree/tree-view'
 import TreeGroup from '@/components/tree/tree-group'
@@ -25,6 +30,9 @@ import '../scss/styles.scss'
 
 const components = [
   Loading,
+  Logo,
+  Modal,
+  Validation,
   TreeView,
   TreeGroup,
   TreeItem,
@@ -47,6 +55,8 @@ const install = (Vue) => {
   components.map(component => {
     Vue.component(component.name, component)
   })
+
+  Vue.use(VeeValidate)
 }
 
 install(Vue)

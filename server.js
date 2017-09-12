@@ -3,6 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const utils = require('./src/js/server/utils')
+const Email = require('./src/js/server/utils/send')
 const port = '3636'
 
 // Server
@@ -164,6 +165,16 @@ app.post('/build', async (req, res) => {
     res.send(message)
   } catch (error) {
     res.status(500).send(error.message)
+  }
+})
+
+app.post('/send', async (req, res) => {
+  try {
+    const options = req.body
+    const msg = await new Email(options)
+    res.send(msg)
+  } catch (error) {
+    res.status(500).send(error)
   }
 })
 

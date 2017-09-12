@@ -1,7 +1,10 @@
 <template>
   <div class="content">
     <div class="error-message" v-if="renderer_error">{{ renderer_error }}</div>
-    <component :is="`${active_editor_group_type}_view`" />
+    <component :is="`${active_editor_group_type}_view`" v-if="active_editor_group_type" />
+    <div v-else>
+      No type found
+    </div>
   </div>
 </template>
 

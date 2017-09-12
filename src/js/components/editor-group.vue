@@ -1,17 +1,26 @@
 <template>
-  <div class="editor-group">
-    <editor
-      v-for="editor in editors"
-      v-model="data[editor.model]"
-      :key="editor.title"
-      :title="editor.title"
-      :mode="editor.mode"
-      :path="editor.path"
-      :ref="editor.path"
-      @input="debounceInput"
-      @close="closeEditor"
-    />
-    <div class="clear"></div>
+  <div class="editor-group-container">
+    <div class="editor-group" v-if="editors.length">
+      <editor
+        v-for="editor in editors"
+        v-model="data[editor.model]"
+        :key="editor.title"
+        :title="editor.title"
+        :mode="editor.mode"
+        :path="editor.path"
+        :ref="editor.path"
+        @input="debounceInput"
+        @close="closeEditor"
+      />
+    </div>
+    <div v-else class="editor-group empty">
+      <div class="container">
+        <logo />
+        <div class="tagline">
+          A new way of thinking about notifications
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -124,11 +133,8 @@ $divider-background: #333;
   width: 50%;
   height: 100vh;
   background-color: $color-page-background;
+  color: $color-text-light;
   float: left;
-
-  .editor-panel {
-    height: 50vh;
-  }
 }
 .divider {
   height: $divider-height;
@@ -140,5 +146,13 @@ $divider-background: #333;
 }
 .clear {
   clear: both;
+}
+.container {
+  max-width: 90%;
+  width: 500px;
+  margin: 10vh auto 0;
+}
+.tagline {
+  color: $color-highlight;
 }
 </style>
