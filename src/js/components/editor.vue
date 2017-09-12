@@ -189,7 +189,7 @@ $header-shade-color: rgba(0,0,0, 0.4);
 <style lang="scss">
 .editor-group {
   .ace-monokai .ace_gutter {
-    background: #282c34;;
+    background: #282c34;
     color: #8F908A
   }
 

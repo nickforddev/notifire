@@ -1,6 +1,6 @@
 <template>
   <div class="tree-view" :style="[tree_styles]">
-    <h3>Files <button @click="build">Build</button></h3>
+    <h3>NOTIFLY <button @click="build">Build</button></h3>
 
     <tree-group
       type="globals"
