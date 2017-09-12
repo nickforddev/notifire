@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <phone>
-      <lock-screen :data="push_data" />
-    </phone>
+    <iphone>
+      <iphone-lock-screen :data="push_data" />
+    </iphone>
   </div>
 </template>
 

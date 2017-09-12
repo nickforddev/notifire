@@ -1,18 +1,27 @@
 <template>
   <div class="container">
-    <phone>
+    <iphone>
       <div class="header">
         <div class="sender">{{ globals.app_name }}</div>
+        <div class="receiver">To: <span>{{ globals.receiver_name }}</span></div>
+
+        <div class="divider"></div>
+
         <div class="subject">{{ data.subject }}</div>
+        <div class="time">{{ received }}</div>
+
+        <div class="divider"></div>
+        
       </div>
       <iframe ref="iframe" />
-    </phone>
+    </iphone>
   </div>
 </template>
 
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <script>
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -28,6 +37,9 @@ export default {
     }
   },
   computed: {
+    received() {
+      return moment.utc().format('dddd, MMMM d, h:mma')
+    },
     ...mapGetters([
       'globals'
     ])
@@ -48,7 +60,8 @@ export default {
 @import '~%/modules/mixins';
 @import '~%/modules/colors';
 
-$header-height: 32px;
+$header-height: 102px;
+
 .container {
   height: 100%;
   // height: calc(100% - #{$header-height});
@@ -59,11 +72,33 @@ $header-height: 32px;
   height: $header-height;
   text-align: left;
   padding: 10px;
-  border-bottom: 1px solid grey;
+  // border-bottom: 1px solid grey;
   background: white;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 0.8em;
 
-  .sender {
+  .sender, .subject {
+    margin-top: 0;
+    margin-bottom: 3px;
     font-weight: bold;
+    font-size: 1.1em;
+  }
+
+  .receiver {
+    font-size: .9em;
+
+    span {
+      color: grey;
+    }
+  }
+
+  .time {
+    color: grey;
+  }
+
+  .divider {
+    border-top: 1px solid #cdcdcd;
+    margin: 14px 0;
   }
 }
 iframe {

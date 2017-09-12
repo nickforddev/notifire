@@ -23,8 +23,11 @@ import TreeItemTemplate from '@/components/tree/tree-item-template'
 import ContentView from '@/components/content-view'
 import Renderer from '@/components/renderer'
 
-import Phone from '@/components/phone'
-import LockScreen from '@/components/lock-screen'
+import iPhone from '@/components/devices/iphone'
+import iPhoneLockScreen from '@/components/devices/iphone/lock-screen'
+
+import Android from '@/components/devices/android'
+import AndroidLockScreen from '@/components/devices/android/lock-screen'
 
 import '../scss/styles.scss'
 
@@ -42,8 +45,10 @@ const components = [
   TreeItemTemplate,
   ContentView,
   Renderer,
-  Phone,
-  LockScreen
+  iPhone,
+  iPhoneLockScreen,
+  Android,
+  AndroidLockScreen
 ]
 
 const install = (Vue) => {

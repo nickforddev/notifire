@@ -36,7 +36,7 @@ export default {
   props: {
     data: Object
   },
-  name: 'lock-screen',
+  name: 'android-lock-screen',
   created() {
     this.interval = setInterval(() => {
       this.date = moment()

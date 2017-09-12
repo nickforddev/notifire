@@ -38,6 +38,7 @@ import { Request } from '@/utils'
 
 import desktop from './desktop'
 import iphone from './iphone'
+import android from './android'
 
 export default {
   name: 'email',
@@ -91,7 +92,8 @@ export default {
   },
   components: {
     desktop,
-    iphone
+    iphone,
+    android
   }
 }
 </script>
