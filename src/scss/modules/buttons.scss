@@ -1,0 +1,51 @@
+@import '~%/modules/colors';
+
+$button-text-size: 0.6rem;
+
+button {
+  display: inline-block;
+  position: relative;
+  padding: .40em .65em;
+  background-color: $color-button-background;
+  color: $color-button-text;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  text-transform: uppercase;
+  font-size: $button-text-size;
+  font-weight: 500;
+  box-shadow: 0 1px 4px rgba(0,0,0, 0.3);
+  box-sizing: border-box;
+  transition: box-shadow 0.2s;
+  user-select: none;
+  text-decoration: none;
+  text-rendering: optimizeLegibility;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased;
+
+  &:hover {
+    color: $color-button-text;
+    box-shadow: 0 3px 4px rgba(0,0,0, 0.3);
+    cursor: pointer;
+    transition: box-shadow 0.4s;
+  }
+
+  &:active {
+    background-color: darken($color-button-background, 10%);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 5px 2px #7584b9;
+  }
+
+  &:disabled, .disabled {
+    opacity: 0.5;
+
+    &:hover {
+      cursor: not-allowed;
+      color: $color-button-text;
+      box-shadow: 0 1px 4px rgba(0,0,0, 0.2);
+    }
+  }
+}

@@ -124,7 +124,7 @@ $font-size: 10px;
   border-width: 0 0 5px 5px;
   border-color: transparent transparent $color-sidebar-caret transparent;
 
-  .closed > & {
+  .folder.closed & {
     border-width: 3.5px 0 3.5px 4px;
     border-color: transparent transparent transparent $color-sidebar-caret;
   }
