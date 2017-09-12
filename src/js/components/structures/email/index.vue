@@ -121,6 +121,9 @@ $subject-height: 32px;
   top: 10px;
   right: 10px;
 }
+.sender {
+  margin-top: 6px;
+}
 // .sender {
   // position: absolute;
   // top: 10px;

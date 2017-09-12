@@ -34,7 +34,7 @@ export default {
     render(html) {
       const iframe = this.$refs.iframe
       const doc = iframe.contentDocument || iframe.contentWindow.document
-      doc.body.innerHTML = html
+      doc.body.innerHTML = html || ''
     }
   }
 }

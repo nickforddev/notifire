@@ -140,8 +140,8 @@ $phone-height: 824px;
 
 .inner {
   @include absolute_center;
-  width: $phone-width - 14px;
-  height: $phone-height - 14px;
+  width: $phone-width;
+  height: $phone-height;
   background: $color-phone-background;
   border-radius: $phone-border-radius;
   z-index: 3;
@@ -154,12 +154,21 @@ $phone-height: 824px;
     border-radius: $phone-border-radius - 4px;
     box-shadow: inset 0 0 3px 0 rgba(0,0,0,0.1), inset 0 0 6px 3px #212121;
   }
+  &:before {
+    @include absolute_center;
+    @include block_psuedo;
+    height: calc(100% - 6px);
+    width: calc(100% - 6px);
+    border-radius: $phone-border-radius - 4px;
+    box-shadow: inset 0 0 10px 0 rgba(255,255,255,0.7);
+    z-index: 999;
+  }
 }
 
 .content {
   position: relative;
   height: 740px;
-  margin: 10px;
+  margin: 10px 7px;
   background-image: url('/static/lockscreen-galaxy-s8.jpg');
   background-size: cover;
   // background-repeat: no-repeat;
