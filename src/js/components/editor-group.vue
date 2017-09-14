@@ -130,6 +130,7 @@ $divider-background: #333;
   background-color: $color-page-background;
   color: $color-text-light;
   float: left;
+  overflow: hidden;
 }
 .divider {
   height: $divider-height;
