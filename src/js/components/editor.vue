@@ -1,5 +1,5 @@
 <template>
-  <div class="editor-container">
+  <div class="editor-container" :style="[container_styles]">
     <loading v-if="loading" />
     <div class="header">
       <div class="title">
@@ -14,6 +14,7 @@
       </div>
     </div>
     <div class="editor"></div>
+    <div v-if="resizable" class="divider horizontal" @mousedown.self.prevent="dragStart" />
   </div>
 </template>
 
@@ -21,9 +22,9 @@
 
 <script>
 import _ from 'lodash'
-import config from '@/config'
-import axios from 'axios'
 import ace from 'brace'
+import config from '@/config'
+import { Request, sleep } from '@/utils'
 
 const theme = 'monokai'
 
@@ -38,7 +39,7 @@ export default {
     return {
       loading: true,
       content: this.value || '',
-      editor: null
+      custom_editor_height: false
     }
   },
   computed: {
@@ -50,6 +51,28 @@ export default {
       const filename_split = filename.split('.')
       const type = filename_split[filename_split.length - 1]
       return `/static/svg/${type}.svg`
+    },
+    resizable() {
+      const length = this.$parent.active_files.length
+      const index = this.$parent.active_files.indexOf(this.path)
+      let output = false
+      if (index < (length - 1)) {
+        output = true
+      }
+      return output
+    },
+    editor_height() {
+      if (this.custom_editor_height) {
+        return `${this.custom_editor_height}%`
+      } else {
+        const editors = this.$parent.active_files.length
+        return `${100 / editors}%`
+      }
+    },
+    container_styles() {
+      return {
+        height: this.editor_height
+      }
     }
   },
   async mounted() {
@@ -59,8 +82,13 @@ export default {
     }
   },
   beforeDestroy() {
-    window.removeEventListener('resize-editors', this.resize)
     this.editor.destroy()
+  },
+  watch: {
+    async editor_height(value) {
+      await sleep(2)
+      this.resize()
+    }
   },
   methods: {
     initEditor() {
@@ -93,7 +121,6 @@ export default {
         this.content = content
         this.emitChange()
       })
-      window.addEventListener('resize-editors', this.resize)
     },
     emitChange: _.debounce(function() {
       this.$emit('input', this.content)
@@ -106,23 +133,37 @@ export default {
       this.editor.clearSelection()
     },
     async fetch() {
-      const { data } = await axios.get(this.url)
+      const { data } = await Request(this.path)
       this.setValue(data)
       this.loading = false
+    },
+    async save() {
+      await Request(this.path, {
+        method: 'put',
+        data: {
+          content: this.content
+        }
+      })
+      console.log('saved successfully')
     },
     resize() {
       this.editor.resize()
     },
-    save() {
-      return axios.put(this.url, {
-        content: this.content
-      }).then(() => {
-        console.log(`${this.title} saved successfully`)
-      })
-    },
     close() {
       this.$emit('close', this.path)
       this.$destroy()
+    },
+    dragging(e) {
+      // const percentage = (e.clientX - this.sidebar_width) / this.$el.offsetWidth * 100
+      // this.$store.dispatch('set_editor_width', percentage)
+    },
+    dragStart(e) {
+      window.addEventListener('mousemove', this.dragging)
+      window.addEventListener('mouseup', this.dragStop)
+    },
+    dragStop() {
+      window.removeEventListener('mousemove', this.dragging)
+      // window.dispatchEvent(new Event('resize-editors'))
     }
   }
 }
@@ -187,5 +228,19 @@ $header-shade-color: rgba(0,0,0, 0.4);
   height: 100%;
   width: 100%;
   -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.divider {
+  background: red;
+  position: absolute;
+  bottom: -7px;
+  height: 14px;
+  width: 100%;
+  z-index: 99;
+  opacity: 0.3;
+
+  &:hover {
+    cursor: row-resize;
+  }
 }
 </style>

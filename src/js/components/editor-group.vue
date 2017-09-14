@@ -3,7 +3,6 @@
     <div class="editor-group" v-if="editors.length">
       <editor
         v-for="editor in editors"
-        v-model="data[editor.model]"
         :key="editor.title"
         :title="editor.title"
         :mode="editor.mode"
@@ -29,16 +28,11 @@
 <script>
 import _ from 'lodash'
 import editor from '@/components/editor'
-import { sleep, pathToData, Request } from '@/utils'
+import { pathToData, Request } from '@/utils'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'editor-group',
-  data () {
-    return {
-      data: {}
-    }
-  },
   computed: {
     editors() {
       return this.active_files.map(path => {
@@ -53,13 +47,7 @@ export default {
     ])
   },
   async mounted() {
-    this.setHeights()
     window.addEventListener('focus-editor', this.editorFocus)
-  },
-  watch: {
-    editors(val) {
-      this.setHeights()
-    }
   },
   methods: {
     debounceInput: _.debounce(function() {
@@ -72,20 +60,9 @@ export default {
         : data.ext
       return {
         title: data.name,
-        model: data.ext,
         mode,
         path
       }
-    },
-    async setHeights() {
-      await sleep(10)
-      const editor_count = this.$el.querySelectorAll('.editor').length
-      const height = 100 / editor_count
-      const $editors = this.$el.querySelectorAll('.editor-container')
-      _.each($editors, ($editor) => {
-        $editor.style.height = `${height}%`
-      })
-      window.dispatchEvent(new Event('resize-editors'))
     },
     closeEditor(editor) {
       this.$store.dispatch('close_editor', editor)
