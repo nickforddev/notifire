@@ -85,7 +85,9 @@ export default {
     }
   },
   beforeDestroy() {
+    console.log('destroy')
     this.editor.destroy()
+    window.removeEventListener('resize-editors', this.resize)
   },
   watch: {
     async editor_height(value) {
@@ -128,6 +130,7 @@ export default {
         this.content = content
         this.emitChange()
       })
+      window.addEventListener('resize-editors', this.resize)
     },
     setValue(value) {
       if (typeof value === 'object') value = JSON.stringify(value, null, '\t')
@@ -195,11 +198,12 @@ $header-shade-color: rgba(0,0,0, 0.4);
 .editor-container {
   position: relative;
   height: 100%;
-  overflow: hidden;
+  // overflow: hidden;
 
   .editor {
     height: calc(100% - #{$header-height});
     overflow: hidden;
+    // padding-bottom: 10px;
   }
 
   .header {
@@ -247,7 +251,7 @@ $header-shade-color: rgba(0,0,0, 0.4);
   height: 14px;
   width: 100%;
   z-index: 999;
-  opacity: 0.3;
+  opacity: 0;
 
   &:hover {
     cursor: row-resize;

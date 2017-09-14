@@ -46,12 +46,7 @@ export default {
   },
   watch: {
     editors() {
-      for (let key in this.$refs) {
-        const vm = this.$refs[key][0]
-        if (vm) {
-          this.$refs[key][0].resetSize()
-        }
-      }
+      this.all('resetSize')
     }
   },
   async mounted() {
@@ -101,6 +96,14 @@ export default {
     editorFocus(e) {
       const $editor = this.$refs[e.detail]
       $editor[0].editor.focus()
+    },
+    all(method_name, ...args) {
+      for (let key in this.$refs) {
+        const vm = this.$refs[key][0]
+        if (vm) {
+          this.$refs[key][0][method_name](...args)
+        }
+      }
     }
   },
   components: {

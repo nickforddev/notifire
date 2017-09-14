@@ -37,6 +37,7 @@ export default {
     },
     dragStop() {
       document.body.removeEventListener('mousemove', this.dragging)
+      window.dispatchEvent(new Event('resize-editors'))
     }
   }
 }
