@@ -2,11 +2,9 @@
   <div class="editor-group-container">
     <div class="editor-group" v-if="editors.length">
       <editor
-        v-for="editor in editors"
-        :key="editor.title"
-        :title="editor.title"
-        :mode="editor.mode"
-        :path="editor.path"
+        v-for="(editor, index) in editors"
+        :key="index"
+        :data="editor"
         :ref="editor.path"
         @input="debounceInput"
         @close="closeEditor"
@@ -45,6 +43,16 @@ export default {
       'active_editor_group',
       'active_editor_group_type'
     ])
+  },
+  watch: {
+    editors() {
+      for (let key in this.$refs) {
+        const vm = this.$refs[key][0]
+        if (vm) {
+          this.$refs[key][0].resetSize()
+        }
+      }
+    }
   },
   async mounted() {
     window.addEventListener('focus-editor', this.editorFocus)

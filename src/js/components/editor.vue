@@ -1,12 +1,13 @@
 <template>
   <div class="editor-container" :style="[container_styles]">
+    <!-- {{ custom_editor_height }} -->
     <loading v-if="loading" />
     <div class="header">
       <div class="title">
         <div class="icon">
           <img :src="icon_src" />
         </div>
-        {{ this.title }}
+        {{ this.data.title }}
       </div>
       <div class="actions">
         <button @click="close">Close</button>
@@ -23,38 +24,31 @@
 <script>
 import _ from 'lodash'
 import ace from 'brace'
-import config from '@/config'
-import { Request, sleep } from '@/utils'
+import { Request, sleep, pathToData } from '@/utils'
 
 const theme = 'monokai'
 
 export default {
   props: {
-    value: String,
-    mode: String,
-    title: String,
-    path: String
+    data: Object
   },
   data() {
     return {
       loading: true,
+      editor: null,
       content: this.value || '',
       custom_editor_height: false
     }
   },
   computed: {
-    url() {
-      return `${config.api}/${this.path}`
-    },
     icon_src() {
-      const filename = this.path.split('/').slice(-1)[0]
-      const filename_split = filename.split('.')
-      const type = filename_split[filename_split.length - 1]
+      const file = pathToData(this.data.path, this.$parent.files)
+      const type = file.ext
       return `/static/svg/${type}.svg`
     },
     resizable() {
       const length = this.$parent.active_files.length
-      const index = this.$parent.active_files.indexOf(this.path)
+      const index = this.$parent.active_files.indexOf(this.data.path)
       let output = false
       if (index < (length - 1)) {
         output = true
@@ -63,21 +57,30 @@ export default {
     },
     editor_height() {
       if (this.custom_editor_height) {
-        return `${this.custom_editor_height}%`
+        return this.custom_editor_height
       } else {
         const editors = this.$parent.active_files.length
-        return `${100 / editors}%`
+        return 100 / editors
       }
+    },
+    editor_index() {
+      return this.$parent.active_files.indexOf(this.data.path)
+    },
+    next_editor() {
+      const next_index = this.editor_index + 1
+      const next_path = this.$parent.active_files[next_index]
+      const next_editor = this.$parent.$refs[next_path]
+      return next_editor[0]
     },
     container_styles() {
       return {
-        height: this.editor_height
+        height: `${this.editor_height}%`
       }
     }
   },
   async mounted() {
     this.initEditor()
-    if (this.path) {
+    if (this.data.path) {
       await this.fetch()
     }
   },
@@ -91,14 +94,18 @@ export default {
     }
   },
   methods: {
+    emitChange: _.debounce(function() {
+      this.$emit('input', this.content)
+      this.save()
+    }, 900),
     initEditor() {
-      require(`brace/mode/${this.mode}`)
+      require(`brace/mode/${this.data.mode}`)
       require(`brace/theme/${theme}`)
       this.editor = ace.edit(this.$el.querySelector('.editor'))
       this.editor.setWrapBehavioursEnabled(false)
-      if (this.mode) {
+      if (this.data.mode) {
         this.editor.session.setOptions({
-          mode: `ace/mode/${this.mode}`,
+          mode: `ace/mode/${this.data.mode}`,
           tabSize: 2,
           useSoftTabs: true
         })
@@ -122,10 +129,6 @@ export default {
         this.emitChange()
       })
     },
-    emitChange: _.debounce(function() {
-      this.$emit('input', this.content)
-      this.save()
-    }, 900),
     setValue(value) {
       if (typeof value === 'object') value = JSON.stringify(value, null, '\t')
       this.content = value
@@ -133,12 +136,12 @@ export default {
       this.editor.clearSelection()
     },
     async fetch() {
-      const { data } = await Request(this.path)
+      const { data } = await Request(this.data.path)
       this.setValue(data)
       this.loading = false
     },
     async save() {
-      await Request(this.path, {
+      await Request(this.data.path, {
         method: 'put',
         data: {
           content: this.content
@@ -149,13 +152,21 @@ export default {
     resize() {
       this.editor.resize()
     },
+    resetSize() {
+      this.custom_editor_height = false
+    },
     close() {
-      this.$emit('close', this.path)
-      this.$destroy()
+      this.$emit('close', this.data.path)
+      // this.$destroy()
     },
     dragging(e) {
-      // const percentage = (e.clientX - this.sidebar_width) / this.$el.offsetWidth * 100
-      // this.$store.dispatch('set_editor_width', percentage)
+      const offset = this.$el.getBoundingClientRect().top
+      const percentage = ((e.clientY - offset) / window.innerHeight) * 100
+      const next_editor_height = this.next_editor.editor_height
+      const total_height = this.editor_height + next_editor_height
+      this.custom_editor_height = percentage
+      const new_next_height = total_height - percentage
+      this.next_editor.custom_editor_height = new_next_height
     },
     dragStart(e) {
       window.addEventListener('mousemove', this.dragging)
@@ -163,7 +174,6 @@ export default {
     },
     dragStop() {
       window.removeEventListener('mousemove', this.dragging)
-      // window.dispatchEvent(new Event('resize-editors'))
     }
   }
 }
@@ -231,12 +241,12 @@ $header-shade-color: rgba(0,0,0, 0.4);
 }
 
 .divider {
-  background: red;
+  // background: white;
   position: absolute;
   bottom: -7px;
   height: 14px;
   width: 100%;
-  z-index: 99;
+  z-index: 999;
   opacity: 0.3;
 
   &:hover {
