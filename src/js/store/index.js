@@ -14,7 +14,8 @@ export default new Vuex.Store({
     active_editor_group_type: false,
     editor_width: '50%',
     renderer_html: '',
-    renderer_error: ''
+    renderer_error: '',
+    renderer_loading: false
   },
   getters: {
     sidebar_width: state => {
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     renderer_error: state => {
       return state.renderer_error
+    },
+    renderer_loading: state => {
+      return state.renderer_loading
     },
     editor_width: state => {
       return state.editor_width
@@ -79,6 +83,9 @@ export default new Vuex.Store({
         state.active_files.push(path)
       }
     },
+    RENDERER_LOADING(state, value) {
+      state.renderer_loading = value
+    },
     CLOSE_EDITOR(state, path) {
       state.active_files = state.active_files.filter((file, index) => {
         return file !== path
@@ -86,6 +93,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    renderer_loading({ commit }, value) {
+      commit('RENDERER_LOADING', value)
+    },
     set_sidebar_width({ commit }, value) {
       commit('SET_SIDEBAR_WIDTH', value)
     },
@@ -131,12 +141,12 @@ export default new Vuex.Store({
       }
     },
     async set_editor_group({ commit, dispatch }, options) {
+      dispatch('renderer_loading', true)
       dispatch('clear_editor_group')
       commit('SET_EDITOR_GROUP', options)
       let parent_path = options.path.split('/')
       parent_path.splice(-1)
       parent_path = parent_path.join('/')
-      // console.log({parent_path})
       let files
       if (options.type === 'email') {
         await sleep(1)

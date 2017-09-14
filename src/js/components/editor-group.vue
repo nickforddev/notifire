@@ -94,6 +94,7 @@ export default {
       this.editors = []
     },
     render() {
+      this.$store.dispatch('renderer_loading', true)
       const type = this.active_editor_group_type
       return new Request(`render/${type}`, {
         method: 'post',
@@ -107,6 +108,9 @@ export default {
       .catch(error => {
         const message = _.get(error, 'response.data') || 'Could not connect with the server'
         this.$store.dispatch('set_renderer_error', message)
+      })
+      .then(() => {
+        this.$store.dispatch('renderer_loading', false)
       })
     },
     editorFocus(e) {

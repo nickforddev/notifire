@@ -124,9 +124,4 @@ $subject-height: 32px;
 .sender {
   margin-top: 6px;
 }
-// .sender {
-  // position: absolute;
-  // top: 10px;
-  // left: 10px;
-// }
 </style>

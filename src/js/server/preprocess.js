@@ -1,6 +1,6 @@
 const sass = require('node-sass')
 
-module.exports = function preprocess (data) {
+module.exports = async function preprocess (data) {
   try {
     const { css } = sass.renderSync({
       data,
@@ -9,8 +9,10 @@ module.exports = function preprocess (data) {
       ]
     })
     const output = css.toString()
-    return Promise.resolve(output)
+    return output
+    // return Promise.resolve(output)
   } catch (error) {
-    return Promise.reject(error)
+    throw error
+    // return Promise.reject(error)
   }
 }

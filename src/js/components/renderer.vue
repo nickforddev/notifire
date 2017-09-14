@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <loading v-if="renderer_loading" />
     <div class="error-message" v-if="renderer_error">{{ renderer_error }}</div>
     <component :is="`${active_editor_group_type}_view`" v-if="active_editor_group_type" />
     <div v-else class="no-content">
@@ -35,6 +36,7 @@ export default {
   name: 'renderer',
   computed: {
     ...mapGetters([
+      'renderer_loading',
       'renderer_error',
       'active_editor_group_type'
     ])
