@@ -1,5 +1,5 @@
 <template>
-  <div class="editor-container" :style="[container_styles]">
+  <div class="editor-container" :style="[container_styles]" :class="[container_class]">
     <!-- {{ custom_editor_height }} -->
     <loading v-if="loading" />
     <div class="header">
@@ -36,9 +36,20 @@ export default {
     return {
       loading: true,
       editor: null,
+      focused: false,
       content: this.value || '',
       custom_editor_height: false
     }
+  },
+  async mounted() {
+    this.initEditor()
+    if (this.data.path) {
+      await this.fetch()
+    }
+  },
+  beforeDestroy() {
+    this.editor.destroy()
+    window.removeEventListener('resize-editors', this.resize)
   },
   computed: {
     icon_src() {
@@ -66,6 +77,9 @@ export default {
     editor_index() {
       return this.$parent.active_files.indexOf(this.data.path)
     },
+    offset_top() {
+      return this.$el.getBoundingClientRect().top
+    },
     next_editor() {
       const next_index = this.editor_index + 1
       const next_path = this.$parent.active_files[next_index]
@@ -76,18 +90,12 @@ export default {
       return {
         height: `${this.editor_height}%`
       }
+    },
+    container_class() {
+      if (this.focused) {
+        return 'focused'
+      }
     }
-  },
-  async mounted() {
-    this.initEditor()
-    if (this.data.path) {
-      await this.fetch()
-    }
-  },
-  beforeDestroy() {
-    console.log('destroy')
-    this.editor.destroy()
-    window.removeEventListener('resize-editors', this.resize)
   },
   watch: {
     async editor_height(value) {
@@ -130,10 +138,18 @@ export default {
         this.content = content
         this.emitChange()
       })
+      this.editor.on('focus', () => {
+        this.focused = true
+      })
+      this.editor.on('blur', () => {
+        this.focused = false
+      })
       window.addEventListener('resize-editors', this.resize)
     },
     setValue(value) {
-      if (typeof value === 'object') value = JSON.stringify(value, null, '\t')
+      if (typeof value === 'object') {
+        value = JSON.stringify(value, null, '\t') // fix for json content
+      }
       this.content = value
       this.editor.setValue(this.content)
       this.editor.clearSelection()
@@ -150,7 +166,7 @@ export default {
           content: this.content
         }
       })
-      console.log('saved successfully')
+      this.showSuccess()
     },
     resize() {
       this.editor.resize()
@@ -160,10 +176,12 @@ export default {
     },
     close() {
       this.$emit('close', this.data.path)
-      // this.$destroy()
+    },
+    showSuccess() {
+      console.log('success')
     },
     dragging(e) {
-      const offset = this.$el.getBoundingClientRect().top
+      const offset = this.offset_top
       const percentage = ((e.clientY - offset) / window.innerHeight) * 100
       const next_editor_height = this.next_editor.editor_height
       const total_height = this.editor_height + next_editor_height
@@ -198,18 +216,23 @@ $header-shade-color: rgba(0,0,0, 0.4);
 .editor-container {
   position: relative;
   height: 100%;
-  // overflow: hidden;
+
+  &.focused {
+    .header {
+      font-weight: bold;
+      color: $header-color;
+    }
+  }
 
   .editor {
     height: calc(100% - #{$header-height});
     overflow: hidden;
-    // padding-bottom: 10px;
   }
 
   .header {
     position: relative;
     height: $header-height;
-    color: $header-color;
+    color: darken($header-color, 30%);
     background: $header-background;
     border-top: 1px solid $header-highlight-color;
     border-bottom: 1px solid $header-shade-color;
@@ -245,7 +268,6 @@ $header-shade-color: rgba(0,0,0, 0.4);
 }
 
 .divider {
-  // background: white;
   position: absolute;
   bottom: -7px;
   height: 14px;
