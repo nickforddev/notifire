@@ -5,7 +5,7 @@
         <div v-if="file.type === 'folder'" class="caret"></div>
       </div>
       <div class="leader icon">
-        <img :src="icon_src" alt="css">
+        <img :src="icon_src" :alt="file.type">
       </div>
       <span class="name">
         {{ file.name }}

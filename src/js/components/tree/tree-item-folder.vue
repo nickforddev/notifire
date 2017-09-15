@@ -55,8 +55,8 @@ export default {
     },
     class_name() {
       return this.open
-          ? 'open'
-          : 'closed'
+        ? 'open'
+        : 'closed'
     },
     icon_src() {
       return this.open
