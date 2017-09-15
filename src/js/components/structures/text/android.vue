@@ -1,9 +1,7 @@
 <template>
-  <div class="container">
-    <iphone>
-      <iphone-lock-screen :data="text_data" />
-    </iphone>
-  </div>
+  <galaxy>
+    <android-lock-screen :data="text_data" />
+  </galaxy>
 </template>
 
 <!--/////////////////////////////////////////////////////////////////////////-->

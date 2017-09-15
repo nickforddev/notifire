@@ -1,9 +1,8 @@
 <template>
   <div class="container">
-    <component :is="type" :data="push_data" :style="[device_styles]" />
+    <component :is="type" :data="text_data" :style="[device_styles]" />
     <div class="menu">
       <select v-model="type">
-        <option value="desktop">Desktop</option>
         <option value="iphone">iPhone</option>
         <option value="android">Android</option>
       </select>
@@ -31,7 +30,7 @@ export default {
     }
   },
   computed: {
-    push_data() {
+    text_data() {
       return {
         app: 'Rafi Payment',
         message: this.renderer_html.html
