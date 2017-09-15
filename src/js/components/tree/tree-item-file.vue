@@ -9,7 +9,9 @@
         <img :src="icon_src" :alt="file.type" />
       </div>
 
-      {{ file.name }}
+      <div class="name">
+        {{ file.name }}
+      </div>
 
     </div>
   </div>
@@ -63,47 +65,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~%/modules/colors';
-
-$color-sidebar-templates-folder: #424952;
-$font-size: 10px;
-
-.tree-item {
-  padding: 4px;
-  margin: 0;
-  font-size: $font-size;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  user-select: none;
-
-  &:hover {
-    background: $color-sidebar-hover;
-    cursor: pointer;
-  }
-
-  .active > & {
-    background: $color-sidebar-selected;
-
-    &:hover {
-      background: $color-sidebar-hover;
-    }
-  }
-}
 .leader {
-  display: inline-block;
-  width: 8px;
   margin-left: 14px;
-  text-align: center;
-  pointer-events: none;
-}
-.icon {
-  position: relative;
-  top: 3px;
-  width: 14px;
-}
-.actions {
-  display: inline-block;
-  position: absolute;
-  right: 5px;
 }
 </style>

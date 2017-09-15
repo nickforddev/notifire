@@ -2,7 +2,9 @@
   <component
     :data="data"
     :level="level"
-    :is="vc_name" />
+    :is="vc_name">
+    <slot />
+  </component>
 </template>
 
 <script>

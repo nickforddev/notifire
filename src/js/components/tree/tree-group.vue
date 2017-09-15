@@ -68,8 +68,8 @@ export default {
 <!--/////////////////////////////////////////////////////////////////////////-->
 
 <style scoped lang="scss">
-  h3 {
-    padding-left: 13px;
-    text-transform: capitalize;
-  }
+h3 {
+  padding-left: 13px;
+  text-transform: capitalize;
+}
 </style>

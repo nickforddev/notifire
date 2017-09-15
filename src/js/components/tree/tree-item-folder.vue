@@ -11,8 +11,9 @@
         <img :src="icon_src" :alt="file.type" />
       </div>
 
-      {{ file.name }}
+      <span class="name">{{ file.name }}</span>
 
+      <slot></slot>
     </div>
 
     <div v-if="open">
@@ -27,8 +28,6 @@
 </template>
 
 <script>
-// import axios from 'axios'
-// import config from '@/config'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -91,68 +90,3 @@ export default {
   }
 }
 </script>
-
-<style scoped lang="scss">
-@import '~%/modules/colors';
-
-$color-sidebar-templates-folder: #424952;
-$font-size: 10px;
-
-.tree-item {
-  padding: 4px;
-  margin: 0;
-  font-size: $font-size;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  user-select: none;
-
-  &:hover {
-    background: $color-sidebar-hover;
-    cursor: pointer;
-  }
-
-  .active > & {
-    background: $color-sidebar-selected;
-  }
-}
-.caret {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 0 5px 5px;
-  border-color: transparent transparent $color-sidebar-caret transparent;
-
-  .closed & {
-    border-width: 3.5px 0 3.5px 4px;
-    border-color: transparent transparent transparent $color-sidebar-caret;
-  }
-}
-.leader {
-  display: inline-block;
-  width: 8px;
-  text-align: center;
-  pointer-events: none;
-}
-.icon {
-  position: relative;
-  top: 3px;
-  width: 14px;
-}
-.actions {
-  display: inline-block;
-  position: absolute;
-  right: 5px;
-}
-// .templates-folder {
-//   padding: 6px 6px 10px;
-//   background: $color-sidebar-templates-folder;
-//   margin-top: 6px;
-//   border-top: 1px solid lighten($color-sidebar-templates-folder, 10%);
-//   border-bottom: 1px solid darken($color-sidebar-templates-folder, 10%);
-
-//   &:hover {
-//     background: lighten($color-sidebar-templates-folder, 10%);
-//   }
-// }
-</style>

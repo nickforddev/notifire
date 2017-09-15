@@ -29,7 +29,9 @@ export default {
   },
   methods: {
     dragging(e) {
-      this.$store.dispatch('set_sidebar_width', e.clientX + 5)
+      if (e.clientX > 200 && e.clientX < 500) {
+        this.$store.dispatch('set_sidebar_width', e.clientX + 5)
+      }
     },
     dragStart(e) {
       document.body.addEventListener('mousemove', this.dragging)

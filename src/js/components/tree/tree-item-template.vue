@@ -7,7 +7,9 @@
       <div class="leader icon">
         <img :src="icon_src" alt="css">
       </div>
-      {{ file.name }}
+      <span class="name">
+        {{ file.name }}
+      </span>
       <div class="actions">
         <button @click="remove">-</button>
       </div>
@@ -18,10 +20,11 @@
         <tree-item
           :data="child"
           :level="next_level"
-          :template="file.name" />
-        <div v-if="child.type === 'folder'" class="actions">
-          <button @click="edit(child)">Edit</button>
-        </div>
+          :template="file.name">
+          <div v-if="child.type === 'folder'" class="actions">
+            <button @click="edit(child)">Edit</button>
+          </div>
+        </tree-item>
       </div>
     </div>
   </div>
@@ -100,73 +103,3 @@ export default {
   }
 }
 </script>
-
-<style scoped lang="scss">
-@import '~%/modules/colors';
-
-$color-sidebar-templates-folder: #424952;
-$font-size: 10px;
-
-.tree-item {
-  position: relative;
-  padding: 4px 4px 4px 10px;
-  margin: 0;
-  font-size: $font-size;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  user-select: none;
-
-  &:hover {
-    background: $color-sidebar-hover;
-    cursor: pointer;
-  }
-
-  .active > & {
-    background: $color-sidebar-selected;
-  }
-}
-.caret {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 0 5px 5px;
-  border-color: transparent transparent $color-sidebar-caret transparent;
-
-  .folder.closed & {
-    border-width: 3.5px 0 3.5px 4px;
-    border-color: transparent transparent transparent $color-sidebar-caret;
-  }
-}
-.leader {
-  display: inline-block;
-  width: 8px;
-  text-align: center;
-  pointer-events: none;
-}
-.icon {
-  position: relative;
-  top: 3px;
-  width: 14px;
-}
-.actions {
-  display: inline-block;
-  position: absolute;
-  right: 5px;
-  top: 2px;
-}
-.tree-item-children {
-  position: relative;
-}
-// .templates-folder {
-//   padding: 6px 6px 10px;
-//   background: $color-sidebar-templates-folder;
-//   margin-top: 6px;
-//   border-top: 1px solid lighten($color-sidebar-templates-folder, 10%);
-//   border-bottom: 1px solid darken($color-sidebar-templates-folder, 10%);
-
-//   &:hover {
-//     background: lighten($color-sidebar-templates-folder, 10%);
-//   }
-// }
-</style>
