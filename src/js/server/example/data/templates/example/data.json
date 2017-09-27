@@ -1,0 +1,28 @@
+{
+	"url": "http://payment.rafiproperties.com/",
+	"button_text": "Log In Now",
+	"details": [
+		{
+			"status": "complete",
+			"body": "Created Dwolla Account",
+			"url": "http://payment.rafiproperties.com/help"
+		},
+		{
+			"status": "complete",
+			"body": "Added Bank Account"
+		},
+		{
+			"status": "pending",
+			"body": "Microdeposits Pending",
+			"url": "http://payment.rafiproperties.com/help"
+		},
+		{
+			"status": "complete",
+			"body": "Recurring Payments Enabled"
+		},
+		{
+			"status": "complete",
+			"body": "Rafi Payment Account Activated"
+		}
+	]
+}

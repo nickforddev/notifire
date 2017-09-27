@@ -1,0 +1,21 @@
+.button-table {
+  margin: 20px auto;
+}
+
+.button-wrapper {
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+}
+
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  color: #ffffff;
+  background-color: #007dc1;
+  border: 1px solid #007dc1;
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+  font-size: 22px;
+  font-weight: 200;
+  text-decoration: none;
+}

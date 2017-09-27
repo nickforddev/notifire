@@ -10,7 +10,8 @@
     "start": "concurrently \"node build/dev-server.js\" \"node server.js\"",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src",
-    "test": "export NODE_ENV=test && jest"
+    "test": "export NODE_ENV=test && jest",
+    "example": "node example.js"
   },
   "dependencies": {
     "anchorme": "^1.1.2",
@@ -26,9 +27,11 @@
     "hogan": "^1.0.2",
     "http": "0.0.0",
     "inline-css": "^2.2.2",
+    "inquirer": "^3.3.0",
     "lodash": "^4.17.4",
     "mkdirp": "^0.5.1",
     "moment": "^2.18.1",
+    "ncp": "^2.0.0",
     "node-sass": "^4.5.3",
     "postcss": "^6.0.11",
     "postcss-js": "^1.0.0",
