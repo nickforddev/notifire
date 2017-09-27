@@ -24,6 +24,7 @@
 <script>
 import _ from 'lodash'
 import ace from 'brace'
+import { mapGetters } from 'vuex'
 import { Request, sleep, pathToData } from '@/utils'
 
 const theme = 'monokai'
@@ -37,7 +38,6 @@ export default {
       loading: true,
       editor: null,
       focused: false,
-      content: this.value || '',
       custom_editor_height: false
     }
   },
@@ -95,12 +95,24 @@ export default {
       if (this.focused) {
         return 'focused'
       }
-    }
+    },
+    content() {
+      return this.editor_content[this.data.path] || ''
+    },
+    ...mapGetters([
+      'editor_content'
+    ])
   },
   watch: {
     async editor_height(value) {
       await sleep(2)
       this.resize()
+    },
+    content(content) {
+      this.setValue(content)
+      this.editor.session.setOptions({
+        mode: `ace/mode/${this.data.mode}`
+      })
     }
   },
   methods: {
@@ -135,7 +147,11 @@ export default {
     initEventListeners(editor) {
       this.editor.on('change', () => {
         const content = this.editor.getValue()
-        this.content = content
+        const data = {
+          path: this.data.path,
+          content
+        }
+        this.$store.dispatch('set_editor_content', data)
         this.emitChange()
       })
       this.editor.on('focus', () => {
@@ -146,11 +162,15 @@ export default {
       })
       window.addEventListener('resize-editors', this.resize)
     },
-    setValue(value) {
-      if (typeof value === 'object') {
-        value = JSON.stringify(value, null, '\t') // fix for json content
+    setValue(content) {
+      if (typeof content === 'object') {
+        content = JSON.stringify(content, null, '\t') // fix for json content
       }
-      this.content = value
+      const data = {
+        path: this.data.path,
+        content
+      }
+      this.$store.dispatch('set_editor_content', data)
       this.editor.setValue(this.content)
       this.editor.clearSelection()
     },
@@ -182,12 +202,15 @@ export default {
     },
     dragging(e) {
       const offset = this.offset_top
-      const percentage = ((e.clientY - offset) / window.innerHeight) * 100
-      const next_editor_height = this.next_editor.editor_height
-      const total_height = this.editor_height + next_editor_height
-      this.custom_editor_height = percentage
-      const new_next_height = total_height - percentage
-      this.next_editor.custom_editor_height = new_next_height
+      const height = e.clientY - offset
+      if (height > 30) {
+        const percentage = (height / window.innerHeight) * 100
+        const next_editor_height = this.next_editor.editor_height
+        const total_height = this.editor_height + next_editor_height
+        this.custom_editor_height = percentage
+        const new_next_height = total_height - percentage
+        this.next_editor.custom_editor_height = new_next_height
+      }
     },
     dragStart(e) {
       window.addEventListener('mousemove', this.dragging)

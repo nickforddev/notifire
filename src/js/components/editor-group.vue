@@ -46,6 +46,8 @@ export default {
   },
   watch: {
     editors() {
+      // console.log('editors', this.editors)
+      // console.log('refs', this.$refs)
       this.all('resetSize')
     }
   },

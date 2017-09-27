@@ -13,6 +13,7 @@ export default new Vuex.Store({
     active_editor_group: false,
     active_editor_group_type: false,
     editor_width: '50%',
+    editor_content: {},
     renderer_html: '',
     renderer_error: '',
     renderer_loading: false
@@ -47,6 +48,9 @@ export default new Vuex.Store({
     },
     editor_width: state => {
       return state.editor_width
+    },
+    editor_content: state => {
+      return state.editor_content
     }
   },
   mutations: {
@@ -87,9 +91,18 @@ export default new Vuex.Store({
       state.renderer_loading = value
     },
     CLOSE_EDITOR(state, path) {
-      state.active_files = state.active_files.filter((file, index) => {
-        return file !== path
-      })
+      // state.active_files = state.active_files.filter((file, index) => {
+      //   return file !== path
+      // })
+      const index = state.active_files.indexOf(path)
+      Vue.delete(state.active_files, index)
+    },
+    SET_EDITOR_CONTENT(state, data) {
+      // state.editor_content[data.path] = data.content
+      Vue.set(state.editor_content, data.path, data.content)
+    },
+    REMOVE_EDITOR_CONTENT(state, path) {
+      delete state.editor_content[path]
     }
   },
   actions: {
@@ -111,11 +124,12 @@ export default new Vuex.Store({
     clear_editor_group({ commit }) {
       commit('CLEAR_EDITOR_GROUP')
     },
-    add_editor({ commit }, file) {
-      commit('ADD_EDITOR', file)
+    add_editor({ commit }, path) {
+      commit('ADD_EDITOR', path)
     },
-    close_editor({ commit }, file) {
-      commit('CLOSE_EDITOR', file)
+    close_editor({ commit }, path) {
+      commit('CLOSE_EDITOR', path)
+      commit('REMOVE_EDITOR_CONTENT', path)
     },
     remove_file({ commit }, path) {
       return new Request(path, {
@@ -172,6 +186,9 @@ export default new Vuex.Store({
       for (let file of files) {
         dispatch('add_editor', file)
       }
+    },
+    set_editor_content({ commit }, data) {
+      commit('SET_EDITOR_CONTENT', data)
     }
   }
 })
