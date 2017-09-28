@@ -161,7 +161,7 @@ $phone-height: 824px;
     width: calc(100% - 6px);
     border-radius: $phone-border-radius - 4px;
     box-shadow: inset 0 0 10px 0 rgba(255,255,255,0.7);
-    z-index: 999;
+    z-index: 1;
   }
 }
 

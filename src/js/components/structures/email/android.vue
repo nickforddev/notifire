@@ -12,7 +12,7 @@
 
         <div class="divider"></div>
         
-      </div>``
+      </div>
       <iframe ref="iframe" />
     </galaxy>
   </div>
@@ -60,7 +60,7 @@ export default {
 @import '~%/modules/mixins';
 @import '~%/modules/colors';
 
-$header-height: 102px;
+$header-height: 122px;
 
 .container {
   height: 100%;
