@@ -7,7 +7,9 @@
       <div class="leader icon">
         <img :src="icon_src" alt="css">
       </div>
-      {{ file.name }}
+      <span class="name">
+        {{ file.name }}
+      </span>
       <div class="actions">
         <button @click="remove">Delete</button>
       </div>

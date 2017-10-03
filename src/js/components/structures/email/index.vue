@@ -122,6 +122,9 @@ $subject-height: 32px;
   right: 10px;
 }
 .sender {
-  margin-top: 6px;
+  // margin-top: 6px;
+  margin-top: 2px;
+  float: right;
+  margin-left: 7px;
 }
 </style>

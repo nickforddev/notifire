@@ -170,9 +170,12 @@ export default {
         path: this.data.path,
         content
       }
+      var cursor = this.editor.getCursorPosition()
+      console.log({cursor})
       this.$store.dispatch('set_editor_content', data)
       this.editor.setValue(this.content)
       this.editor.clearSelection()
+      this.editor.moveCursorToPosition(cursor)
     },
     async fetch() {
       const { data } = await Request(this.data.path)
