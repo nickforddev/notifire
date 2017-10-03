@@ -1,7 +1,7 @@
 # Notifire
 
-[![Build](https://travis-ci.org/nickforddesign/notification_designer.svg?branch=master)](#)
-[![Coverage Status](https://coveralls.io/repos/github/nickforddesign/notification_designer/badge.svg?branch=master)](https://coveralls.io/github/nickforddesign/notification_designer?branch=master)
+[![Build](https://travis-ci.org/nickforddesign/notifire.svg?branch=master)](#)
+[![Coverage Status](https://coveralls.io/repos/github/nickforddesign/notifire/badge.svg?branch=master)](https://coveralls.io/github/nickforddesign/notifire?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 > A tool for designing app-related emails, push notifications, and sms notifications using handlebars templates
