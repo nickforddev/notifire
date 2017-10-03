@@ -93,6 +93,46 @@ describe('utils.transformAsync', () => {
 
 // fs
 describe('utils.mkdir', () => {
+  it('should make sure data folder exists', async () => {
+    expect.assertions(1)
+    await utils.mkdir('./data')
+    const files = await utils.asyncCallback(glob, './data')
+    expect(files)
+      .toEqual([
+        './data'
+      ])
+  })
+
+  it('should make sure templates folder exists', async () => {
+    expect.assertions(1)
+    await utils.mkdir('./data/templates')
+    const files = await utils.asyncCallback(glob, './data/templates')
+    expect(files)
+      .toEqual([
+        './data/templates'
+      ])
+  })
+
+  it('should make sure partials folder exists', async () => {
+    expect.assertions(1)
+    await utils.mkdir('./data/partials')
+    const files = await utils.asyncCallback(glob, './data/partials')
+    expect(files)
+      .toEqual([
+        './data/partials'
+      ])
+  })
+
+  it('should make sure styles folder exists', async () => {
+    expect.assertions(1)
+    await utils.mkdir('./data/styles')
+    const files = await utils.asyncCallback(glob, './data/styles')
+    expect(files)
+      .toEqual([
+        './data/styles'
+      ])
+  })
+
   it('should make a new directory asynchronously', async () => {
     expect.assertions(1)
     await utils.mkdir('./___testing___')
