@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    sidebar_width: 300,
+    sidebar_width: 240,
     globals: {},
     files: {},
     active_files: [],
