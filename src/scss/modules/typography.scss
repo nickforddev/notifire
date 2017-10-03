@@ -18,3 +18,23 @@ a {
     // text-decoration: none;
   }
 }
+
+$phone-link-color: blue;
+
+.phone {
+  a {
+    color: $phone-link-color;
+
+    &:hover {
+      color: $phone-link-color;
+    }
+
+    &:visited {
+      color: $phone-link-color;
+    }
+
+    &:active {
+      color: $phone-link-color;
+    }
+  }
+}
