@@ -40,7 +40,8 @@ export default {
     },
     device_styles() {
       return {
-        transform: `scale(${this.size / 100})`
+        transform: `scale(${this.size / 100})`,
+        transformOrigin: 'top 10px'
       }
     },
     ...mapGetters([

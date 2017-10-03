@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="mask" />
-    <component :is="type" :data="renderer_html"/>
+    <component :is="type" :data="renderer_html" :size="size"/>
     <div class="menu">
       <div class="select">
         <select v-model="type">
@@ -29,6 +29,9 @@
         </modal>
       </div>
     </div>
+    <div class="scale" v-if="type !== 'desktop'">
+      <input type="range" orient="vertical" v-model="size" min="20" />
+    </div>
   </div>
 </template>
 
@@ -49,7 +52,8 @@ export default {
       type: 'desktop',
       modal_visible: false,
       to: 'nford@rafiproperties.com',
-      from: 'test@rafiproperties.com'
+      from: 'test@rafiproperties.com',
+      size: 100
     }
   },
   computed: {
@@ -132,5 +136,17 @@ $subject-height: 32px;
   margin-top: 10px;
   float: right;
   margin-left: 7px;
+}
+.scale {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+
+  input {
+    height: 100px;
+    width: 10px;
+    writing-mode: bt-lr;
+    -webkit-appearance: slider-vertical;
+  }
 }
 </style>

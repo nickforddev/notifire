@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <galaxy>
+    <galaxy :style="[device_styles]"> 
       <div class="header">
         <div class="sender">{{ globals.app_name }}</div>
         <div class="receiver">To: <span>{{ globals.receiver_name }}</span></div>
@@ -26,6 +26,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   props: {
+    size: [Number, String],
     data: [Object, String]
   },
   mounted() {
@@ -37,6 +38,12 @@ export default {
     }
   },
   computed: {
+    device_styles() {
+      return {
+        transform: `scale(${this.size / 100})`,
+        transformOrigin: 'top 10px'
+      }
+    },
     received() {
       return moment.utc().format('dddd, MMMM d, h:mma')
     },
