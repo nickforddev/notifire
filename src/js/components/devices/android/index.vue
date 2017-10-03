@@ -46,7 +46,7 @@ $phone-height: 824px;
 
 .phone {
   position: relative;
-  top: 30px;
+  top: 60px;
   width: $phone-width;
   margin: 0 auto;
 }

@@ -3,6 +3,7 @@
     <logo />
     <button @click="build" class="build">Build</button>
 
+    <div class="divider"></div>
     <tree-group
       type="globals"
       :add="false"
@@ -95,5 +96,10 @@ export default {
   margin-top: 16px;
   float: right;
   margin-right: 16px;
+}
+.divider {
+  width: 100%;
+  height: 1px;
+  background: #61656b;
 }
 </style>
