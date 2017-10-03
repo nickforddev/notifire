@@ -1,5 +1,8 @@
 {
 	"url": "http://payment.rafiproperties.com/",
+	"first": "Jane",
+	"last": "Doe",
+	"message": "thanks for activating your account!",
 	"button_text": "Log In Now",
 	"details": [
 		{
