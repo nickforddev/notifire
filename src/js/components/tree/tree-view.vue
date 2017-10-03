@@ -1,6 +1,7 @@
 <template>
   <div class="tree-view" :style="[tree_styles]">
-    <h3>NOTIFLY <button @click="build">Build</button></h3>
+    <logo />
+    <button @click="build" class="build">Build</button>
 
     <tree-group
       type="globals"
@@ -84,5 +85,15 @@ export default {
   h3 {
     padding-left: 15px;
   }
+
+  .logo {
+    width: 120px;
+    margin: 10px;
+  }
+}
+.build {
+  margin-top: 16px;
+  float: right;
+  margin-right: 16px;
 }
 </style>

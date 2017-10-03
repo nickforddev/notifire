@@ -3,11 +3,13 @@
     <div class="mask" />
     <component :is="type" :data="renderer_html"/>
     <div class="menu">
-      <select v-model="type">
-        <option value="desktop">Desktop</option>
-        <option value="iphone">iPhone</option>
-        <option value="android">Android</option>
-      </select>
+      <div class="select">
+        <select v-model="type">
+          <option value="desktop">Desktop</option>
+          <option value="iphone">iPhone</option>
+          <option value="android">Android</option>
+        </select>
+      </div>
       <div class="sender">
         <button @click="toggleModal">Send Test</button>
         <modal v-if="modal_visible" @close="closeModal" :confirm="confirmModal">
@@ -120,10 +122,14 @@ $subject-height: 32px;
   position: absolute;
   top: 10px;
   right: 10px;
+
+  select {
+    margin-top: 10px;
+  }
 }
 .sender {
   // margin-top: 6px;
-  margin-top: 2px;
+  margin-top: 10px;
   float: right;
   margin-left: 7px;
 }

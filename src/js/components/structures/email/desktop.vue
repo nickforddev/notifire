@@ -45,7 +45,7 @@ export default {
 <style scoped lang="scss">
 @import '~%/modules/mixins';
 
-$header-height: 32px;
+$header-height: 60px;
 .container {
   height: 100%;
 }
@@ -54,7 +54,7 @@ $header-height: 32px;
   height: $header-height;
   text-align: left;
   padding: 10px;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid #ccc;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 0.8em;
   text-align: left;

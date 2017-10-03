@@ -4,7 +4,9 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const utils = require('./src/js/server/utils')
 const Email = require('./src/js/server/utils/send')
-const port = '3636'
+const port = '36361'
+
+console.warn = () => {}
 
 // Server
 

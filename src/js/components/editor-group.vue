@@ -14,7 +14,28 @@
       <div class="container">
         <logo />
         <div class="tagline">
-          Lorem ipsum dolor sit amet
+          Design next level notifications
+        </div>
+        <div class="getting-started">
+          <h3>Getting Started</h3>
+          <p>Create a new template or select an existing one, then click edit. This will open the relevant files in the editor, and render the template.</p>
+
+          <h3>Templates</h3>
+          <p>
+            Templates are a group that represent a single notification, each containing an email, a push notification, and a text message.
+            <a href="http://handlebarsjs.com/expressions.html" target="_blank">More info</a>
+          </p>
+
+          <h3>Partials</h3>
+          <p>
+            Partials allow you to reuse components within your templates. 
+            <a href="http://handlebarsjs.com/partials.html" target="_blank">More info</a>
+          </p>
+
+          <h3>Globals</h3>
+          <p>
+            Globals are elements that are shared between all templates. Your global template will wrap every email template, global json will be available to every template, global styles will be applied to every template.
+          </p>
         </div>
       </div>
     </div>
@@ -133,6 +154,10 @@ $divider-background: #333;
   color: $color-text-light;
   float: left;
   overflow: hidden;
+  
+  &.empty {
+    overflow: scroll;
+  }
 }
 .divider {
   height: $divider-height;
@@ -147,10 +172,20 @@ $divider-background: #333;
 }
 .container {
   max-width: 90%;
-  width: 500px;
+  width: 300px;
   margin: 10vh auto 0;
+
+  .logo {
+    width: 200px;
+  }
 }
 .tagline {
   color: $color-highlight;
+}
+
+.getting-started {
+  margin-top: 30px;
+  text-align: left;
+  font-size: 12px;
 }
 </style>

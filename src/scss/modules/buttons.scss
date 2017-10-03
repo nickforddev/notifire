@@ -2,7 +2,7 @@
 
 $button-text-size: 0.6rem;
 
-button {
+button, select {
   display: inline-block;
   position: relative;
   padding: .40em .65em;
@@ -47,5 +47,36 @@ button {
       color: $color-button-text;
       box-shadow: 0 1px 4px rgba(0,0,0, 0.2);
     }
+  }
+}
+
+select {
+  // padding: 10px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.select {
+  display: inline-block;
+  position: relative;
+
+  select {
+    padding-right: 20px;
+  }
+
+  &:after {
+    display: inline-block;
+    content: '';
+    position: absolute;
+    right: 6px;
+    bottom: 11px;
+    // bottom: 50%;
+    width: 0;
+    height: 0;
+    border-color: #efefef transparent transparent transparent;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    transform: translateY(50%);
+    z-index: 2;
   }
 }

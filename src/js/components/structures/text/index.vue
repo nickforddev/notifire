@@ -2,10 +2,12 @@
   <div class="container">
     <component :is="type" :data="text_data" :style="[device_styles]" />
     <div class="menu">
-      <select v-model="type">
-        <option value="iphone">iPhone</option>
-        <option value="android">Android</option>
-      </select>
+      <div class="select">
+        <select v-model="type">
+          <option value="iphone">iPhone</option>
+          <option value="android">Android</option>
+        </select>
+      </div>
     </div>
     <div class="scale">
       <input type="range" orient="vertical" v-model="size" min="20" />

@@ -16,7 +16,7 @@
         </svg>
       </div>
 
-      <h2>No content to renderer</h2>
+      <h2>No content to render</h2>
       <div class="description">
         Please select a template to render it
       </div>

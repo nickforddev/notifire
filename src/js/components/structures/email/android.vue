@@ -60,7 +60,7 @@ export default {
 @import '~%/modules/mixins';
 @import '~%/modules/colors';
 
-$header-height: 122px;
+$header-height: 124px;
 
 .container {
   height: 100%;
