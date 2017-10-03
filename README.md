@@ -21,7 +21,7 @@ npm start
 
 ## Screenshot
 
-![screenshot](/static/screenshot.png?raw=true)
+![screenshot](/static/screenshot.jpg?raw=true)
 
 ## Getting Started
 
