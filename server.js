@@ -161,7 +161,7 @@ app.post('/render/text', async (req, res) => {
 })
 
 app.post('/render/false', (req, res) => {
-  const message = 'Rendering this type of file is not currently supported. Please select from the templates section if you want to render something.'
+  const message = `Rendering this type of file by itself is not currently supported. Please select from the templates section if you want to render something.`
   return res.status(500).send(message)
 })
 
