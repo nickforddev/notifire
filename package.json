@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "anchorme": "^1.1.2",
-    "asyncawait": "^1.0.6",
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
     "brace": "^0.10.0",
