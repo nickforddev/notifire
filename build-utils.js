@@ -88,7 +88,10 @@ async function build(path = '', output_path = './dist') {
       extraCss: global_css_post
     })
 
-    await utils.rmrf(output_path)
+    await utils.rmrf(`${output_path}/globals`)
+    await utils.rmrf(`${output_path}/templates`)
+    await utils.rmrf(`${output_path}/partials`)
+    
     await utils.mkdir(`${output_path}/globals/`)
 
     await utils.writeFile(`${output_path}/globals/index.html`, inlined_global_template)
