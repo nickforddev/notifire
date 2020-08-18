@@ -8,11 +8,8 @@ module.exports = async function preprocess (data) {
         './data/styles/'
       ]
     })
-    const output = css.toString()
-    return output
-    // return Promise.resolve(output)
+    return css.toString()
   } catch (error) {
     throw error
-    // return Promise.reject(error)
   }
 }
