@@ -9,9 +9,7 @@ module.exports = async function inline(template_html, options = {}) {
   try {
     const output = inliner(template_html, merged_options)
     return output
-    // return Promise.resolve(output)
   } catch (error) {
     throw error
-    // return Promise.reject(error)
   }
 }
